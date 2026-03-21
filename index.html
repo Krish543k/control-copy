@@ -1263,6 +1263,9 @@ body.dark-mode .corner {
                 <span>📖 How to Use (Guide)</span>
             </div>
             <div class="menu-item" onclick="downloadAPK()"><span>📱 Download APK for Android</span></div>
+            <div class="menu-item" onclick="logoutApp()" style="border-top: 2px solid #f44336;">
+                <span style="color:#f44336;">🚪 Logout</span>
+            </div>
         </div>
     </div>
 
@@ -3535,6 +3538,27 @@ function downloadAPK() {
     toggleMenu();
 }
 
+function logoutApp() {
+    toggleMenu();
+    if (!confirm('Logout karna chahte ho?')) return;
+    // Role reset karo
+    window._userRole = null;
+    // Location watch band karo
+    stopLocationWatch();
+    _currentLat = null;
+    _currentLng = null;
+    // Search clear karo
+    document.getElementById('searchInput').value = '';
+    document.getElementById('resultsContainer').innerHTML = '';
+    hideResultCount();
+    // Lock screen dikhao
+    document.getElementById('passwordScreen').style.display = 'flex';
+    document.getElementById('passwordInput').value = '';
+    document.getElementById('passwordError').textContent = '';
+    // Location watch dobara shuru karo
+    showPasswordScreen();
+}
+
 // API Settings — key HTML mein nahi, localStorage mein save hoti hai
 function openApiSettings() {
     toggleMenu();
@@ -3615,37 +3639,42 @@ function openLocationSettings() {
 
     const modal = document.createElement('div');
     modal.id = 'locationModal';
-    modal.style.cssText = 'position:fixed;top:0;left:0;width:100%;height:100%;background:rgba(0,0,0,0.6);display:flex;justify-content:center;align-items:center;z-index:9999;';
+    modal.style.cssText = 'position:fixed;top:0;left:0;width:100%;height:100%;background:rgba(0,0,0,0.6);display:flex;justify-content:center;align-items:flex-start;padding:20px;box-sizing:border-box;overflow-y:auto;z-index:9999;';
     modal.innerHTML = `
-        <div style="background:white;padding:25px;border-radius:15px;width:90%;max-width:450px;box-shadow:0 10px 40px rgba(0,0,0,0.3);max-height:90vh;overflow-y:auto;">
-            <h3 style="color:#667eea;margin-bottom:15px;">📍 Location Settings</h3>
-            <p style="font-size:12px;color:#888;margin-bottom:15px;">⚠️ Admin ke liye location lock nahi hoga — sirf users ke liye</p>
+        <div style="background:white;padding:clamp(15px,4vw,25px);border-radius:15px;width:100%;max-width:480px;box-shadow:0 10px 40px rgba(0,0,0,0.3);margin:auto;box-sizing:border-box;">
+            <h3 style="color:#667eea;margin-bottom:4px;font-size:clamp(16px,4vw,20px);">📍 Location Settings</h3>
+            <p style="font-size:clamp(10px,2.5vw,12px);color:#888;margin-bottom:12px;">
+                ⚠️ <span style="font-size:clamp(10px,2.5vw,12px);color:#aaa;">Admin ke liye lock nahi hoga</span>
+                &nbsp;Location lock applies to view users only
+            </p>
 
-            <label style="font-weight:600;font-size:13px;">📍 Location 1:</label>
-            <div style="display:flex;gap:8px;margin:6px 0 12px;">
-                <input id="loc1lat" type="text" placeholder="Latitude" value="${loc1 ? loc1.lat : ''}" style="flex:1;padding:8px;border:2px solid #ddd;border-radius:5px;font-size:13px;">
-                <input id="loc1lng" type="text" placeholder="Longitude" value="${loc1 ? loc1.lng : ''}" style="flex:1;padding:8px;border:2px solid #ddd;border-radius:5px;font-size:13px;">
-                <button onclick="autoFillLocation(1)" style="padding:8px;background:#4CAF50;color:white;border:none;border-radius:5px;cursor:pointer;font-size:12px;">📡 Auto</button>
+            <label style="font-weight:600;font-size:clamp(13px,3vw,15px);display:block;margin-bottom:4px;">📍 Location 1 <span style="font-size:10px;color:#aaa;font-weight:400;">पहली लोकेशन</span></label>
+            <div style="display:grid;grid-template-columns:1fr 1fr auto;gap:6px;margin-bottom:12px;">
+                <input id="loc1lat" type="number" step="any" placeholder="Latitude" value="${loc1 ? loc1.lat : ''}" style="padding:clamp(7px,2vw,10px);border:2px solid #ddd;border-radius:6px;font-size:clamp(12px,3vw,14px);width:100%;box-sizing:border-box;">
+                <input id="loc1lng" type="number" step="any" placeholder="Longitude" value="${loc1 ? loc1.lng : ''}" style="padding:clamp(7px,2vw,10px);border:2px solid #ddd;border-radius:6px;font-size:clamp(12px,3vw,14px);width:100%;box-sizing:border-box;">
+                <button onclick="autoFillLocation(1)" style="padding:clamp(7px,2vw,10px) clamp(8px,2vw,12px);background:#4CAF50;color:white;border:none;border-radius:6px;cursor:pointer;font-size:clamp(11px,2.5vw,13px);white-space:nowrap;">📡 Auto</button>
             </div>
 
-            <label style="font-weight:600;font-size:13px;">📍 Location 2:</label>
-            <div style="display:flex;gap:8px;margin:6px 0 12px;">
-                <input id="loc2lat" type="text" placeholder="Latitude" value="${loc2 ? loc2.lat : ''}" style="flex:1;padding:8px;border:2px solid #ddd;border-radius:5px;font-size:13px;">
-                <input id="loc2lng" type="text" placeholder="Longitude" value="${loc2 ? loc2.lng : ''}" style="flex:1;padding:8px;border:2px solid #ddd;border-radius:5px;font-size:13px;">
-                <button onclick="autoFillLocation(2)" style="padding:8px;background:#4CAF50;color:white;border:none;border-radius:5px;cursor:pointer;font-size:12px;">📡 Auto</button>
+            <label style="font-weight:600;font-size:clamp(13px,3vw,15px);display:block;margin-bottom:4px;">📍 Location 2 <span style="font-size:10px;color:#aaa;font-weight:400;">दूसरी लोकेशन</span></label>
+            <div style="display:grid;grid-template-columns:1fr 1fr auto;gap:6px;margin-bottom:12px;">
+                <input id="loc2lat" type="number" step="any" placeholder="Latitude" value="${loc2 ? loc2.lat : ''}" style="padding:clamp(7px,2vw,10px);border:2px solid #ddd;border-radius:6px;font-size:clamp(12px,3vw,14px);width:100%;box-sizing:border-box;">
+                <input id="loc2lng" type="number" step="any" placeholder="Longitude" value="${loc2 ? loc2.lng : ''}" style="padding:clamp(7px,2vw,10px);border:2px solid #ddd;border-radius:6px;font-size:clamp(12px,3vw,14px);width:100%;box-sizing:border-box;">
+                <button onclick="autoFillLocation(2)" style="padding:clamp(7px,2vw,10px) clamp(8px,2vw,12px);background:#4CAF50;color:white;border:none;border-radius:6px;cursor:pointer;font-size:clamp(11px,2.5vw,13px);white-space:nowrap;">📡 Auto</button>
             </div>
 
-            <label style="font-weight:600;font-size:13px;">📏 Radius (meters):</label>
-            <input id="locRadius" type="number" value="${radius}" placeholder="100" style="width:100%;padding:8px;border:2px solid #ddd;border-radius:5px;font-size:13px;margin:6px 0 15px;box-sizing:border-box;">
+            <label style="font-weight:600;font-size:clamp(13px,3vw,15px);display:block;margin-bottom:4px;">📏 Radius (meters) <span style="font-size:10px;color:#aaa;font-weight:400;">दायरा मीटर में</span></label>
+            <input id="locRadius" type="number" value="${radius}" placeholder="100" style="width:100%;padding:clamp(7px,2vw,10px);border:2px solid #ddd;border-radius:6px;font-size:clamp(12px,3vw,14px);margin-bottom:14px;box-sizing:border-box;">
 
-            <label style="display:flex;align-items:center;gap:8px;margin-bottom:15px;font-size:13px;font-weight:600;">
-                <input type="checkbox" id="locEnabled" ${localStorage.getItem('loc_enabled') === 'true' ? 'checked' : ''} style="width:18px;height:18px;">
-                Location Lock Enable karo
+            <label style="display:flex;align-items:center;gap:10px;margin-bottom:16px;cursor:pointer;">
+                <input type="checkbox" id="locEnabled" ${localStorage.getItem('loc_enabled') === 'true' ? 'checked' : ''} style="width:20px;height:20px;cursor:pointer;">
+                <span style="font-size:clamp(13px,3vw,15px);font-weight:600;">Enable Location Lock
+                    <span style="display:block;font-size:10px;color:#aaa;font-weight:400;">लोकेशन लॉक चालू करो</span>
+                </span>
             </label>
 
-            <div style="display:flex;gap:10px;">
-                <button onclick="saveLocationSettings()" style="flex:1;padding:12px;background:#667eea;color:white;border:none;border-radius:8px;font-size:15px;cursor:pointer;font-weight:600;">💾 Save</button>
-                <button onclick="document.getElementById('locationModal').remove()" style="flex:1;padding:12px;background:#999;color:white;border:none;border-radius:8px;font-size:15px;cursor:pointer;font-weight:600;">✖ Close</button>
+            <div style="display:grid;grid-template-columns:1fr 1fr;gap:10px;">
+                <button onclick="saveLocationSettings()" style="padding:clamp(10px,3vw,14px);background:#667eea;color:white;border:none;border-radius:8px;font-size:clamp(13px,3vw,15px);cursor:pointer;font-weight:600;">💾 Save</button>
+                <button onclick="document.getElementById('locationModal').remove()" style="padding:clamp(10px,3vw,14px);background:#999;color:white;border:none;border-radius:8px;font-size:clamp(13px,3vw,15px);cursor:pointer;font-weight:600;">✖ Close</button>
             </div>
         </div>`;
     document.body.appendChild(modal);
@@ -3950,7 +3979,7 @@ async function syncToServer() {
             if (res.status === 404) throw new Error('404 - Bin ID nahi mila!');
             throw new Error('HTTP ' + res.status);
         }
-        showSyncToast('☁️ Server pe save ho gaya', '#2196F3');
+        showSyncToast('☁️ Server Saved  •  सर्वर पे सेव हो गया', '#2196F3');
     } catch (err) {
         showSyncToast('❌ ' + err.message, '#f44336');
     }
