@@ -2143,8 +2143,16 @@ window.onload = function() {
 // Password Protection
 function showPasswordScreen() {
     document.getElementById('passwordScreen').style.display = 'flex';
-    startLocationWatch(); // ek baar permission — phir auto track
-    updateLocationDots();
+    // Pehle server se location settings fetch karo, phir watch shuru karo
+    if (isJsonBinConfigured()) {
+        syncFromServer().then(() => {
+            startLocationWatch();
+            updateLocationDots();
+        });
+    } else {
+        startLocationWatch();
+        updateLocationDots();
+    }
 }
 
 function checkPassword() {
@@ -3772,13 +3780,20 @@ function refreshLocationAndSync() {
     stopLocationWatch();
     _currentLat = null;
     _currentLng = null;
-    startLocationWatch();
-    updateLocationDots();
+    // Dots grey + blink karo jab tak naya data na aaye
+    const dots = [document.getElementById('locationDot'), document.getElementById('mainLocationDot')];
+    dots.forEach(d => { if(d) { d.style.background = '#ccc'; d.style.boxShadow = ''; d.classList.add('dot-blink'); } });
+    // Server se fresh location settings fetch karo
     if (isJsonBinConfigured()) {
         syncFromServer().then(() => {
+            startLocationWatch();
+            updateLocationDots();
             const term = document.getElementById('searchInput')?.value?.trim();
             if (term) searchData();
         });
+    } else {
+        startLocationWatch();
+        updateLocationDots();
     }
 }
 
