@@ -1165,7 +1165,31 @@ body.dark-mode .corner {
     }
     .dark-mode-toggle {
         font-size: 18px;
-   
+    }
+    .delete-card-btn {
+        font-size: 13px;
+        padding: 8px 12px;
+    }
+}
+
+@media (min-width: 1024px) {
+    .search-section {
+        padding: 20px;
+        gap: 12px;
+    }
+    #searchInput {
+        font-size: 16px;
+        padding: 13px 15px;
+    }
+    .search-section button {
+        padding: 13px 26px;
+        font-size: 16px;
+    }
+    .camera-btn {
+        padding: 13px 22px;
+        font-size: 22px;
+    }
+}
     </style>
 </head>
 
@@ -3645,6 +3669,7 @@ function saveLocationSettings() {
     localStorage.setItem('loc_enabled', enabled ? 'true' : 'false');
     document.getElementById('locationModal').remove();
     showSuccessPopup('📍 Location settings save ho gayi!');
+    syncToServer(); // server pe bhi save karo
 }
 
 function getDistance(lat1, lng1, lat2, lng2) {
@@ -3845,11 +3870,21 @@ async function syncFromServer() {
         }
         const json = await res.json();
         const rec = json.record || {};
-        // bin mein {"records":{}} format hai
+        // Product records sync
         const serverData = rec.records || {};
         const localData = JSON.parse(localStorage.getItem('mc_data_v1') || '{}');
         const merged = Object.assign({}, localData, serverData);
         localStorage.setItem('mc_data_v1', JSON.stringify(merged));
+        // Location settings sync — sirf agar server pe hain to overwrite karo
+        if (rec.locationSettings) {
+            const ls = rec.locationSettings;
+            if (ls.loc_1) localStorage.setItem('loc_1', JSON.stringify(ls.loc_1));
+            else localStorage.removeItem('loc_1');
+            if (ls.loc_2) localStorage.setItem('loc_2', JSON.stringify(ls.loc_2));
+            else localStorage.removeItem('loc_2');
+            if (ls.loc_radius) localStorage.setItem('loc_radius', ls.loc_radius);
+            if (ls.loc_enabled !== undefined) localStorage.setItem('loc_enabled', ls.loc_enabled);
+        }
         const count = Object.keys(merged).length;
         showSyncToast('✅ ' + count + ' records synced', '#4CAF50');
         return merged;
@@ -3863,13 +3898,20 @@ async function syncToServer() {
     if (!isJsonBinConfigured()) return;
     try {
         const data = JSON.parse(localStorage.getItem('mc_data_v1') || '{}');
+        // Location settings bhi save karo
+        const locationSettings = {
+            loc_1: JSON.parse(localStorage.getItem('loc_1') || 'null'),
+            loc_2: JSON.parse(localStorage.getItem('loc_2') || 'null'),
+            loc_radius: localStorage.getItem('loc_radius') || '100',
+            loc_enabled: localStorage.getItem('loc_enabled') || 'false'
+        };
         const res = await fetch(`https://api.jsonbin.io/v3/b/${getBinId()}`, {
             method: 'PUT',
             headers: {
                 'Content-Type': 'application/json',
                 'X-Master-Key': getApiKey()
             },
-            body: JSON.stringify({ records: data })
+            body: JSON.stringify({ records: data, locationSettings })
         });
         if (!res.ok) {
             if (res.status === 401) throw new Error('401 - API Key galat hai!');
@@ -3882,10 +3924,6 @@ async function syncToServer() {
     }
 }
 
-
-
-
-
 // App open hone par server se data load karo
 function unlockApp(role) {
     window._userRole = role || 'admin';
@@ -3897,13 +3935,11 @@ function unlockApp(role) {
     applyRoleAccess(window._userRole);
     if (isJsonBinConfigured()) {
         syncFromServer().then(() => {
-            // Agar search box mein kuch hai to refresh karo
             const term = document.getElementById('searchInput')?.value?.trim();
             if (term) searchData();
         });
     }
 }
-    </script>
+</script>
 </body>
 </html>
-
