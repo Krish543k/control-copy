@@ -3653,11 +3653,28 @@ function openLocationSettings() {
 
 function autoFillLocation(num) {
     if (!navigator.geolocation) { alert('GPS supported nahi hai!'); return; }
-    navigator.geolocation.getCurrentPosition(pos => {
-        document.getElementById('loc' + num + 'lat').value = pos.coords.latitude.toFixed(6);
-        document.getElementById('loc' + num + 'lng').value = pos.coords.longitude.toFixed(6);
-        showSuccessPopup('📍 Location ' + num + ' auto-fill ho gayi!');
-    }, () => alert('Location nahi mili — GPS on karo'));
+    const latEl = document.getElementById('loc' + num + 'lat');
+    const lngEl = document.getElementById('loc' + num + 'lng');
+    // Pehle clear karo aur loading dikhao
+    latEl.value = '';
+    lngEl.value = '';
+    latEl.placeholder = '⏳ GPS...';
+    lngEl.placeholder = '⏳ GPS...';
+    navigator.geolocation.getCurrentPosition(
+        pos => {
+            latEl.value = pos.coords.latitude.toFixed(6);
+            lngEl.value = pos.coords.longitude.toFixed(6);
+            latEl.placeholder = 'Latitude';
+            lngEl.placeholder = 'Longitude';
+            showSuccessPopup('📍 Location ' + num + ' add ho gayi!');
+        },
+        err => {
+            latEl.placeholder = 'Latitude';
+            lngEl.placeholder = 'Longitude';
+            alert('Location nahi mili!\n\nReason: ' + err.message + '\n\nGPS on karo aur dobara try karo.');
+        },
+        { enableHighAccuracy: true, timeout: 10000, maximumAge: 0 }
+    );
 }
 
 function saveLocationSettings() {
