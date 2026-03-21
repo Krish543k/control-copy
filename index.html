@@ -17,7 +17,7 @@
     // JSONBin API Config
     const JSONBIN_CONFIG = {
         apiKey: '$2a$10$icHKnwYDDwt1RDuClLB0RuBKvQGyjFy30dIisnUEPjt4hsaWXdWyu',
-        binId:  '69bcf282c3097a1dd540dc3b'
+        binId:  '69be6b9cb7ec241ddc8b64c7'
     };
     </script>
     <style>
@@ -3629,7 +3629,7 @@ function clearApiSettings() {
 
 function openLocationSettings() {
     const adminPassword = localStorage.getItem('admin_password') || '1234';
-    const pwd = prompt('Admin password daalo:');
+    const pwd = prompt('Enter admin password:\nएडमिन पासवर्ड डालो');
     if (pwd !== adminPassword) { alert('Wrong password!'); return; }
     toggleMenu();
 
@@ -3979,7 +3979,7 @@ async function syncToServer() {
             if (res.status === 404) throw new Error('404 - Bin ID nahi mila!');
             throw new Error('HTTP ' + res.status);
         }
-        showSyncToast('☁️ Server Saved  •  सर्वर पे सेव हो गया', '#2196F3');
+        showSyncToast('☁️ Server pe save ho gaya', '#2196F3');
     } catch (err) {
         showSyncToast('❌ ' + err.message, '#f44336');
     }
