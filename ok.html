@@ -1198,7 +1198,7 @@ body.dark-mode .corner {
     <div id="passwordScreen" class="password-screen">
         <div class="password-box">
             <div class="lock-icon">??</div>
-            <!-- Location Dot + Refresh — top right corner -->
+            <!-- Location Dot + Refresh Â— top right corner -->
             <div style="position:absolute;top:15px;right:15px;display:flex;align-items:center;gap:6px;">
                 <div id="locationDot" style="width:14px;height:14px;border-radius:50%;background:#ccc;box-shadow:0 0 6px rgba(0,0,0,0.3);transition:background 0.5s;" title="Location Status"></div>
                 <button onclick="refreshLocationAndSync()" title="Refresh Location & Sync" style="background:none;border:none;cursor:pointer;font-size:18px;padding:2px;">??</button>
@@ -1275,7 +1275,7 @@ body.dark-mode .corner {
             <button class="camera-btn" onclick="openScanner()">??</button>
             <button class="clear-btn" onclick="clearSearch()" title="Clear Search">?</button>
             <button class="filter-toggle-btn" onclick="toggleFilters()" title="Toggle Filters">??</button>
-            <!-- Location dot + Refresh — search row mein -->
+            <!-- Location dot + Refresh Â— search row mein -->
             <div style="display:flex;align-items:center;gap:5px;padding:0 4px;">
                 <div id="mainLocationDot" class="dot-blink" style="width:12px;height:12px;border-radius:50%;background:#ccc;box-shadow:0 0 6px rgba(0,0,0,0.3);flex-shrink:0;" title="Location Status"></div>
                 <button onclick="refreshLocationAndSync()" title="Location & Server Refresh" style="background:#667eea;border:none;cursor:pointer;font-size:16px;padding:8px 12px;border-radius:5px;color:white;line-height:1;">??</button>
@@ -1509,7 +1509,7 @@ function uploadFile() {
         alert('Please select a file');
         return;
     }
-    const uploaderName = prompt('Apna naam likho (kaun upload kar raha hai):');
+    const uploaderName = prompt('Enter your name (upload Person ):');
     if (!uploaderName || !uploaderName.trim()) {
         alert('Naam zaroori hai!');
         return;
@@ -3559,7 +3559,7 @@ function logoutApp() {
     showPasswordScreen();
 }
 
-// API Settings — key HTML mein nahi, localStorage mein save hoti hai
+// API Settings Â— key HTML mein nahi, localStorage mein save hoti hai
 function openApiSettings() {
     toggleMenu();
     const currentKey = getApiKey();
@@ -3579,7 +3579,7 @@ function openApiSettings() {
 
             <div style="background:#e8f5e9;border-radius:8px;padding:12px;margin-bottom:15px;font-size:12px;color:#2e7d32;">
                 <b>?? Admin Device (tumhara):</b> API Key + Bin ID dono daalo<br>
-                <b>?? User Device (doosra):</b> Sirf Bin ID daalo — data read ho jayega
+                <b>?? User Device (doosra):</b> Sirf Bin ID daalo Â— data read ho jayega
             </div>
 
             <label style="font-weight:600;font-size:14px;display:block;margin-bottom:5px;">Bin ID <span style="color:#4CAF50;">(sab devices pe same)</span>:</label>
@@ -3736,7 +3736,7 @@ function getDistance(lat1, lng1, lat2, lng2) {
     return R * 2 * Math.atan2(Math.sqrt(a), Math.sqrt(1-a));
 }
 
-// ---- Global Location Tracker (watchPosition — sirf ek baar permission) ----
+// ---- Global Location Tracker (watchPosition Â— sirf ek baar permission) ----
 let _currentLat = null;
 let _currentLng = null;
 let _locationWatchId = null;
@@ -3793,7 +3793,7 @@ function updateLocationDots() {
     }
 
     if (_currentLat === null) {
-        // GPS nahi mila — grey
+        // GPS nahi mila Â— grey
         dots.forEach(d => { if(d) { d.style.background = '#ccc'; d.style.boxShadow = ''; d.classList.remove('dot-blink'); } });
         return;
     }
@@ -3807,7 +3807,7 @@ function updateLocationDots() {
     });
 }
 
-// Purana naam raha — backward compatible
+// Purana naam raha Â— backward compatible
 function checkLocationDot() {
     const enabled = localStorage.getItem('loc_enabled') === 'true';
     if (!enabled) { updateLocationDots(); return; }
@@ -3854,7 +3854,7 @@ function isLocationAllowed(callback) {
         return;
     }
 
-    // Pehli baar — ek baar getCurrentPosition, phir watch shuru
+    // Pehli baar Â— ek baar getCurrentPosition, phir watch shuru
     navigator.geolocation.getCurrentPosition(pos => {
         _currentLat = pos.coords.latitude;
         _currentLng = pos.coords.longitude;
@@ -3863,12 +3863,12 @@ function isLocationAllowed(callback) {
         callback(isInRange());
     }, () => {
         startLocationWatch();
-        callback(true); // GPS nahi mila — allow karo
+        callback(true); // GPS nahi mila Â— allow karo
     }, { enableHighAccuracy: true, timeout: 8000 });
 }
 
 // ============================================================
-// JSONBIN BACKEND SYNC — Online Data Storage
+// JSONBIN BACKEND SYNC Â— Online Data Storage
 // ============================================================
 // SETUP KARNE KE LIYE:
 //   1. jsonbin.io par free account banao
@@ -3878,8 +3878,8 @@ function isLocationAllowed(callback) {
 //   5. Neeche JSONBIN_API_KEY aur JSONBIN_BIN_ID fill karo
 // ============================================================
 
-// API keys HTML mein nahi hain — localStorage mein store hoti hain
-// Admin settings se enter karo — GitHub pe leak nahi hogi
+// API keys HTML mein nahi hain Â— localStorage mein store hoti hain
+// Admin settings se enter karo Â— GitHub pe leak nahi hogi
 function getApiKey() {
     // Pehle config.js check karo (local file, GitHub pe nahi jayegi)
     if (typeof JSONBIN_CONFIG !== 'undefined' && JSONBIN_CONFIG.apiKey)
@@ -3915,7 +3915,7 @@ function showSyncToast(msg, color) {
     t._timer = setTimeout(() => { t.style.opacity = '0'; setTimeout(() => { t.style.display = 'none'; }, 300); }, 3500);
 }
 
-// Server se data fetch karo — public bin se, key optional
+// Server se data fetch karo Â— public bin se, key optional
 async function syncFromServer() {
     const binId = getBinId();
     if (!binId) return;
@@ -3936,7 +3936,7 @@ async function syncFromServer() {
         const localData = JSON.parse(localStorage.getItem('mc_data_v1') || '{}');
         const merged = Object.assign({}, localData, serverData);
         localStorage.setItem('mc_data_v1', JSON.stringify(merged));
-        // Location settings sync — sirf agar server pe hain to overwrite karo
+        // Location settings sync Â— sirf agar server pe hain to overwrite karo
         if (rec.locationSettings) {
             const ls = rec.locationSettings;
             if (ls.loc_1) localStorage.setItem('loc_1', JSON.stringify(ls.loc_1));
