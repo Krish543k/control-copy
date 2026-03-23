@@ -1717,7 +1717,7 @@ function searchData() {
         else { playErrorSound(); vibrateDevice([200]); }
         displayResults(filtered, searchTerm);
     };
-    if (isJsonBinConfigured()) { syncFromServer().then(() => doSearch()); }
+    if (isJsonBinConfigured()) { doSearch(); }
     else { doSearch(); }
 }
 
