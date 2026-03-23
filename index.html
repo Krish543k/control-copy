@@ -17,7 +17,7 @@
     // JSONBin API Config
     const JSONBIN_CONFIG = {
         apiKey: '$2a$10$7yKDK4eU8xJnFHJDzssaBuJvnDVw4iulb2F0faX2fJBFaziBWXiTG',
-        binId:  '69be6b9cb7ec241ddc8b64c7'
+        binId:   '69be6b9cb7ec241ddc8b64c7'
     };
     </script>
     <style>
@@ -3698,12 +3698,12 @@ function autoFillLocation(num) {
             lngEl.value = pos.coords.longitude.toFixed(6);
             latEl.placeholder = 'Latitude';
             lngEl.placeholder = 'Longitude';
-            showSuccessPopup('📍 Location ' + num + ' add ho gayi!');
+            showSuccessPopup('📍 Location ' + num + ' location add done');
         },
         err => {
             latEl.placeholder = 'Latitude';
             lngEl.placeholder = 'Longitude';
-            alert('Location nahi mili!\n\nReason: ' + err.message + '\n\nGPS on karo aur dobara try karo.');
+            alert('Location nahi mili!\n\nReason: ' + err.message + '\n\nGPS on and try agean.');
         },
         { enableHighAccuracy: true, timeout: 10000, maximumAge: 0 }
     );
@@ -3725,7 +3725,7 @@ function saveLocationSettings() {
     localStorage.setItem('loc_radius', radius);
     localStorage.setItem('loc_enabled', enabled ? 'true' : 'false');
     document.getElementById('locationModal').remove();
-    showSuccessPopup('📍 Location settings save ho gayi!');
+    showSuccessPopup('📍 Location settings seve');
     syncToServer(); // server pe bhi save karo
 }
 
@@ -3928,8 +3928,8 @@ async function syncFromServer() {
         if (key) headers['X-Master-Key'] = key;
         const res = await fetch(`https://api.jsonbin.io/v3/b/${binId}/latest`, { headers });
         if (!res.ok) {
-            if (res.status === 401) throw new Error('401 - API Key galat hai!');
-            if (res.status === 404) throw new Error('404 - Bin ID nahi mila!');
+            if (res.status === 401) throw new Error('401 - API Key wrong!');
+            if (res.status === 404) throw new Error('404 - Bin ID not found!');
             throw new Error('HTTP ' + res.status);
         }
         const json = await res.json();
@@ -3978,11 +3978,11 @@ async function syncToServer() {
             body: JSON.stringify({ records: data, locationSettings })
         });
         if (!res.ok) {
-            if (res.status === 401) throw new Error('401 - API Key galat hai!');
-            if (res.status === 404) throw new Error('404 - Bin ID nahi mila!');
+            if (res.status === 401) throw new Error('401 - API Key wrong!');
+            if (res.status === 404) throw new Error('404 - Bin ID not found!');
             throw new Error('HTTP ' + res.status);
         }
-        showSyncToast('☁️ Server pe save ho gaya', '#2196F3');
+        showSyncToast('☁️ Saved to tha server', '#2196F3');
     } catch (err) {
         showSyncToast('❌ ' + err.message, '#f44336');
     }
