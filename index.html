@@ -3924,11 +3924,11 @@ async function syncFromServer() {
     try {
         const headers = { 'X-Bin-Meta': 'false' };
         const key = getApiKey();
-        if (key) headers['X-Master-Key'] = key;
+        if (key) headers['X-Access-Key'] = key;
         const res = await fetch(`https://api.jsonbin.io/v3/b/${binId}/latest`, { headers });
         if (!res.ok) {
-            if (res.status === 401) throw new Error('401 - Wrong API Key!');
-            if (res.status === 404) throw new Error('404 - Not found Bin ID!');
+            if (res.status === 401) throw new Error('401 - API Key wrong!');
+            if (res.status === 404) throw new Error('404 - Bin ID not found!');
             throw new Error('HTTP ' + res.status);
         }
         const json = await res.json();
@@ -3972,13 +3972,13 @@ async function syncToServer() {
             method: 'PUT',
             headers: {
                 'Content-Type': 'application/json',
-                'X-Master-Key': getApiKey()
+                'X-Access-Key': getApiKey()
             },
             body: JSON.stringify({ records: data, locationSettings })
         });
         if (!res.ok) {
-            if (res.status === 401) throw new Error('401 - Wrong API Key!');
-            if (res.status === 404) throw new Error('404 - Not found Bin ID!');
+            if (res.status === 401) throw new Error('401 - API Key wrong!');
+            if (res.status === 404) throw new Error('404 - Bin ID not found!');
             throw new Error('HTTP ' + res.status);
         }
         showSyncToast('☁️ Saved to tha server', '#2196F3');
