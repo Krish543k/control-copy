@@ -3895,8 +3895,7 @@ function getBinId() {
     if (typeof JSONBIN_CONFIG !== 'undefined' && JSONBIN_CONFIG.binId)
         return JSONBIN_CONFIG.binId;
     // Phir localStorage check karo
-    return localStorage.getItem('jb_bin_id') || localStorage.getItem('jb_public_bin_id') || '';
-}
+    return localStorage.getItem('jb_bin_id') || '';}
 
 function isJsonBinConfigured() {
     return getApiKey() !== '' && getBinId() !== '';
@@ -3928,8 +3927,8 @@ async function syncFromServer() {
         if (key) headers['X-Master-Key'] = key;
         const res = await fetch(`https://api.jsonbin.io/v3/b/${binId}/latest`, { headers });
         if (!res.ok) {
-            if (res.status === 401) throw new Error('401 - API Key wrong!');
-            if (res.status === 404) throw new Error('404 - Bin ID not found!');
+            if (res.status === 401) throw new Error('401 - Wrong API Key!');
+            if (res.status === 404) throw new Error('404 - Not found Bin ID!');
             throw new Error('HTTP ' + res.status);
         }
         const json = await res.json();
@@ -3978,8 +3977,8 @@ async function syncToServer() {
             body: JSON.stringify({ records: data, locationSettings })
         });
         if (!res.ok) {
-            if (res.status === 401) throw new Error('401 - API Key wrong!');
-            if (res.status === 404) throw new Error('404 - Bin ID not found!');
+            if (res.status === 401) throw new Error('401 - Wrong API Key!');
+            if (res.status === 404) throw new Error('404 - Not found Bin ID!');
             throw new Error('HTTP ' + res.status);
         }
         showSyncToast('☁️ Saved to tha server', '#2196F3');
