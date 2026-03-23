@@ -3932,7 +3932,7 @@ async function syncFromServer() {
             throw new Error('HTTP ' + res.status);
         }
         const json = await res.json();
-        const rec = json.record || {};
+        const rec = json.record || json || {};
         // Product records sync
         const serverData = rec.records || {};
         const localData = JSON.parse(localStorage.getItem('mc_data_v1') || '{}');
