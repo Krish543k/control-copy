@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <meta charset="UTF-4">
+    <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta name="theme-color" content="#667eea">
     <meta name="description" content="P Code Verify - Product data management with QR/Barcode scanner">
@@ -17,14 +17,14 @@
     // JSONBin API Config
     const JSONBIN_CONFIG = {
         apiKey: '$2a$10$7yKDK4eU8xJnFHJDzssaBuJvnDVw4iulb2F0faX2fJBFaziBWXiTG',
-         binId:  '69be6b9cb7ec241ddc8b64c7'
+        binId:  '69be6b9cb7ec241ddc8b64c7'
     };
     </script>
     <style>
 * {
-        margin: 0;
-        padding: 0;
-        box-sizing: border-box;
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
 }
 
 body {
@@ -1197,18 +1197,18 @@ body.dark-mode .corner {
     <!-- Password Screen -->
     <div id="passwordScreen" class="password-screen">
         <div class="password-box">
-            <div class="lock-icon">??</div>
-            <!-- Location Dot + Refresh  top right corner -->
+            <div class="lock-icon">🔒</div>
+            <!-- Location Dot + Refresh — top right corner -->
             <div style="position:absolute;top:15px;right:15px;display:flex;align-items:center;gap:6px;">
                 <div id="locationDot" style="width:14px;height:14px;border-radius:50%;background:#ccc;box-shadow:0 0 6px rgba(0,0,0,0.3);transition:background 0.5s;" title="Location Status"></div>
-                <button onclick="refreshLocationAndSync()" title="Refresh Location & Sync" style="background:none;border:none;cursor:pointer;font-size:18px;padding:2px;">??</button>
+                <button onclick="refreshLocationAndSync()" title="Refresh Location & Sync" style="background:none;border:none;cursor:pointer;font-size:18px;padding:2px;">🔄</button>
             </div>
             <h2>P Code Verify</h2>
             <p>Enter password to access</p>
             <input type="password" id="passwordInput" placeholder="Enter Password" onkeypress="if(event.key==='Enter') checkPassword()">
             <button onclick="checkPassword()">Unlock</button>
             <div onclick="useFingerprintAuth()" style="width: 50px; height: 50px; background: #4CAF50; border-radius: 50%; display: flex; align-items: center; justify-content: center; margin: 15px auto 0; cursor: pointer; transition: all 0.3s; box-shadow: 0 2px 10px rgba(76, 175, 80, 0.3);" onmouseover="this.style.transform='scale(1.1)'" onmouseout="this.style.transform='scale(1)'">
-                <span style="font-size: 28px;">??</span>
+                <span style="font-size: 28px;">👆</span>
             </div>
             <p class="password-error" id="passwordError"></p>
         </div>
@@ -1223,7 +1223,7 @@ body.dark-mode .corner {
             </div>
             <h1>P Code Verify</h1>
             <div class="dark-mode-toggle" onclick="toggleDarkMode()" title="Toggle Dark Mode">
-                <span id="darkModeIcon">??</span>
+                <span id="darkModeIcon">🌙</span>
             </div>
         </div>
     </header>
@@ -1235,36 +1235,39 @@ body.dark-mode .corner {
         </div>
         <div class="menu-content">
             <div class="menu-item" onclick="openUploadModal()">
-                <span>?? Upload File (CSV/Excel)</span>
+                <span>📁 Upload File (CSV/Excel)</span>
             </div>
             <div class="menu-item" onclick="downloadTemplate()">
-                <span>?? Download CSV Template</span>
+                <span>📥 Download CSV Template</span>
             </div>
             <div class="menu-item" onclick="openManualEntryModal()">
-                <span>?? Add Manual Data</span>
+                <span>✏️ Add Manual Data</span>
             </div>
             <div class="menu-item" onclick="toggleDarkMode()">
-                <span id="darkModeMenuText">?? Dark Mode</span>
+                <span id="darkModeMenuText">🌙 Dark Mode</span>
             </div>
             <div class="menu-item" onclick="openThemeSelector()">
-                <span>?? Change Theme</span>
+                <span>🎨 Change Theme</span>
             </div>
             <div class="menu-item" onclick="changePassword()">
-                <span>?? Change Password</span>
+                <span>🔑 Change Password</span>
             </div>
 
             <div class="menu-item" onclick="manageFingerprintAuth()">
-                <span>?? Fingerprint Setup</span>
+                <span>👆 Fingerprint Setup</span>
             </div>
             <div class="menu-item" onclick="openLocationSettings()">
-                <span>?? Location Settings</span>
+                <span>📍 Location Settings</span>
             </div>
             <div class="menu-item" onclick="downloadUserGuide()">
-                <span>?? How to Use (Guide)</span>
+                <span>📖 How to Use (Guide)</span>
             </div>
-            <div class="menu-item" onclick="downloadAPK()"><span>?? Download APK for Android</span></div>
+            <div class="menu-item" onclick="downloadAPK()"><span>📱 Download APK for Android</span></div>
+            <div class="menu-item" onclick="openApiSettings()">
+                <span>🔗 API / Bin ID Settings</span>
+            </div>
             <div class="menu-item" onclick="logoutApp()" style="border-top: 2px solid #f44336;">
-                <span style="color:#f44336;">?? Logout</span>
+                <span style="color:#f44336;">🚪 Logout</span>
             </div>
         </div>
     </div>
@@ -1272,13 +1275,13 @@ body.dark-mode .corner {
     <div class="container">
         <div class="search-section">
             <input type="text" id="searchInput" placeholder="Search by PCode, SKU, Case G/Case, Pouch G/Case..." onkeyup="searchData()">
-            <button class="camera-btn" onclick="openScanner()">??</button>
-            <button class="clear-btn" onclick="clearSearch()" title="Clear Search">?</button>
-            <button class="filter-toggle-btn" onclick="toggleFilters()" title="Toggle Filters">??</button>
-            <!-- Location dot + Refresh  search row mein -->
+            <button class="camera-btn" onclick="openScanner()">📷</button>
+            <button class="clear-btn" onclick="clearSearch()" title="Clear Search">✖</button>
+            <button class="filter-toggle-btn" onclick="toggleFilters()" title="Toggle Filters">🔽</button>
+            <!-- Location dot + Refresh — search row mein -->
             <div style="display:flex;align-items:center;gap:5px;padding:0 4px;">
                 <div id="mainLocationDot" class="dot-blink" style="width:12px;height:12px;border-radius:50%;background:#ccc;box-shadow:0 0 6px rgba(0,0,0,0.3);flex-shrink:0;" title="Location Status"></div>
-                <button onclick="refreshLocationAndSync()" title="Location & Server Refresh" style="background:#667eea;border:none;cursor:pointer;font-size:16px;padding:8px 12px;border-radius:5px;color:white;line-height:1;">??</button>
+                <button onclick="refreshLocationAndSync()" title="Location & Server Refresh" style="background:#667eea;border:none;cursor:pointer;font-size:16px;padding:8px 12px;border-radius:5px;color:white;line-height:1;">🔄</button>
             </div>
         </div>
 
@@ -1359,7 +1362,7 @@ body.dark-mode .corner {
 
     <div id="successPopup" class="success-popup">
         <div class="popup-content">
-            <div class="success-icon">?</div>
+            <div class="success-icon">✓</div>
             <h3>Success!</h3>
             <p id="successMessage">Operation completed successfully</p>
         </div>
@@ -1380,12 +1383,12 @@ body.dark-mode .corner {
                 </div>
             </div>
             <div class="scanner-controls">
-                <button onclick="closeScanner()" class="scanner-btn close-scanner-btn">? Close Scanner</button>
+                <button onclick="closeScanner()" class="scanner-btn close-scanner-btn">❌ Close Scanner</button>
             </div>
             <div class="zoom-controls">
-                <button onclick="adjustZoom(-0.5)" class="zoom-btn">??-</button>
+                <button onclick="adjustZoom(-0.5)" class="zoom-btn">🔍−</button>
                 <span id="zoomLevel">1.0x</span>
-                <button onclick="adjustZoom(0.5)" class="zoom-btn">??+</button>
+                <button onclick="adjustZoom(0.5)" class="zoom-btn">🔍+</button>
             </div>
             <p style="text-align: center; margin-top: 15px; color: #666;">Position the code within the frame</p>
         </div>
@@ -1398,67 +1401,67 @@ body.dark-mode .corner {
             <div class="theme-grid">
                 <div class="theme-option" onclick="setTheme('default')">
                     <div class="theme-preview" style="background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);"></div>
-                    <p>? Default Purple</p>
+                    <p>✨ Default Purple</p>
                 </div>
                 <div class="theme-option" onclick="setTheme('blue')">
                     <div class="theme-preview" style="background: linear-gradient(135deg, #2196F3 0%, #21CBF3 100%);"></div>
-                    <p>?? Blue Ocean</p>
+                    <p>🌊 Blue Ocean</p>
                 </div>
                 <div class="theme-option" onclick="setTheme('green')">
                     <div class="theme-preview" style="background: linear-gradient(135deg, #4CAF50 0%, #8BC34A 100%);"></div>
-                    <p>?? Green Nature</p>
+                    <p>🌿 Green Nature</p>
                 </div>
                 <div class="theme-option" onclick="setTheme('red')">
                     <div class="theme-preview" style="background: linear-gradient(135deg, #f44336 0%, #e91e63 100%);"></div>
-                    <p>?? Red Fire</p>
+                    <p>🔥 Red Fire</p>
                 </div>
                 <div class="theme-option" onclick="setTheme('orange')">
                     <div class="theme-preview" style="background: linear-gradient(135deg, #FF9800 0%, #FF5722 100%);"></div>
-                    <p>?? Orange Sunset</p>
+                    <p>🌅 Orange Sunset</p>
                 </div>
                 <div class="theme-option" onclick="setTheme('pink')">
                     <div class="theme-preview" style="background: linear-gradient(135deg, #e91e63 0%, #f06292 100%);"></div>
-                    <p>?? Pink Love</p>
+                    <p>💖 Pink Love</p>
                 </div>
                 <div class="theme-option" onclick="setTheme('teal')">
                     <div class="theme-preview" style="background: linear-gradient(135deg, #009688 0%, #00BCD4 100%);"></div>
-                    <p>?? Teal Ocean</p>
+                    <p>🌴 Teal Ocean</p>
                 </div>
                 <div class="theme-option" onclick="setTheme('yellow')">
                     <div class="theme-preview" style="background: linear-gradient(135deg, #FFC107 0%, #FFEB3B 100%);"></div>
-                    <p>?? Yellow Sun</p>
+                    <p>☀️ Yellow Sun</p>
                 </div>
                 <div class="theme-option" onclick="setTheme('indigo')">
                     <div class="theme-preview" style="background: linear-gradient(135deg, #3F51B5 0%, #5C6BC0 100%);"></div>
-                    <p>?? Indigo Night</p>
+                    <p>🌌 Indigo Night</p>
                 </div>
                 <div class="theme-option" onclick="setTheme('cyan')">
                     <div class="theme-preview" style="background: linear-gradient(135deg, #00BCD4 0%, #80DEEA 100%);"></div>
-                    <p>?? Cyan Crystal</p>
+                    <p>💎 Cyan Crystal</p>
                 </div>
                 <div class="theme-option" onclick="setTheme('lime')">
                     <div class="theme-preview" style="background: linear-gradient(135deg, #CDDC39 0%, #C0CA33 100%);"></div>
-                    <p>?? Lime Fresh</p>
+                    <p>🍋 Lime Fresh</p>
                 </div>
                 <div class="theme-option" onclick="setTheme('brown')">
                     <div class="theme-preview" style="background: linear-gradient(135deg, #795548 0%, #8D6E63 100%);"></div>
-                    <p>?? Brown Coffee</p>
+                    <p>🍫 Brown Coffee</p>
                 </div>
                 <div class="theme-option" onclick="setTheme('deeporange')">
                     <div class="theme-preview" style="background: linear-gradient(135deg, #FF5722 0%, #FF7043 100%);"></div>
-                    <p>?? Deep Orange</p>
+                    <p>🔶 Deep Orange</p>
                 </div>
                 <div class="theme-option" onclick="setTheme('deeppurple')">
                     <div class="theme-preview" style="background: linear-gradient(135deg, #673AB7 0%, #9575CD 100%);"></div>
-                    <p>?? Deep Purple</p>
+                    <p>🔮 Deep Purple</p>
                 </div>
                 <div class="theme-option" onclick="setTheme('bluegrey')">
                     <div class="theme-preview" style="background: linear-gradient(135deg, #607D8B 0%, #78909C 100%);"></div>
-                    <p>?? Blue Grey</p>
+                    <p>⚙️ Blue Grey</p>
                 </div>
                 <div class="theme-option" onclick="setCustomTheme()">
-                    <div class="theme-preview" style="background: linear-gradient(135deg, #333 0%, #666 100%); display: flex; align-items: center; justify-content: center; color: white; font-size: 28px;">??</div>
-                    <p>?? Custom Color</p>
+                    <div class="theme-preview" style="background: linear-gradient(135deg, #333 0%, #666 100%); display: flex; align-items: center; justify-content: center; color: white; font-size: 28px;">🎨</div>
+                    <p>🎨 Custom Color</p>
                 </div>
             </div>
         </div>
@@ -1509,7 +1512,7 @@ function uploadFile() {
         alert('Please select a file');
         return;
     }
-    const uploaderName = prompt('Enter your name (upload Person ):');
+    const uploaderName = prompt('Apna naam likho (kaun upload kar raha hai):');
     if (!uploaderName || !uploaderName.trim()) {
         alert('Naam zaroori hai!');
         return;
@@ -1763,8 +1766,8 @@ function createProductCard(item, isCompact = false, searchTerm = '') {
     const cardId = 'card_' + item.pcode;
     const compactClass = isCompact ? ' compact' : '';
     const isView = window._userRole === 'view';
-    const adminBtns = isView ? '' : `<button class="edit-card-btn" onclick="editRecord('${item.pcode}')">?? Edit</button>
-                <button class="delete-card-btn" onclick="deleteCard('${item.pcode}')">??? Delete</button>`;
+    const adminBtns = isView ? '' : `<button class="edit-card-btn" onclick="editRecord('${item.pcode}')">✏️ Edit</button>
+                <button class="delete-card-btn" onclick="deleteCard('${item.pcode}')">🗑️ Delete</button>`;
     
     // Helper function to highlight matching text
     const highlightText = (text, search) => {
@@ -1853,8 +1856,8 @@ function createProductCard(item, isCompact = false, searchTerm = '') {
                     </div>
                 </div>
                 ${adminBtns}
-                <button class="share-card-btn" onclick="shareProduct('${item.pcode}')">?? Share Product</button>
-                ${(item.addedOn || item.addedBy) ? `<div style="display:flex;justify-content:space-between;margin-top:10px;padding-top:6px;border-top:1px solid #eee;"><span style="font-size:11px;color:#888;">?? ${item.addedBy || ''}</span><span style="font-size:11px;color:#aaa;">?? ${item.addedOn || ''}</span></div>` : ''}
+                <button class="share-card-btn" onclick="shareProduct('${item.pcode}')">📤 Share Product</button>
+                ${(item.addedOn || item.addedBy) ? `<div style="display:flex;justify-content:space-between;margin-top:10px;padding-top:6px;border-top:1px solid #eee;"><span style="font-size:11px;color:#888;">👤 ${item.addedBy || ''}</span><span style="font-size:11px;color:#aaa;">📅 ${item.addedOn || ''}</span></div>` : ''}
             </div>
             <div class="section-content secondary-section" data-section="secondary">
                 <span class="secondary-label">SECONDARY</span>
@@ -1909,8 +1912,8 @@ function createProductCard(item, isCompact = false, searchTerm = '') {
                 </div>
                 
                 ${adminBtns}
-                <button class="share-card-btn" onclick="shareProduct('${item.pcode}')">?? Share Product</button>
-                ${(item.addedOn || item.addedBy) ? `<div style="display:flex;justify-content:space-between;margin-top:10px;padding-top:6px;border-top:1px solid #eee;"><span style="font-size:11px;color:#888;">?? ${item.addedBy || ''}</span><span style="font-size:11px;color:#aaa;">?? ${item.addedOn || ''}</span></div>` : ''}
+                <button class="share-card-btn" onclick="shareProduct('${item.pcode}')">📤 Share Product</button>
+                ${(item.addedOn || item.addedBy) ? `<div style="display:flex;justify-content:space-between;margin-top:10px;padding-top:6px;border-top:1px solid #eee;"><span style="font-size:11px;color:#888;">👤 ${item.addedBy || ''}</span><span style="font-size:11px;color:#aaa;">📅 ${item.addedOn || ''}</span></div>` : ''}
             </div>
         </div>
     `;
@@ -1970,16 +1973,16 @@ function shareProduct(pcode) {
     }
     
     // Create share text
-    const text = `?? Product Details
-???????????????
-?? PCode: ${item.pcode}
-?? SKU: ${item.sku}
-?? MRP: Rs.${item.mrpNew} (Old: Rs.${item.mrpOld})
-?? Per Unit: Rs.${item.perUnitMrp}
-?? Bulk G/Case: ${item.bulkGCase}
-?? Pouch G/Case: ${item.pouchGCase}
-?? Case G/Case: ${item.caseGCase}
-???????????????
+    const text = `📦 Product Details
+━━━━━━━━━━━━━━━
+🔖 PCode: ${item.pcode}
+📝 SKU: ${item.sku}
+💰 MRP: Rs.${item.mrpNew} (Old: Rs.${item.mrpOld})
+📊 Per Unit: Rs.${item.perUnitMrp}
+📦 Bulk G/Case: ${item.bulkGCase}
+📦 Pouch G/Case: ${item.pouchGCase}
+📦 Case G/Case: ${item.caseGCase}
+━━━━━━━━━━━━━━━
 Generated by P Code Verify`;
     
     // Show share options
@@ -2172,7 +2175,7 @@ function checkPassword() {
             if (allowed) {
                 unlockApp('view');
             } else {
-                showErrorPopup('? Wrong Location!');
+                showErrorPopup('❌ Wrong Location!');
                 const passwordBox = document.querySelector('.password-box');
                 passwordBox.style.border = '3px solid #f44336';
                 passwordBox.style.boxShadow = '0 0 30px rgba(244, 67, 54, 0.8)';
@@ -2275,7 +2278,7 @@ function applyRoleAccess(role) {
 async function useFingerprintAuth() {
     // Check if WebAuthn is supported
     if (!window.PublicKeyCredential) {
-        showErrorPopup('? Fingerprint Not Supported!');
+        showErrorPopup('❌ Fingerprint Not Supported!');
         return;
     }
     
@@ -2292,7 +2295,7 @@ async function useFingerprintAuth() {
     
     // Authenticate with fingerprint
     try {
-        document.getElementById('passwordError').textContent = '?? Place your finger on the sensor...';
+        document.getElementById('passwordError').textContent = '👆 Place your finger on the sensor...';
         document.getElementById('passwordError').style.color = '#4CAF50';
         
         const credentialId = localStorage.getItem('fingerprint_credential');
@@ -2321,7 +2324,7 @@ async function useFingerprintAuth() {
         
         if (assertion) {
             // Fingerprint verified successfully
-            document.getElementById('passwordError').textContent = '? Fingerprint verified!';
+            document.getElementById('passwordError').textContent = '✅ Fingerprint verified!';
             document.getElementById('passwordError').style.color = '#4CAF50';
             vibrateDevice([100, 50, 100]);
             
@@ -2342,7 +2345,7 @@ async function useFingerprintAuth() {
         passwordBox.style.animation = 'shake 0.5s';
         
         // Update error message
-        document.getElementById('passwordError').textContent = '? Fingerprint not recognized! Try again or use password.';
+        document.getElementById('passwordError').textContent = '❌ Fingerprint not recognized! Try again or use password.';
         document.getElementById('passwordError').style.color = '#f44336';
         
         // Vibrate error pattern
@@ -2362,7 +2365,7 @@ async function setupFingerprint() {
     try {
         // Check if WebAuthn is supported
         if (!window.PublicKeyCredential) {
-            alert('? Fingerprint Not Supported!\n\nYour browser/device does not support fingerprint authentication.\n\nRequirements:\n- HTTPS website (not HTTP)\n- Modern browser (Chrome, Edge, Safari)\n- Device with fingerprint sensor');
+            alert('❌ Fingerprint Not Supported!\n\nYour browser/device does not support fingerprint authentication.\n\nRequirements:\n- HTTPS website (not HTTP)\n- Modern browser (Chrome, Edge, Safari)\n- Device with fingerprint sensor');
             return;
         }
         
@@ -2375,7 +2378,7 @@ async function setupFingerprint() {
             return;
         }
         
-        alert('? Password verified!\n\n?? Now place your finger on the sensor to register your fingerprint.\n\nNote: You may need to scan your finger multiple times.');
+        alert('✅ Password verified!\n\n👆 Now place your finger on the sensor to register your fingerprint.\n\nNote: You may need to scan your finger multiple times.');
         
         // Create registration challenge
         const challenge = new Uint8Array(32);
@@ -2422,7 +2425,7 @@ async function setupFingerprint() {
             
             console.log('Fingerprint registered successfully!');
             vibrateDevice([100, 50, 100, 50, 100]);
-            showSuccessPopup('? Fingerprint registered successfully! ??');
+            showSuccessPopup('✅ Fingerprint registered successfully! 👆');
         }
     } catch (error) {
         console.error('Fingerprint setup error:', error);
@@ -2436,7 +2439,7 @@ async function setupFingerprint() {
         } else if (error.name === 'SecurityError') {
             errorMessage += 'Reason: Security error.\n\nThis page must be served over HTTPS (not HTTP) for fingerprint to work.\n\nTry:\n- Upload to GitHub Pages (HTTPS)\n- Use localhost for testing';
         } else if (error.name === 'InvalidStateError') {
-            errorMessage += 'Reason: Fingerprint already registered.\n\nGo to Menu ? Fingerprint Setup to re-register.';
+            errorMessage += 'Reason: Fingerprint already registered.\n\nGo to Menu → Fingerprint Setup to re-register.';
         } else {
             errorMessage += 'Reason: ' + error.message + '\n\nError Type: ' + error.name;
         }
@@ -2448,7 +2451,7 @@ async function setupFingerprint() {
 // Manage Fingerprint from Menu
 function manageFingerprintAuth() {
     if (!window.PublicKeyCredential) {
-        alert('? Fingerprint authentication not supported!\n\nYour device/browser does not support fingerprint authentication.\n\nSupported on:\n- Android Chrome/Edge\n- iOS Safari (iPhone with Touch ID/Face ID)\n- Windows Hello\n\nPlease use password instead.');
+        alert('❌ Fingerprint authentication not supported!\n\nYour device/browser does not support fingerprint authentication.\n\nSupported on:\n- Android Chrome/Edge\n- iOS Safari (iPhone with Touch ID/Face ID)\n- Windows Hello\n\nPlease use password instead.');
         toggleMenu();
         return;
     }
@@ -2457,7 +2460,7 @@ function manageFingerprintAuth() {
     
     if (fingerprintEnabled) {
         // Already set up - show options
-        const choice = confirm('Fingerprint Authentication Status: ? ENABLED\n\nWhat do you want to do?\n\nOK = Re-register fingerprint\nCancel = Disable fingerprint');
+        const choice = confirm('Fingerprint Authentication Status: ✅ ENABLED\n\nWhat do you want to do?\n\nOK = Re-register fingerprint\nCancel = Disable fingerprint');
         
         if (choice) {
             // Re-register
@@ -2474,7 +2477,7 @@ function manageFingerprintAuth() {
         }
     } else {
         // Not set up yet
-        const setup = confirm('Fingerprint Authentication Status: ? NOT SET UP\n\nDo you want to set up fingerprint authentication?\n\nOK = Set up now\nCancel = Cancel');
+        const setup = confirm('Fingerprint Authentication Status: ❌ NOT SET UP\n\nDo you want to set up fingerprint authentication?\n\nOK = Set up now\nCancel = Cancel');
         if (setup) {
             setupFingerprint();
         }
@@ -2486,7 +2489,7 @@ function manageFingerprintAuth() {
 // Show empty state message
 function showEmptyState() {
     const container = document.getElementById('resultsContainer');
-    container.innerHTML = '<p class="no-data">?? Use search or scan to find products</p>';
+    container.innerHTML = '<p class="no-data">🔍 Use search or scan to find products</p>';
 }
 
 // Show result count
@@ -2495,11 +2498,11 @@ function showResultCount(count, searchTerm) {
     const countText = document.getElementById('countText');
     
     if (count === 0) {
-        countText.innerHTML = `? No results found for "<span style="color: #f44336;">${searchTerm}</span>"`;
+        countText.innerHTML = `❌ No results found for "<span style="color: #f44336;">${searchTerm}</span>"`;
     } else if (count === 1) {
-        countText.innerHTML = `? Found <span style="color: #4CAF50;">${count}</span> result for "${searchTerm}"`;
+        countText.innerHTML = `✅ Found <span style="color: #4CAF50;">${count}</span> result for "${searchTerm}"`;
     } else {
-        countText.innerHTML = `? Found <span style="color: #4CAF50;">${count}</span> results for "${searchTerm}"`;
+        countText.innerHTML = `✅ Found <span style="color: #4CAF50;">${count}</span> results for "${searchTerm}"`;
     }
     
     countDiv.style.display = 'block';
@@ -2520,12 +2523,12 @@ function toggleDarkMode() {
     body.classList.toggle('dark-mode');
     
     if (body.classList.contains('dark-mode')) {
-        icon.textContent = '??';
-        menuText.innerHTML = '?? Light Mode';
+        icon.textContent = '☀️';
+        menuText.innerHTML = '☀️ Light Mode';
         localStorage.setItem('darkMode', 'enabled');
     } else {
-        icon.textContent = '??';
-        menuText.innerHTML = '?? Dark Mode';
+        icon.textContent = '🌙';
+        menuText.innerHTML = '🌙 Dark Mode';
         localStorage.setItem('darkMode', 'disabled');
     }
 }
@@ -2538,8 +2541,8 @@ function loadDarkMode() {
     
     if (darkMode === 'enabled') {
         body.classList.add('dark-mode');
-        icon.textContent = '??';
-        menuText.innerHTML = '?? Light Mode';
+        icon.textContent = '☀️';
+        menuText.innerHTML = '☀️ Light Mode';
     }
 }
 
@@ -2598,9 +2601,9 @@ function changePassword() {
     
     vibrateDevice([100, 50, 100]);
     if (choice) {
-        showSuccessPopup('4-Digit PIN set successfully! ??');
+        showSuccessPopup('4-Digit PIN set successfully! 🔢');
     } else {
-        showSuccessPopup('Password changed successfully! ??');
+        showSuccessPopup('Password changed successfully! 🔐');
     }
     toggleMenu();
 }
@@ -2762,7 +2765,7 @@ function setCustomTheme() {
     
     customModal.innerHTML = `
         <div style="background: white; padding: 30px; border-radius: 15px; max-width: 400px; width: 90%; box-shadow: 0 10px 40px rgba(0,0,0,0.3);">
-            <h3 style="margin-bottom: 20px; color: #667eea; text-align: center;">?? Custom Color Theme</h3>
+            <h3 style="margin-bottom: 20px; color: #667eea; text-align: center;">🎨 Custom Color Theme</h3>
             
             <div style="margin-bottom: 20px;">
                 <label style="display: block; margin-bottom: 8px; font-weight: 600; color: #333;">Primary Color:</label>
@@ -2997,11 +3000,11 @@ function toggleFilters() {
     const btn = document.querySelector('.filter-toggle-btn');
     if (panel.style.display === 'none') {
         panel.style.display = 'block';
-        btn.textContent = '??';
+        btn.textContent = '🔼';
         vibrateDevice([50]);
     } else {
         panel.style.display = 'none';
-        btn.textContent = '??';
+        btn.textContent = '🔽';
         vibrateDevice([50]);
     }
 }
@@ -3524,7 +3527,7 @@ function downloadUserGuide() {
         // Save PDF
         doc.save('P_Code_Verify_User_Guide.pdf');
         vibrateDevice([100]);
-        showSuccessPopup('User Guide downloaded! ??');
+        showSuccessPopup('User Guide downloaded! 📖');
         toggleMenu();
     } catch (error) {
         console.error('Error generating guide:', error);
@@ -3534,7 +3537,7 @@ function downloadUserGuide() {
 
 // Download APK function placeholder
 function downloadAPK() {
-    alert('?? APK Download\n\nTo create APK:\n\n1. Use Cordova (see APK-KAISE-BANAYE.txt)\n2. Or use online tools like:\n   - PWA Builder (pwabuilder.com)\n   - APK Generator\n\n3. Upload to GitHub Pages first\n4. Then convert to APK');
+    alert('📱 APK Download\n\nTo create APK:\n\n1. Use Cordova (see APK-KAISE-BANAYE.txt)\n2. Or use online tools like:\n   - PWA Builder (pwabuilder.com)\n   - APK Generator\n\n3. Upload to GitHub Pages first\n4. Then convert to APK');
     toggleMenu();
 }
 
@@ -3559,27 +3562,27 @@ function logoutApp() {
     showPasswordScreen();
 }
 
-// API Settings  key HTML mein nahi, localStorage mein save hoti hai
+// API Settings — key HTML mein nahi, localStorage mein save hoti hai
 function openApiSettings() {
     toggleMenu();
     const currentKey = getApiKey();
     const currentBin = getBinId();
     const publicBin  = localStorage.getItem('jb_public_bin_id') || currentBin;
     const status = isJsonBinConfigured()
-        ? '? Online Sync: ACTIVE (Admin)'
-        : (publicBin ? '??? Read-Only Sync: ACTIVE' : '? Online Sync: NOT SET UP');
+        ? '✅ Online Sync: ACTIVE (Admin)'
+        : (publicBin ? '👁️ Read-Only Sync: ACTIVE' : '❌ Online Sync: NOT SET UP');
 
     const modal = document.createElement('div');
     modal.id = 'apiSettingsModal';
     modal.style.cssText = 'position:fixed;top:0;left:0;width:100%;height:100%;background:rgba(0,0,0,0.6);display:flex;justify-content:center;align-items:center;z-index:9999;';
     modal.innerHTML = `
         <div style="background:white;padding:25px;border-radius:15px;width:90%;max-width:450px;box-shadow:0 10px 40px rgba(0,0,0,0.3);max-height:90vh;overflow-y:auto;">
-            <h3 style="color:#667eea;margin-bottom:5px;">?? Online Sync Setup</h3>
+            <h3 style="color:#667eea;margin-bottom:5px;">🔗 Online Sync Setup</h3>
             <p style="color:#666;font-size:13px;margin-bottom:5px;">${status}</p>
 
             <div style="background:#e8f5e9;border-radius:8px;padding:12px;margin-bottom:15px;font-size:12px;color:#2e7d32;">
-                <b>?? Admin Device (tumhara):</b> API Key + Bin ID dono daalo<br>
-                <b>?? User Device (doosra):</b> Sirf Bin ID daalo  data read ho jayega
+                <b>👑 Admin Device (tumhara):</b> API Key + Bin ID dono daalo<br>
+                <b>👤 User Device (doosra):</b> Sirf Bin ID daalo — data read ho jayega
             </div>
 
             <label style="font-weight:600;font-size:14px;display:block;margin-bottom:5px;">Bin ID <span style="color:#4CAF50;">(sab devices pe same)</span>:</label>
@@ -3591,9 +3594,9 @@ function openApiSettings() {
                 style="width:100%;padding:10px;border:2px solid #ddd;border-radius:5px;font-size:13px;margin-bottom:20px;box-sizing:border-box;">
 
             <div style="display:flex;gap:10px;">
-                <button onclick="saveApiSettings()" style="flex:1;padding:12px;background:#667eea;color:white;border:none;border-radius:8px;font-size:15px;cursor:pointer;font-weight:600;">?? Save</button>
-                <button onclick="clearApiSettings()" style="flex:1;padding:12px;background:#f44336;color:white;border:none;border-radius:8px;font-size:15px;cursor:pointer;font-weight:600;">??? Clear</button>
-                <button onclick="document.getElementById('apiSettingsModal').remove()" style="flex:1;padding:12px;background:#999;color:white;border:none;border-radius:8px;font-size:15px;cursor:pointer;font-weight:600;">?</button>
+                <button onclick="saveApiSettings()" style="flex:1;padding:12px;background:#667eea;color:white;border:none;border-radius:8px;font-size:15px;cursor:pointer;font-weight:600;">💾 Save</button>
+                <button onclick="clearApiSettings()" style="flex:1;padding:12px;background:#f44336;color:white;border:none;border-radius:8px;font-size:15px;cursor:pointer;font-weight:600;">🗑️ Clear</button>
+                <button onclick="document.getElementById('apiSettingsModal').remove()" style="flex:1;padding:12px;background:#999;color:white;border:none;border-radius:8px;font-size:15px;cursor:pointer;font-weight:600;">✖</button>
             </div>
         </div>`;
     document.body.appendChild(modal);
@@ -3611,7 +3614,7 @@ function saveApiSettings() {
         localStorage.setItem('jb_bin_id', bin);
     }
     document.getElementById('apiSettingsModal').remove();
-    showSuccessPopup(key ? '? Admin sync active!' : '??? Read-only sync active!');
+    showSuccessPopup(key ? '✅ Admin sync active!' : '👁️ Read-only sync active!');
     syncFromServer();
 }
 
@@ -3629,7 +3632,7 @@ function clearApiSettings() {
 
 function openLocationSettings() {
     const adminPassword = localStorage.getItem('admin_password') || '1234';
-    const pwd = prompt('Enter admin password:\n????? ??????? ????');
+    const pwd = prompt('Enter admin password:\nएडमिन पासवर्ड डालो');
     if (pwd !== adminPassword) { alert('Wrong password!'); return; }
     toggleMenu();
 
@@ -3642,39 +3645,39 @@ function openLocationSettings() {
     modal.style.cssText = 'position:fixed;top:0;left:0;width:100%;height:100%;background:rgba(0,0,0,0.6);display:flex;justify-content:center;align-items:flex-start;padding:20px;box-sizing:border-box;overflow-y:auto;z-index:9999;';
     modal.innerHTML = `
         <div style="background:white;padding:clamp(15px,4vw,25px);border-radius:15px;width:100%;max-width:480px;box-shadow:0 10px 40px rgba(0,0,0,0.3);margin:auto;box-sizing:border-box;">
-            <h3 style="color:#667eea;margin-bottom:4px;font-size:clamp(16px,4vw,20px);">?? Location Settings</h3>
+            <h3 style="color:#667eea;margin-bottom:4px;font-size:clamp(16px,4vw,20px);">📍 Location Settings</h3>
             <p style="font-size:clamp(10px,2.5vw,12px);color:#888;margin-bottom:12px;">
-                ?? <span style="font-size:clamp(10px,2.5vw,12px);color:#aaa;">Admin ke liye lock nahi hoga</span>
+                ⚠️ <span style="font-size:clamp(10px,2.5vw,12px);color:#aaa;">Admin ke liye lock nahi hoga</span>
                 &nbsp;Location lock applies to view users only
             </p>
 
-            <label style="font-weight:600;font-size:clamp(13px,3vw,15px);display:block;margin-bottom:4px;">?? Location 1 <span style="font-size:10px;color:#aaa;font-weight:400;">???? ??????</span></label>
+            <label style="font-weight:600;font-size:clamp(13px,3vw,15px);display:block;margin-bottom:4px;">📍 Location 1 <span style="font-size:10px;color:#aaa;font-weight:400;">पहली लोकेशन</span></label>
             <div style="display:grid;grid-template-columns:1fr 1fr auto;gap:6px;margin-bottom:12px;">
                 <input id="loc1lat" type="number" step="any" placeholder="Latitude" value="${loc1 ? loc1.lat : ''}" style="padding:clamp(7px,2vw,10px);border:2px solid #ddd;border-radius:6px;font-size:clamp(12px,3vw,14px);width:100%;box-sizing:border-box;">
                 <input id="loc1lng" type="number" step="any" placeholder="Longitude" value="${loc1 ? loc1.lng : ''}" style="padding:clamp(7px,2vw,10px);border:2px solid #ddd;border-radius:6px;font-size:clamp(12px,3vw,14px);width:100%;box-sizing:border-box;">
-                <button onclick="autoFillLocation(1)" style="padding:clamp(7px,2vw,10px) clamp(8px,2vw,12px);background:#4CAF50;color:white;border:none;border-radius:6px;cursor:pointer;font-size:clamp(11px,2.5vw,13px);white-space:nowrap;">?? Auto</button>
+                <button onclick="autoFillLocation(1)" style="padding:clamp(7px,2vw,10px) clamp(8px,2vw,12px);background:#4CAF50;color:white;border:none;border-radius:6px;cursor:pointer;font-size:clamp(11px,2.5vw,13px);white-space:nowrap;">📡 Auto</button>
             </div>
 
-            <label style="font-weight:600;font-size:clamp(13px,3vw,15px);display:block;margin-bottom:4px;">?? Location 2 <span style="font-size:10px;color:#aaa;font-weight:400;">????? ??????</span></label>
+            <label style="font-weight:600;font-size:clamp(13px,3vw,15px);display:block;margin-bottom:4px;">📍 Location 2 <span style="font-size:10px;color:#aaa;font-weight:400;">दूसरी लोकेशन</span></label>
             <div style="display:grid;grid-template-columns:1fr 1fr auto;gap:6px;margin-bottom:12px;">
                 <input id="loc2lat" type="number" step="any" placeholder="Latitude" value="${loc2 ? loc2.lat : ''}" style="padding:clamp(7px,2vw,10px);border:2px solid #ddd;border-radius:6px;font-size:clamp(12px,3vw,14px);width:100%;box-sizing:border-box;">
                 <input id="loc2lng" type="number" step="any" placeholder="Longitude" value="${loc2 ? loc2.lng : ''}" style="padding:clamp(7px,2vw,10px);border:2px solid #ddd;border-radius:6px;font-size:clamp(12px,3vw,14px);width:100%;box-sizing:border-box;">
-                <button onclick="autoFillLocation(2)" style="padding:clamp(7px,2vw,10px) clamp(8px,2vw,12px);background:#4CAF50;color:white;border:none;border-radius:6px;cursor:pointer;font-size:clamp(11px,2.5vw,13px);white-space:nowrap;">?? Auto</button>
+                <button onclick="autoFillLocation(2)" style="padding:clamp(7px,2vw,10px) clamp(8px,2vw,12px);background:#4CAF50;color:white;border:none;border-radius:6px;cursor:pointer;font-size:clamp(11px,2.5vw,13px);white-space:nowrap;">📡 Auto</button>
             </div>
 
-            <label style="font-weight:600;font-size:clamp(13px,3vw,15px);display:block;margin-bottom:4px;">?? Radius (meters) <span style="font-size:10px;color:#aaa;font-weight:400;">????? ???? ???</span></label>
+            <label style="font-weight:600;font-size:clamp(13px,3vw,15px);display:block;margin-bottom:4px;">📏 Radius (meters) <span style="font-size:10px;color:#aaa;font-weight:400;">दायरा मीटर में</span></label>
             <input id="locRadius" type="number" value="${radius}" placeholder="100" style="width:100%;padding:clamp(7px,2vw,10px);border:2px solid #ddd;border-radius:6px;font-size:clamp(12px,3vw,14px);margin-bottom:14px;box-sizing:border-box;">
 
             <label style="display:flex;align-items:center;gap:10px;margin-bottom:16px;cursor:pointer;">
                 <input type="checkbox" id="locEnabled" ${localStorage.getItem('loc_enabled') === 'true' ? 'checked' : ''} style="width:20px;height:20px;cursor:pointer;">
                 <span style="font-size:clamp(13px,3vw,15px);font-weight:600;">Enable Location Lock
-                    <span style="display:block;font-size:10px;color:#aaa;font-weight:400;">?????? ??? ???? ???</span>
+                    <span style="display:block;font-size:10px;color:#aaa;font-weight:400;">लोकेशन लॉक चालू करो</span>
                 </span>
             </label>
 
             <div style="display:grid;grid-template-columns:1fr 1fr;gap:10px;">
-                <button onclick="saveLocationSettings()" style="padding:clamp(10px,3vw,14px);background:#667eea;color:white;border:none;border-radius:8px;font-size:clamp(13px,3vw,15px);cursor:pointer;font-weight:600;">?? Save</button>
-                <button onclick="document.getElementById('locationModal').remove()" style="padding:clamp(10px,3vw,14px);background:#999;color:white;border:none;border-radius:8px;font-size:clamp(13px,3vw,15px);cursor:pointer;font-weight:600;">? Close</button>
+                <button onclick="saveLocationSettings()" style="padding:clamp(10px,3vw,14px);background:#667eea;color:white;border:none;border-radius:8px;font-size:clamp(13px,3vw,15px);cursor:pointer;font-weight:600;">💾 Save</button>
+                <button onclick="document.getElementById('locationModal').remove()" style="padding:clamp(10px,3vw,14px);background:#999;color:white;border:none;border-radius:8px;font-size:clamp(13px,3vw,15px);cursor:pointer;font-weight:600;">✖ Close</button>
             </div>
         </div>`;
     document.body.appendChild(modal);
@@ -3687,15 +3690,15 @@ function autoFillLocation(num) {
     // Pehle clear karo aur loading dikhao
     latEl.value = '';
     lngEl.value = '';
-    latEl.placeholder = '? GPS...';
-    lngEl.placeholder = '? GPS...';
+    latEl.placeholder = '⏳ GPS...';
+    lngEl.placeholder = '⏳ GPS...';
     navigator.geolocation.getCurrentPosition(
         pos => {
             latEl.value = pos.coords.latitude.toFixed(6);
             lngEl.value = pos.coords.longitude.toFixed(6);
             latEl.placeholder = 'Latitude';
             lngEl.placeholder = 'Longitude';
-            showSuccessPopup('?? Location ' + num + ' add ho gayi!');
+            showSuccessPopup('📍 Location ' + num + ' add ho gayi!');
         },
         err => {
             latEl.placeholder = 'Latitude';
@@ -3722,7 +3725,7 @@ function saveLocationSettings() {
     localStorage.setItem('loc_radius', radius);
     localStorage.setItem('loc_enabled', enabled ? 'true' : 'false');
     document.getElementById('locationModal').remove();
-    showSuccessPopup('?? Location settings save ho gayi!');
+    showSuccessPopup('📍 Location settings save ho gayi!');
     syncToServer(); // server pe bhi save karo
 }
 
@@ -3736,7 +3739,7 @@ function getDistance(lat1, lng1, lat2, lng2) {
     return R * 2 * Math.atan2(Math.sqrt(a), Math.sqrt(1-a));
 }
 
-// ---- Global Location Tracker (watchPosition  sirf ek baar permission) ----
+// ---- Global Location Tracker (watchPosition — sirf ek baar permission) ----
 let _currentLat = null;
 let _currentLng = null;
 let _locationWatchId = null;
@@ -3793,7 +3796,7 @@ function updateLocationDots() {
     }
 
     if (_currentLat === null) {
-        // GPS nahi mila  grey
+        // GPS nahi mila — grey
         dots.forEach(d => { if(d) { d.style.background = '#ccc'; d.style.boxShadow = ''; d.classList.remove('dot-blink'); } });
         return;
     }
@@ -3807,7 +3810,7 @@ function updateLocationDots() {
     });
 }
 
-// Purana naam raha  backward compatible
+// Purana naam raha — backward compatible
 function checkLocationDot() {
     const enabled = localStorage.getItem('loc_enabled') === 'true';
     if (!enabled) { updateLocationDots(); return; }
@@ -3854,7 +3857,7 @@ function isLocationAllowed(callback) {
         return;
     }
 
-    // Pehli baar  ek baar getCurrentPosition, phir watch shuru
+    // Pehli baar — ek baar getCurrentPosition, phir watch shuru
     navigator.geolocation.getCurrentPosition(pos => {
         _currentLat = pos.coords.latitude;
         _currentLng = pos.coords.longitude;
@@ -3863,12 +3866,12 @@ function isLocationAllowed(callback) {
         callback(isInRange());
     }, () => {
         startLocationWatch();
-        callback(true); // GPS nahi mila  allow karo
+        callback(true); // GPS nahi mila — allow karo
     }, { enableHighAccuracy: true, timeout: 8000 });
 }
 
 // ============================================================
-// JSONBIN BACKEND SYNC  Online Data Storage
+// JSONBIN BACKEND SYNC — Online Data Storage
 // ============================================================
 // SETUP KARNE KE LIYE:
 //   1. jsonbin.io par free account banao
@@ -3878,8 +3881,8 @@ function isLocationAllowed(callback) {
 //   5. Neeche JSONBIN_API_KEY aur JSONBIN_BIN_ID fill karo
 // ============================================================
 
-// API keys HTML mein nahi hain  localStorage mein store hoti hain
-// Admin settings se enter karo  GitHub pe leak nahi hogi
+// API keys HTML mein nahi hain — localStorage mein store hoti hain
+// Admin settings se enter karo — GitHub pe leak nahi hogi
 function getApiKey() {
     // Pehle config.js check karo (local file, GitHub pe nahi jayegi)
     if (typeof JSONBIN_CONFIG !== 'undefined' && JSONBIN_CONFIG.apiKey)
@@ -3915,7 +3918,7 @@ function showSyncToast(msg, color) {
     t._timer = setTimeout(() => { t.style.opacity = '0'; setTimeout(() => { t.style.display = 'none'; }, 300); }, 3500);
 }
 
-// Server se data fetch karo  public bin se, key optional
+// Server se data fetch karo — public bin se, key optional
 async function syncFromServer() {
     const binId = getBinId();
     if (!binId) return;
@@ -3936,7 +3939,7 @@ async function syncFromServer() {
         const localData = JSON.parse(localStorage.getItem('mc_data_v1') || '{}');
         const merged = Object.assign({}, localData, serverData);
         localStorage.setItem('mc_data_v1', JSON.stringify(merged));
-        // Location settings sync  sirf agar server pe hain to overwrite karo
+        // Location settings sync — sirf agar server pe hain to overwrite karo
         if (rec.locationSettings) {
             const ls = rec.locationSettings;
             if (ls.loc_1) localStorage.setItem('loc_1', JSON.stringify(ls.loc_1));
@@ -3947,10 +3950,10 @@ async function syncFromServer() {
             if (ls.loc_enabled !== undefined) localStorage.setItem('loc_enabled', ls.loc_enabled);
         }
         const count = Object.keys(merged).length;
-        showSyncToast('? ' + count + ' records synced', '#4CAF50');
+        showSyncToast('✅ ' + count + ' records synced', '#4CAF50');
         return merged;
     } catch (err) {
-        showSyncToast('? ' + err.message, '#f44336');
+        showSyncToast('❌ ' + err.message, '#f44336');
     }
 }
 
@@ -3979,9 +3982,9 @@ async function syncToServer() {
             if (res.status === 404) throw new Error('404 - Bin ID nahi mila!');
             throw new Error('HTTP ' + res.status);
         }
-        showSyncToast('?? Server pe save ho gaya', '#2196F3');
+        showSyncToast('☁️ Server pe save ho gaya', '#2196F3');
     } catch (err) {
-        showSyncToast('? ' + err.message, '#f44336');
+        showSyncToast('❌ ' + err.message, '#f44336');
     }
 }
 
