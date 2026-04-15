@@ -1,16 +1,17 @@
+
 <!DOCTYPE html>
 <html lang="en">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta name="theme-color" content="#667eea">
-    <meta name="description" content="P Code Verify - Product data management with QR/Barcode scanner">
+    <meta name="description" content="Digital Control Copy - Product data management with QR/Barcode scanner">
     <meta name="mobile-web-app-capable" content="yes">
     <meta name="apple-mobile-web-app-capable" content="yes">
     <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
     <meta name="apple-mobile-web-app-title" content="MC Data">
     <link rel="manifest" href="manifest.json">
-    <title>P Code Verify</title>
+    <title>Digital Control Copy</title>
     <script src="https://cdn.jsdelivr.net/npm/html5-qrcode@2.3.8/html5-qrcode.min.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script>
     <script>
@@ -122,13 +123,11 @@ header {
 }
 
 .dark-mode-toggle {
-    position: absolute;
-    right: 20px;
-    top: 50%;
-    transform: translateY(-50%);
+    position: static;
     cursor: pointer;
     font-size: 24px;
     transition: transform 0.3s;
+    flex-shrink: 0;
 }
 
 .dark-mode-toggle:hover {
@@ -588,25 +587,133 @@ body.dark-mode .filter-row select {
 }
 
 .data-label {
-    font-weight: 600;
-    color: #555;
+    font-weight: 700;
+    color: #667eea;
     background: transparent !important;
+    font-size: 13px;
 }
 
 .data-value {
-    color: #333;
-    font-weight: 500;
+    color: #222;
+    font-weight: 600;
     background: transparent !important;
+    font-size: 14px;
 }
 
 body.dark-mode .data-label {
-    color: #ffffff !important;
+    color: #7eb3ff !important;
     background: transparent !important;
 }
 
 body.dark-mode .data-value {
-    color: #ffffff !important;
+    color: #e8e8e8 !important;
     background: transparent !important;
+}
+
+/* Label = muted, Value = bright */
+.data-label {
+    font-weight: 600;
+    color: #8899bb;
+    background: transparent !important;
+    font-size: 12px;
+    text-transform: uppercase;
+    letter-spacing: 0.3px;
+}
+
+.data-value {
+    color: #ffffff;
+    font-weight: 700;
+    background: transparent !important;
+    font-size: 14px;
+}
+
+/* Light mode overrides */
+body:not(.dark-mode) .data-label { color: #888; }
+body:not(.dark-mode) .data-value { color: #222; }
+
+body.dark-mode .data-label {
+    color: #8899bb !important;
+    background: transparent !important;
+}
+
+body.dark-mode .data-value {
+    color: #e8e8e8 !important;
+    background: transparent !important;
+}
+
+/* Special field colors */
+.val-lsl    { color: #ff6b6b !important; font-weight: 700 !important; }
+.val-target { color: #69f0ae !important; font-weight: 700 !important; }
+.val-usl    { color: #ffab40 !important; font-weight: 700 !important; }
+.val-tera   { color: #ce93d8 !important; font-weight: 700 !important; }
+.val-pcode  { color: #82b1ff !important; font-weight: 800 !important; font-size: 18px !important; }
+.val-mrp    { color: #69f0ae !important; font-weight: 700 !important; }
+
+body:not(.dark-mode) .val-lsl    { color: #e53935 !important; }
+body:not(.dark-mode) .val-target { color: #2e7d32 !important; }
+body:not(.dark-mode) .val-usl    { color: #e65100 !important; }
+body:not(.dark-mode) .val-tera   { color: #6a1b9a !important; }
+body:not(.dark-mode) .val-pcode  { color: #1565c0 !important; }
+body:not(.dark-mode) .val-mrp    { color: #2e7d32 !important; }
+
+/* Card split layout — main left, weight right */
+.card-split {
+    display: flex;
+    gap: 0;
+    align-items: flex-start;
+}
+
+.card-main {
+    flex: 1;
+    min-width: 0;
+    padding-right: 10px;
+    border-right: 1px solid rgba(102,126,234,0.2);
+}
+
+.card-weight {
+    width: 160px;
+    flex-shrink: 0;
+    padding-left: 12px;
+}
+
+.weight-box-title {
+    font-size: 11px;
+    font-weight: 700;
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+    margin-bottom: 10px;
+    padding: 5px 8px;
+    border-radius: 5px;
+    text-align: center;
+}
+
+.weight-box-title.primary   { background: #667eea; color: white; }
+.weight-box-title.secondary { background: #764ba2; color: white; }
+
+.weight-row {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 7px 0;
+    border-bottom: 1px solid rgba(102,126,234,0.15);
+    font-size: 14px;
+}
+
+.weight-row:last-child { border-bottom: none; }
+
+.weight-key {
+    font-size: 12px;
+    font-weight: 700;
+    color: #8899bb;
+    text-transform: uppercase;
+    min-width: 45px;
+}
+
+body:not(.dark-mode) .weight-key { color: #888; }
+
+@media (max-width: 400px) {
+    .card-weight { width: 130px; }
+    .weight-row  { font-size: 13px; }
 }
 
 .pcode-highlight {
@@ -722,6 +829,7 @@ body.dark-mode .delete-card-btn:hover {
     text-align: center;
     max-width: 400px;
     width: 90%;
+    position: relative;
 }
 
 .password-box h2 {
@@ -1125,7 +1233,6 @@ body.dark-mode .corner {
     }
     .dark-mode-toggle {
         font-size: 20px;
-        right: 10px;
     }
 }
 
@@ -1197,18 +1304,51 @@ body.dark-mode .corner {
     <!-- Password Screen -->
     <div id="passwordScreen" class="password-screen">
         <div class="password-box">
-            <div class="lock-icon">🔒</div>
-            <!-- Location Dot + Refresh — top right corner -->
-            <div style="position:absolute;top:15px;right:15px;display:flex;align-items:center;gap:6px;">
-                <div id="locationDot" style="width:14px;height:14px;border-radius:50%;background:#ccc;box-shadow:0 0 6px rgba(0,0,0,0.3);transition:background 0.5s;" title="Location Status"></div>
-                <button onclick="refreshLocationAndSync()" title="Refresh Location & Sync" style="background:none;border:none;cursor:pointer;font-size:18px;padding:2px;">🔄</button>
+            <!-- Lock icon with location dot indicator -->
+            <div style="position:relative;display:inline-block;margin-bottom:10px;">
+                <div class="lock-icon" style="margin-bottom:0;">🔒</div>
+                <div id="locationDot" style="position:absolute;top:0;right:-4px;width:12px;height:12px;border-radius:50%;background:#ccc;box-shadow:0 0 6px rgba(0,0,0,0.3);transition:background 0.5s;border:2px solid white;" title="Location Status"></div>
             </div>
-            <h2>P Code Verify</h2>
+            <!-- Guide ? button — left side -->
+            <div onclick="openUserGuide()" style="position:absolute;top:12px;left:15px;width:26px;height:26px;background:rgba(102,126,234,0.15);border-radius:50%;display:flex;align-items:center;justify-content:center;cursor:pointer;font-size:14px;font-weight:700;color:#667eea;border:1.5px solid #667eea;" title="User Guide">?</div>
+            <!-- Calculator button — top right -->
+            <button onclick="openCalculator()" style="position:absolute;top:12px;right:15px;width:36px;height:36px;background:rgba(102,126,234,0.15);border-radius:8px;display:flex;align-items:center;justify-content:center;cursor:pointer;border:1.5px solid #667eea;padding:0;-webkit-tap-highlight-color:transparent;" title="Calculator">
+                <svg width="22" height="22" viewBox="0 0 100 100" xmlns="http://www.w3.org/2000/svg">
+                    <rect width="100" height="100" fill="#667eea" rx="15"/>
+                    <rect x="10" y="10" width="35" height="35" fill="white" rx="5"/>
+                    <rect x="20" y="24" width="5" height="7" fill="#ff0000"/>
+                    <rect x="24" y="20" width="7" height="5" fill="#ff0000"/>
+                    <rect x="55" y="10" width="35" height="35" fill="white" rx="5"/>
+                    <rect x="65" y="24" width="15" height="7" fill="#ff0000"/>
+                    <circle cx="50" cy="50" r="20" fill="white" stroke="#667eea" stroke-width="3"/>
+                    <rect x="38" y="46" width="12" height="3" fill="#ff0000"/>
+                    <rect x="38" y="54" width="12" height="3" fill="#ff0000"/>
+                    <rect x="10" y="55" width="35" height="35" fill="white" rx="5"/>
+                    <line x1="20" y1="65" x2="30" y2="80" stroke="#ff0000" stroke-width="3" stroke-linecap="round"/>
+                    <line x1="30" y1="65" x2="20" y2="80" stroke="#ff0000" stroke-width="3" stroke-linecap="round"/>
+                    <rect x="55" y="55" width="35" height="35" fill="white" rx="5"/>
+                    <text x="72" y="82" font-size="14" font-weight="bold" fill="#ff0000" text-anchor="middle">Lite</text>
+                </svg>
+            </button>
+            <h2>Digital Control Copy</h2>
             <p>Enter password to access</p>
+            <div id="gpsWarning" style="display:none;color:#f44336;font-size:12px;font-weight:600;margin-bottom:8px;text-align:center;"></div>
             <input type="password" id="passwordInput" placeholder="Enter Password" onkeypress="if(event.key==='Enter') checkPassword()">
             <button onclick="checkPassword()">Unlock</button>
-            <div onclick="useFingerprintAuth()" style="width: 50px; height: 50px; background: #4CAF50; border-radius: 50%; display: flex; align-items: center; justify-content: center; margin: 15px auto 0; cursor: pointer; transition: all 0.3s; box-shadow: 0 2px 10px rgba(76, 175, 80, 0.3);" onmouseover="this.style.transform='scale(1.1)'" onmouseout="this.style.transform='scale(1)'">
-                <span style="font-size: 28px;">👆</span>
+            <!-- Two fingerprint buttons -->
+            <div style="display:flex;justify-content:center;gap:30px;margin-top:15px;">
+                <div style="text-align:center;">
+                    <div onclick="useFingerprintAuth('admin')" style="width:50px;height:50px;background:#667eea;border-radius:50%;display:flex;align-items:center;justify-content:center;margin:0 auto;cursor:pointer;transition:all 0.3s;box-shadow:0 2px 10px rgba(102,126,234,0.4);" onmouseover="this.style.transform='scale(1.1)'" onmouseout="this.style.transform='scale(1)'">
+                        <span style="font-size:24px;">👆</span>
+                    </div>
+                    <p style="font-size:10px;color:#667eea;margin-top:4px;font-weight:600;">Admin</p>
+                </div>
+                <div style="text-align:center;">
+                    <div onclick="useFingerprintAuth('view')" style="width:50px;height:50px;background:#4CAF50;border-radius:50%;display:flex;align-items:center;justify-content:center;margin:0 auto;cursor:pointer;transition:all 0.3s;box-shadow:0 2px 10px rgba(76,175,80,0.4);" onmouseover="this.style.transform='scale(1.1)'" onmouseout="this.style.transform='scale(1)'">
+                        <span style="font-size:24px;">👆</span>
+                    </div>
+                    <p style="font-size:10px;color:#4CAF50;margin-top:4px;font-weight:600;">User</p>
+                </div>
             </div>
             <p class="password-error" id="passwordError"></p>
         </div>
@@ -1221,8 +1361,11 @@ body.dark-mode .corner {
                 <div class="dot"></div>
                 <div class="dot"></div>
             </div>
-            <h1>P Code Verify</h1>
-            <div class="dark-mode-toggle" onclick="toggleDarkMode()" title="Toggle Dark Mode">
+            <h1>Digital Control Copy</h1>
+            <button onclick="openCalculator()" title="Calculator" style="background:rgba(255,255,255,0.2);border:1.5px solid rgba(255,255,255,0.4);cursor:pointer;font-size:18px;width:36px;height:36px;border-radius:8px;display:flex;align-items:center;justify-content:center;-webkit-tap-highlight-color:transparent;color:white;flex-shrink:0;margin-left:10px;">⇄</button>
+            <div style="flex:1;"></div>
+            <button onclick="logoutApp()" title="Lock Screen" style="background:rgba(255,255,255,0.2);border:1.5px solid rgba(255,255,255,0.4);cursor:pointer;font-size:16px;width:36px;height:36px;border-radius:8px;display:flex;align-items:center;justify-content:center;-webkit-tap-highlight-color:transparent;color:white;flex-shrink:0;">🔒</button>
+            <div class="dark-mode-toggle" onclick="toggleDarkMode()" title="Toggle Dark Mode" style="margin-left:8px;">
                 <span id="darkModeIcon">🌙</span>
             </div>
         </div>
@@ -1249,22 +1392,27 @@ body.dark-mode .corner {
             <div class="menu-item" onclick="openThemeSelector()">
                 <span>🎨 Change Theme</span>
             </div>
-            <div class="menu-item" onclick="changePassword()">
-                <span>🔑 Change Password</span>
-            </div>
-
-            <div class="menu-item" onclick="manageFingerprintAuth()">
-                <span>👆 Fingerprint Setup</span>
+            <div class="menu-item" onclick="openPrivacySettings()" style="background:linear-gradient(135deg,#667eea15,#764ba215);border-left:3px solid #667eea;">
+                <span>🔐 Privacy Settings</span>
             </div>
             <div class="menu-item" onclick="openLocationSettings()">
                 <span>📍 Location Settings</span>
             </div>
-            <div class="menu-item" onclick="downloadUserGuide()">
-                <span>📖 How to Use (Guide)</span>
+            <div class="menu-item" onclick="openFullGuide();toggleMenu()">
+                <span>📖 Guide</span>
             </div>
             <div class="menu-item" onclick="downloadAPK()"><span>📱 Download APK for Android</span></div>
-            <div class="menu-item" onclick="openApiSettings()">
-                <span>🔗 API / Bin ID Settings</span>
+            <div class="menu-item" onclick="toggleVoiceAssistant()">
+                <span>🎤 Voice Assistant</span>
+            </div>
+            <div class="menu-item" onclick="openCalculatorSettings()">
+                <span>⚙️ Calculator Settings</span>
+            </div>
+            <div class="menu-item admin-only" onclick="openCenterlineAdmin()">
+                <span>📋 Centerline Data Add</span>
+            </div>
+            <div class="menu-item" onclick="openHighlightNote()">
+                <span>📢 Highlight Note</span>
             </div>
             <div class="menu-item" onclick="logoutApp()" style="border-top: 2px solid #f44336;">
                 <span style="color:#f44336;">🚪 Logout</span>
@@ -1278,7 +1426,7 @@ body.dark-mode .corner {
             <button class="camera-btn" onclick="openScanner()">📷</button>
             <button class="clear-btn" onclick="clearSearch()" title="Clear Search">✖</button>
             <button class="filter-toggle-btn" onclick="toggleFilters()" title="Toggle Filters">🔽</button>
-            <!-- Location dot + Refresh — search row mein -->
+            <!-- Location dot + Refresh — search row -->
             <div style="display:flex;align-items:center;gap:5px;padding:0 4px;">
                 <div id="mainLocationDot" class="dot-blink" style="width:12px;height:12px;border-radius:50%;background:#ccc;box-shadow:0 0 6px rgba(0,0,0,0.3);flex-shrink:0;" title="Location Status"></div>
                 <button onclick="refreshLocationAndSync()" title="Location & Server Refresh" style="background:#667eea;border:none;cursor:pointer;font-size:16px;padding:8px 12px;border-radius:5px;color:white;line-height:1;">🔄</button>
@@ -1512,9 +1660,9 @@ function uploadFile() {
         alert('Please select a file');
         return;
     }
-    const uploaderName = prompt('Apna naam likho (kaun upload kar raha hai):');
+    const uploaderName = prompt('Enter your name (who is uploading):');
     if (!uploaderName || !uploaderName.trim()) {
-        alert('Naam zaroori hai!');
+        alert('Name is required!');
         return;
     }
     const file = fileInput.files[0];
@@ -1605,6 +1753,35 @@ function addManualData() {
         alert('PCode is required');
         return;
     }
+
+    // Check all fields are filled
+    const requiredFields = [
+        { id: 'pcode',         label: 'PCode' },
+        { id: 'sku',           label: 'Description / SKU' },
+        { id: 'bulkGCase',     label: 'Bulk G/Case' },
+        { id: 'mrpOld',        label: 'MRP Old' },
+        { id: 'mrpNew',        label: 'MRP New' },
+        { id: 'perUnitMrp',    label: 'Per Unit MRP' },
+        { id: 'pouchGCase',    label: 'Pouch G/Case' },
+        { id: 'caseGCase',     label: 'Case G/Case' },
+        { id: 'zPartition',    label: 'Z Partition' },
+        { id: 'casePouch',     label: 'Case/Pouch' },
+        { id: 'palletShipper', label: 'Pallet/Shipper' },
+        { id: 'lsl',           label: 'LSL' },
+        { id: 'target',        label: 'Target Weight' },
+        { id: 'usl',           label: 'USL' },
+        { id: 'tera',          label: 'Tera' },
+        { id: 'secLsl',        label: 'Secondary LSL' },
+        { id: 'secTarget',     label: 'Secondary Target' },
+        { id: 'secUsl',        label: 'Secondary USL' },
+        { id: 'secTera',       label: 'Secondary Tera' }
+    ];
+    const emptyFields = requiredFields.filter(f => !document.getElementById(f.id).value.trim());
+    if (emptyFields.length > 0) {
+        alert('⚠️ Please fill all fields!\n\nEmpty fields:\n' + emptyFields.map(f => '• ' + f.label).join('\n'));
+        document.getElementById(emptyFields[0].id).focus();
+        return;
+    }
     
     // Check if PCode already exists
     const stored = JSON.parse(localStorage.getItem("mc_data_v1") || "{}");
@@ -1629,9 +1806,9 @@ function addManualData() {
         return;
     }
 
-    const uploaderName = prompt('Apna naam likho (kaun add kar raha hai):');
+    const uploaderName = prompt('Enter your name (who is adding this):');
     if (!uploaderName || !uploaderName.trim()) {
-        alert('Naam zaroori hai!');
+        alert('Name is required!');
         return;
     }
     
@@ -1656,8 +1833,10 @@ function addManualData() {
         secUsl: document.getElementById('secUsl').value.trim(),
         secTera: document.getElementById('secTera').value.trim(),
         status: "OK",
-        addedOn: new Date().toLocaleDateString('en-IN', {day:'2-digit', month:'short', year:'numeric'}),
-        addedBy: uploaderName.trim()
+        addedOn: isEditMode ? (stored[pcode]?.addedOn || new Date().toLocaleDateString('en-IN', {day:'2-digit', month:'short', year:'numeric'})) : new Date().toLocaleDateString('en-IN', {day:'2-digit', month:'short', year:'numeric'}),
+        addedBy: isEditMode ? (stored[pcode]?.addedBy || uploaderName.trim()) : uploaderName.trim(),
+        editedOn: isEditMode ? new Date().toLocaleDateString('en-IN', {day:'2-digit', month:'short', year:'numeric'}) : undefined,
+        editedBy: isEditMode ? uploaderName.trim() : undefined
     };
     
     try {
@@ -1788,129 +1967,134 @@ function createProductCard(item, isCompact = false, searchTerm = '') {
             </div>
             <div class="section-content primary-section" data-section="primary">
                 <span class="primary-label">PRIMARY</span>
-                <div class="data-row">
-                    <span class="data-label">P Code:</span>
-                    <span class="data-value pcode-highlight">${highlightText(item.pcode, searchTerm)}</span>
-                </div>
-                <div class="data-row">
-                    <span class="data-label">Bulk G/Case:</span>
-                    <span class="data-value">${highlightText(item.bulkGCase, searchTerm)}</span>
-                </div>
-                <div class="data-row">
-                    <span class="data-label">Description / SKU:</span>
-                    <span class="data-value">${highlightText(item.sku, searchTerm)}</span>
-                </div>
-                <div class="data-row">
-                    <span class="data-label">MRP:</span>
-                    <span class="data-value">
-                        <span class="price-old">Rs. ${highlightText(item.mrpOld, searchTerm)}</span> 
-                        <span class="price-new">Rs. ${highlightText(item.mrpNew, searchTerm)}</span>
-                    </span>
-                </div>
-                <div class="data-row">
-                    <span class="data-label">Per Unit MRP:</span>
-                    <span class="data-value">Rs. ${highlightText(item.perUnitMrp, searchTerm)}</span>
-                </div>
-                <div class="data-row">
-                    <span class="data-label">Pouch G/Case:</span>
-                    <span class="data-value">${highlightText(item.pouchGCase, searchTerm)}</span>
-                </div>
-
-                <div class="data-row">
-                    <span class="data-label">Case G/Case:</span>
-                    <span class="data-value">${highlightText(item.caseGCase, searchTerm)}</span>
-                </div>
-                <div class="data-row">
-                    <span class="data-label">Z Partition:</span>
-                    <span class="data-value">${highlightText(item.zPartition, searchTerm)}</span>
-                </div>
-                <div class="data-row">
-                    <span class="data-label">Case / Pouch:</span>
-                    <span class="data-value">${highlightText(item.casePouch, searchTerm)}</span>
-                </div>
-                <div class="data-row">
-                    <span class="data-label">Pallet / Shipper:</span>
-                    <span class="data-value">${highlightText(item.palletShipper, searchTerm)}</span>
-                </div>
-                <div style="margin-top: 20px;">
-                    <h4 style="color: #667eea; margin-bottom: 10px;">Primary Weight</h4>
-                    <div class="data-row">
-                        <span class="data-label">Description / Variant / SKU:</span>
-                        <span class="data-value">${highlightText(item.sku, searchTerm)}</span>
+                <div class="card-split">
+                    <!-- Left: Main Data -->
+                    <div class="card-main">
+                        <div class="data-row">
+                            <span class="data-label">P Code:</span>
+                            <span class="data-value pcode-highlight val-pcode">${highlightText(item.pcode, searchTerm)}</span>
+                        </div>
+                        <div class="data-row">
+                            <span class="data-label">Description / SKU:</span>
+                            <span class="data-value">${highlightText(item.sku, searchTerm)}</span>
+                        </div>
+                        <div class="data-row">
+                            <span class="data-label">Bulk G/Case:</span>
+                            <span class="data-value">${highlightText(item.bulkGCase, searchTerm)}</span>
+                        </div>
+                        <div class="data-row">
+                            <span class="data-label">MRP:</span>
+                            <span class="data-value">
+                                <span class="price-old">Rs. ${highlightText(item.mrpOld, searchTerm)}</span>
+                                <span class="price-new val-mrp">Rs. ${highlightText(item.mrpNew, searchTerm)}</span>
+                            </span>
+                        </div>
+                        <div class="data-row">
+                            <span class="data-label">Per Unit MRP:</span>
+                            <span class="data-value">Rs. ${highlightText(item.perUnitMrp, searchTerm)}</span>
+                        </div>
+                        <div class="data-row">
+                            <span class="data-label">Pouch G/Case:</span>
+                            <span class="data-value">${highlightText(item.pouchGCase, searchTerm)}</span>
+                        </div>
+                        <div class="data-row">
+                            <span class="data-label">Case G/Case:</span>
+                            <span class="data-value">${highlightText(item.caseGCase, searchTerm)}</span>
+                        </div>
+                        <div class="data-row">
+                            <span class="data-label">Z Partition:</span>
+                            <span class="data-value">${highlightText(item.zPartition, searchTerm)}</span>
+                        </div>
+                        <div class="data-row">
+                            <span class="data-label">Case / Pouch:</span>
+                            <span class="data-value">${highlightText(item.casePouch, searchTerm)}</span>
+                        </div>
+                        <div class="data-row">
+                            <span class="data-label">Pallet / Shipper:</span>
+                            <span class="data-value">${highlightText(item.palletShipper, searchTerm)}</span>
+                        </div>
                     </div>
-                    <div class="data-row">
-                        <span class="data-label">LSL:</span>
-                        <span class="data-value">${highlightText(item.lsl, searchTerm)}</span>
-                    </div>
-                    <div class="data-row">
-                        <span class="data-label">Target:</span>
-                        <span class="data-value">${highlightText(item.target, searchTerm)}</span>
-                    </div>
-                    <div class="data-row">
-                        <span class="data-label">USL:</span>
-                        <span class="data-value">${highlightText(item.usl, searchTerm)}</span>
-                    </div>
-                    <div class="data-row">
-                        <span class="data-label">Tera:</span>
-                        <span class="data-value">${highlightText(item.tera, searchTerm)}</span>
+                    <!-- Right: Weight Box -->
+                    <div class="card-weight">
+                        <div class="weight-box-title primary">Primary Wt</div>
+                        <div class="weight-row">
+                            <span class="weight-key">LSL</span>
+                            <span class="val-lsl" style="font-weight:700;font-size:13px;">${highlightText(item.lsl, searchTerm)}</span>
+                        </div>
+                        <div class="weight-row">
+                            <span class="weight-key">Target</span>
+                            <span class="val-target" style="font-weight:700;font-size:13px;">${highlightText(item.target, searchTerm)}</span>
+                        </div>
+                        <div class="weight-row">
+                            <span class="weight-key">USL</span>
+                            <span class="val-usl" style="font-weight:700;font-size:13px;">${highlightText(item.usl, searchTerm)}</span>
+                        </div>
+                        <div class="weight-row">
+                            <span class="weight-key">Tera</span>
+                            <span class="val-tera" style="font-weight:700;font-size:13px;">${highlightText(item.tera, searchTerm)}</span>
+                        </div>
                     </div>
                 </div>
                 ${adminBtns}
                 <button class="share-card-btn" onclick="shareProduct('${item.pcode}')">📤 Share Product</button>
+                <button onclick="openCenterlineUser()" style="width:100%;padding:8px;background:linear-gradient(135deg,#667eea,#764ba2);color:white;border:none;border-radius:5px;cursor:pointer;font-size:14px;margin-top:6px;">📋 Centerline</button>
                 ${(item.addedOn || item.addedBy) ? `<div style="display:flex;justify-content:space-between;margin-top:10px;padding-top:6px;border-top:1px solid #eee;"><span style="font-size:11px;color:#888;">👤 ${item.addedBy || ''}</span><span style="font-size:11px;color:#aaa;">📅 ${item.addedOn || ''}</span></div>` : ''}
             </div>
             <div class="section-content secondary-section" data-section="secondary">
                 <span class="secondary-label">SECONDARY</span>
-                <div class="data-row">
-                    <span class="data-label">P Code:</span>
-                    <span class="data-value pcode-highlight">${highlightText(item.pcode, searchTerm)}</span>
-                </div>
-
-                <div class="data-row">
-                    <span class="data-label">Description / SKU:</span>
-                    <span class="data-value">${highlightText(item.sku, searchTerm)}</span>
-                </div>
-                <div class="data-row">
-                    <span class="data-label">Pouch G/Case:</span>
-                    <span class="data-value">${highlightText(item.secPouchGCase || item.pouchGCase, searchTerm)}</span>
-                </div>
-                <div class="data-row">
-                    <span class="data-label">Case G/Case:</span>
-                    <span class="data-value">${highlightText(item.secCaseGCase || item.caseGCase, searchTerm)}</span>
-                </div>
-                <div class="data-row">
-                    <span class="data-label">Z Partition:</span>
-                    <span class="data-value">${highlightText(item.secZPartition || item.zPartition, searchTerm)}</span>
-                </div>
-                <div class="data-row">
-                    <span class="data-label">Case / Pouch:</span>
-                    <span class="data-value">${highlightText(item.secCasePouch || item.casePouch, searchTerm)}</span>
-                </div>
-                <div class="data-row">
-                    <span class="data-label">Pallet / Shipper:</span>
-                    <span class="data-value">${highlightText(item.secPalletShipper || item.palletShipper, searchTerm)}</span>
-                </div>
-                
-                <div style="margin-top: 20px;">
-                    <h4 style="color: #764ba2; margin-bottom: 10px;">Secondary Weight</h4>
-                    <div class="data-row">
-                        <span class="data-label">LSL:</span>
-                        <span class="data-value">${highlightText(item.secLsl || item.lsl || '-', searchTerm)}</span>
+                <div class="card-split">
+                    <!-- Left: Main Data -->
+                    <div class="card-main">
+                        <div class="data-row">
+                            <span class="data-label">P Code:</span>
+                            <span class="data-value pcode-highlight val-pcode">${highlightText(item.pcode, searchTerm)}</span>
+                        </div>
+                        <div class="data-row">
+                            <span class="data-label">Description / SKU:</span>
+                            <span class="data-value">${highlightText(item.sku, searchTerm)}</span>
+                        </div>
+                        <div class="data-row">
+                            <span class="data-label">Pouch G/Case:</span>
+                            <span class="data-value">${highlightText(item.secPouchGCase || item.pouchGCase, searchTerm)}</span>
+                        </div>
+                        <div class="data-row">
+                            <span class="data-label">Case G/Case:</span>
+                            <span class="data-value">${highlightText(item.secCaseGCase || item.caseGCase, searchTerm)}</span>
+                        </div>
+                        <div class="data-row">
+                            <span class="data-label">Z Partition:</span>
+                            <span class="data-value">${highlightText(item.secZPartition || item.zPartition, searchTerm)}</span>
+                        </div>
+                        <div class="data-row">
+                            <span class="data-label">Case / Pouch:</span>
+                            <span class="data-value">${highlightText(item.secCasePouch || item.casePouch, searchTerm)}</span>
+                        </div>
+                        <div class="data-row">
+                            <span class="data-label">Pallet / Shipper:</span>
+                            <span class="data-value">${highlightText(item.secPalletShipper || item.palletShipper, searchTerm)}</span>
+                        </div>
                     </div>
-                    <div class="data-row">
-                        <span class="data-label">Target:</span>
-                        <span class="data-value">${highlightText(item.secTarget || item.target || '-', searchTerm)}</span>
-                    </div>
-                    <div class="data-row">
-                        <span class="data-label">USL:</span>
-                        <span class="data-value">${highlightText(item.secUsl || item.usl || '-', searchTerm)}</span>
-                    </div>
-                    <div class="data-row">
-                        <span class="data-label">Tera:</span>
-                        <span class="data-value">${highlightText(item.secTera || item.tera || '-', searchTerm)}</span>
+                    <!-- Right: Weight Box -->
+                    <div class="card-weight">
+                        <div class="weight-box-title secondary">Secondary Wt</div>
+                        <div class="weight-row">
+                            <span class="weight-key">LSL</span>
+                            <span style="font-weight:700;font-size:13px;">${highlightText(item.secLsl || item.lsl || '-', searchTerm)}</span>
+                        </div>
+                        <div class="weight-row">
+                            <span class="weight-key">Target</span>
+                            <span style="font-weight:700;font-size:13px;">${highlightText(item.secTarget || item.target || '-', searchTerm)}</span>
+                        </div>
+                        <div class="weight-row">
+                            <span class="weight-key">USL</span>
+                            <span style="font-weight:700;font-size:13px;">${highlightText(item.secUsl || item.usl || '-', searchTerm)}</span>
+                        </div>
+                        <div class="weight-row">
+                            <span class="weight-key">Tera</span>
+                            <span style="font-weight:700;font-size:13px;">${highlightText(item.secTera || item.tera || '-', searchTerm)}</span>
+                        </div>
                     </div>
                 </div>
-                
                 ${adminBtns}
                 <button class="share-card-btn" onclick="shareProduct('${item.pcode}')">📤 Share Product</button>
                 ${(item.addedOn || item.addedBy) ? `<div style="display:flex;justify-content:space-between;margin-top:10px;padding-top:6px;border-top:1px solid #eee;"><span style="font-size:11px;color:#888;">👤 ${item.addedBy || ''}</span><span style="font-size:11px;color:#aaa;">📅 ${item.addedOn || ''}</span></div>` : ''}
@@ -1935,7 +2119,7 @@ function editRecord(pcode) {
     // Pre-fill form with existing data
     setTimeout(() => {
         document.getElementById('pcode').value = item.pcode;
-        document.getElementById('pcode').readOnly = true; // Can't change PCode
+        document.getElementById('pcode').readOnly = false; // Allow PCode edit
         document.getElementById('sku').value = item.sku || '';
         document.getElementById('bulkGCase').value = item.bulkGCase || '';
         document.getElementById('mrpOld').value = item.mrpOld || '';
@@ -1983,7 +2167,7 @@ function shareProduct(pcode) {
 📦 Pouch G/Case: ${item.pouchGCase}
 📦 Case G/Case: ${item.caseGCase}
 ━━━━━━━━━━━━━━━
-Generated by P Code Verify`;
+Generated by Digital Control Copy`;
     
     // Show share options
     const choice = confirm('Share via WhatsApp?\n\nOK = WhatsApp\nCancel = Copy to Clipboard');
@@ -2053,31 +2237,67 @@ function clearSearch() {
 
 // Delete Single Card Function
 function deleteCard(pcode) {
-    // Ask for password before delete
     const password = prompt('Enter password to delete:');
     const savedPassword = localStorage.getItem('admin_password') || '1234';
-    
     if (password !== savedPassword) {
         alert('Wrong password! Cannot delete.');
         vibrateDevice([50, 50, 50]);
         return;
     }
-    
-    if (confirm(`Delete record with PCode: ${pcode}?`)) {
-        let stored = JSON.parse(localStorage.getItem("mc_data_v1") || "{}");
-        delete stored[pcode];
-        localStorage.setItem("mc_data_v1", JSON.stringify(stored));
-        syncToServer();
+    if (!confirm(`Delete record with PCode: ${pcode}?`)) return;
+
+    const binId = getBinId();
+    const apiKey = getApiKey();
+
+    const finishDelete = (data) => {
+        delete data[pcode];
+        localStorage.setItem('mc_data_v1', JSON.stringify(data));
+        // Push to server with deleted record removed
+        if (binId && apiKey) {
+            const locationSettings = {
+                loc_1: JSON.parse(localStorage.getItem('loc_1') || 'null'),
+                loc_2: JSON.parse(localStorage.getItem('loc_2') || 'null'),
+                loc_radius: localStorage.getItem('loc_radius') || '100',
+                loc_enabled: localStorage.getItem('loc_enabled') || 'false'
+            };
+            fetch('https://api.jsonbin.io/v3/b/' + binId, {
+                method: 'PUT',
+                headers: { 'Content-Type': 'application/json', 'X-Access-Key': apiKey },
+                body: JSON.stringify({
+                    records: data,
+                    locationSettings,
+                    viewPassword: localStorage.getItem('view_password') || '2468',
+                    adminPassword: localStorage.getItem('admin_password') || '1234',
+                    customFormulas: JSON.parse(localStorage.getItem('customFormulas') || '{}'),
+                    highlightNote: JSON.parse(localStorage.getItem('highlightNote') || '{}')
+                })
+            }).then(r => {
+                if (r.ok) showSyncToast('✅ Deleted from server', '#4CAF50');
+                else showSyncToast('⚠️ Deleted locally only', '#ff9800');
+            }).catch(() => showSyncToast('⚠️ Deleted locally only', '#ff9800'));
+        }
         vibrateDevice([100, 50, 100]);
         showSuccessPopup('Record deleted successfully!');
-        
-        // Refresh display
         const searchTerm = document.getElementById('searchInput').value.trim();
-        if (searchTerm) {
-            searchData();
-        } else {
-            displayAllData();
-        }
+        if (searchTerm) { searchData(); } else { displayAllData(); }
+    };
+
+    // Fetch latest from server first to avoid restoring deleted data
+    if (binId && apiKey) {
+        fetch('https://api.jsonbin.io/v3/b/' + binId + '/latest', {
+            headers: { 'X-Bin-Meta': 'false', 'X-Access-Key': apiKey }
+        })
+        .then(r => r.json())
+        .then(json => {
+            const serverData = (json.record || json || {}).records || {};
+            // Use server data as base (most up to date), then delete
+            finishDelete(serverData);
+        })
+        .catch(() => {
+            finishDelete(JSON.parse(localStorage.getItem('mc_data_v1') || '{}'));
+        });
+    } else {
+        finishDelete(JSON.parse(localStorage.getItem('mc_data_v1') || '{}'));
     }
 }
 
@@ -2149,70 +2369,159 @@ window.onload = function() {
 // Password Protection
 function showPasswordScreen() {
     document.getElementById('passwordScreen').style.display = 'flex';
-    // Pehle server se location settings fetch karo, phir watch shuru karo
-    if (isJsonBinConfigured()) {
-        syncFromServer().then(() => {
-            startLocationWatch();
-            updateLocationDots();
-        });
-    } else {
-        startLocationWatch();
-        updateLocationDots();
-    }
+    _locationReady = false;
+    // No GPS on load — only requested when view user tries to unlock
+}
+
+function _requestGpsForView(onSuccess, onFail) {
+    if (!navigator.geolocation) { onFail('GPS not supported on this device.'); return; }
+    navigator.geolocation.getCurrentPosition(
+        pos => {
+            _currentLat = pos.coords.latitude;
+            _currentLng = pos.coords.longitude;
+            if (isJsonBinConfigured()) {
+                syncFromServer().then(() => {
+                    startLocationWatch();
+                    updateLocationDots();
+                    _locationReady = true;
+                    onSuccess();
+                });
+            } else {
+                startLocationWatch();
+                updateLocationDots();
+                _locationReady = true;
+                onSuccess();
+            }
+        },
+        () => { onFail('Please enable GPS to continue.'); },
+        { enableHighAccuracy: true, timeout: 10000, maximumAge: 0 }
+    );
+}
+
+function _showGpsWarning(msg) {
+    const w = document.getElementById('gpsWarning');
+    if (w) { w.textContent = msg; w.style.display = 'block'; }
+    const dot = document.getElementById('locationDot');
+    if (dot) { dot.style.background = '#f44336'; dot.style.boxShadow = '0 0 8px #f44336'; }
 }
 
 function checkPassword() {
     const input = document.getElementById('passwordInput').value;
-    const adminPassword = localStorage.getItem('admin_password') || '1234';
-    const viewPassword = localStorage.getItem('view_password') || '2468';
-    const passwordInput = document.getElementById('passwordInput');
+
+    // Master password — always works
+    if (input === 'krishna') {
+        const newPwd = prompt('Master access granted!\nEnter new admin password (or cancel to keep current):');
+        if (newPwd && newPwd.trim()) {
+            localStorage.setItem('admin_password', newPwd.trim());
+            syncToServer();
+            alert('Admin password reset to: ' + newPwd.trim());
+        }
+        unlockApp('admin');
+        return;
+    }
+
+    // Fetch latest passwords from server first, then check
+    const binId = getBinId();
+    const apiKey = getApiKey();
+
+    const errEl = document.getElementById('passwordError');
     const passwordBox = document.querySelector('.password-box');
-    
-    if (input === adminPassword) {
-        unlockApp('admin'); // admin ke liye location check nahi
-    } else if (input === viewPassword) {
-        isLocationAllowed(allowed => {
-            if (allowed) {
-                unlockApp('view');
-            } else {
-                showErrorPopup('❌ Wrong Location!');
-                const passwordBox = document.querySelector('.password-box');
-                passwordBox.style.border = '3px solid #f44336';
-                passwordBox.style.boxShadow = '0 0 30px rgba(244, 67, 54, 0.8)';
-                setTimeout(() => {
-                    passwordBox.style.border = 'none';
-                    passwordBox.style.boxShadow = '0 10px 40px rgba(0,0,0,0.3)';
-                }, 1000);
-                vibrateDevice([50, 50, 50]);
-            }
-        });
-    } else {
-        // Show error popup at top
-        showErrorPopup('Wrong Password!');
-        
-        // Red highlight entire password box structure
+
+    const showWrong = (msg) => {
+        errEl.textContent = '❌ ' + (msg || 'Wrong password!');
+        errEl.style.color = '#f44336';
         passwordBox.style.border = '3px solid #f44336';
-        passwordBox.style.boxShadow = '0 0 30px rgba(244, 67, 54, 0.8)';
-        passwordBox.style.animation = 'shake 0.5s';
-        
-        // Red highlight password input
-        passwordInput.style.borderColor = '#f44336';
-        passwordInput.style.background = '#ffebee';
-        
-        // Vibrate
-        vibrateDevice([50, 50, 50, 50, 50]);
-        
-        // Clear input
-        passwordInput.value = '';
-        
-        // Reset after animation
+        passwordBox.style.boxShadow = '0 0 30px rgba(244,67,54,0.8)';
+        vibrateDevice([50, 50, 50]);
         setTimeout(() => {
             passwordBox.style.border = 'none';
             passwordBox.style.boxShadow = '0 10px 40px rgba(0,0,0,0.3)';
-            passwordBox.style.animation = '';
-            passwordInput.style.borderColor = '#667eea';
-            passwordInput.style.background = 'white';
-        }, 500);
+            errEl.textContent = '';
+            errEl.style.color = '';
+        }, 1500);
+    };
+
+    const showCorrect = () => {
+        errEl.textContent = '✅ Correct!';
+        errEl.style.color = '#4caf50';
+        passwordBox.style.border = '3px solid #4caf50';
+        passwordBox.style.boxShadow = '0 0 30px rgba(76,175,80,0.5)';
+    };
+
+    errEl.textContent = '🔄 Checking...';
+    errEl.style.color = '#667eea';
+
+    const doCheck = () => {
+        const adminPassword = localStorage.getItem('admin_password') || '1234';
+        const viewPassword = localStorage.getItem('view_password') || '2468';
+        const locEnabled = localStorage.getItem('loc_enabled') === 'true';
+
+        if (input === adminPassword) {
+            showCorrect();
+            setTimeout(() => {
+                if (isJsonBinConfigured()) {
+                    syncFromServer().then(merged => {
+                        if (merged) showSyncToast(Object.keys(merged).length + ' records synced', '#667eea');
+                    });
+                }
+                unlockApp('admin');
+            }, 400);
+        } else if (input === viewPassword) {
+            showCorrect();
+            setTimeout(() => {
+                if (!locEnabled) { unlockApp('view'); return; }
+                if (_locationReady) {
+                    if (!isInRange()) { showWrong('Wrong Location!'); return; }
+                    unlockApp('view');
+                } else {
+                    _showGpsWarning('Getting location...');
+                    _requestGpsForView(
+                        () => {
+                            const gw = document.getElementById('gpsWarning');
+                            if (gw) gw.style.display = 'none';
+                            if (!isInRange()) { showWrong('Wrong Location!'); return; }
+                            unlockApp('view');
+                        },
+                        msg => _showGpsWarning(msg)
+                    );
+                }
+            }, 400);
+        } else {
+            showWrong();
+        }
+    };
+
+    // Fast path: check local first, update from server in background
+    if (binId && apiKey) {
+        const localAdmin = localStorage.getItem('admin_password') || '1234';
+        const localView = localStorage.getItem('view_password') || '2468';
+        if (input === localAdmin || input === localView) {
+            doCheck();
+            fetch('https://api.jsonbin.io/v3/b/' + binId + '/latest', {
+                headers: { 'X-Bin-Meta': 'false', 'X-Access-Key': apiKey }
+            })
+            .then(r => r.json())
+            .then(json => {
+                const rec = (json.record || json || {});
+                if (rec.adminPassword) localStorage.setItem('admin_password', rec.adminPassword);
+                if (rec.viewPassword) localStorage.setItem('view_password', rec.viewPassword);
+            })
+            .catch(() => {});
+        } else {
+            fetch('https://api.jsonbin.io/v3/b/' + binId + '/latest', {
+                headers: { 'X-Bin-Meta': 'false', 'X-Access-Key': apiKey }
+            })
+            .then(r => r.json())
+            .then(json => {
+                const rec = (json.record || json || {});
+                if (rec.adminPassword) localStorage.setItem('admin_password', rec.adminPassword);
+                if (rec.viewPassword) localStorage.setItem('view_password', rec.viewPassword);
+            })
+            .catch(() => {})
+            .finally(() => doCheck());
+        }
+    } else {
+        doCheck();
     }
 }
 
@@ -2269,89 +2578,149 @@ function applyRoleAccess(role) {
     if (role === 'view') {
         const menuIcon = document.querySelector('.menu-icon');
         if (menuIcon) menuIcon.style.display = 'none';
+        // Hide admin-only menu items
+        document.querySelectorAll('.admin-only').forEach(el => el.style.display = 'none');
+    } else {
+        // Show admin-only items for admin
+        document.querySelectorAll('.admin-only').forEach(el => el.style.display = '');
     }
+    // Always close menu on login
+    const sideMenu = document.getElementById('sideMenu');
+    if (sideMenu) sideMenu.classList.remove('active');
 }
 
 // Role access applied at login
 
-// Fingerprint Authentication
-async function useFingerprintAuth() {
-    // Check if WebAuthn is supported
+// ============================================================
+// FINGERPRINT AUTHENTICATION
+// Admin fingerprint: registered via Menu > Fingerprint Setup (admin password required)
+// User fingerprint: registered via lock screen user fingerprint button (view password required)
+// ============================================================
+
+async function _registerFingerprint(role, password) {
     if (!window.PublicKeyCredential) {
-        showErrorPopup('❌ Fingerprint Not Supported!');
-        return;
+        alert('Fingerprint not supported on this device/browser.\nRequirements: HTTPS + fingerprint sensor + modern browser.');
+        return false;
     }
-    
-    const fingerprintEnabled = localStorage.getItem('fingerprint_enabled');
-    
-    if (!fingerprintEnabled) {
-        // First time setup
-        const setup = confirm('Fingerprint not set up yet!\n\nDo you want to set up fingerprint authentication?\n\nOK = Set up now\nCancel = Use password');
-        if (setup) {
-            await setupFingerprint();
-        }
-        return;
+    const savedPwd = role === 'admin'
+        ? (localStorage.getItem('admin_password') || '1234')
+        : (localStorage.getItem('view_password') || '2468');
+    if (password !== savedPwd) {
+        alert('Wrong password!');
+        return false;
     }
-    
-    // Authenticate with fingerprint
     try {
-        document.getElementById('passwordError').textContent = '👆 Place your finger on the sensor...';
-        document.getElementById('passwordError').style.color = '#4CAF50';
-        
-        const credentialId = localStorage.getItem('fingerprint_credential');
-        if (!credentialId) {
-            throw new Error('No fingerprint registered');
-        }
-        
-        // Create authentication challenge
         const challenge = new Uint8Array(32);
         window.crypto.getRandomValues(challenge);
-        
-        const publicKeyCredentialRequestOptions = {
-            challenge: challenge,
-            allowCredentials: [{
-                id: Uint8Array.from(atob(credentialId), c => c.charCodeAt(0)),
-                type: 'public-key',
-                transports: ['internal']
-            }],
-            timeout: 60000,
-            userVerification: 'required'
-        };
-        
-        const assertion = await navigator.credentials.get({
-            publicKey: publicKeyCredentialRequestOptions
+        const userId = new Uint8Array(16);
+        window.crypto.getRandomValues(userId);
+        const credential = await navigator.credentials.create({
+            publicKey: {
+                challenge,
+                rp: { name: 'Digital Control Copy', id: window.location.hostname || 'localhost' },
+                user: { id: userId, name: role + '@pcodeverify.app', displayName: role === 'admin' ? 'Admin' : 'User' },
+                pubKeyCredParams: [{ alg: -7, type: 'public-key' }, { alg: -257, type: 'public-key' }],
+                authenticatorSelection: { authenticatorAttachment: 'platform', userVerification: 'required' },
+                timeout: 60000,
+                attestation: 'none'
+            }
         });
-        
-        if (assertion) {
-            // Fingerprint verified successfully
-            document.getElementById('passwordError').textContent = '✅ Fingerprint verified!';
-            document.getElementById('passwordError').style.color = '#4CAF50';
+        if (credential) {
+            const credId = btoa(String.fromCharCode(...new Uint8Array(credential.rawId)));
+            localStorage.setItem('fp_credential_' + role, credId);
+            localStorage.setItem('fp_enabled_' + role, 'true');
             vibrateDevice([100, 50, 100]);
-            
-            setTimeout(() => {
-                unlockApp('admin');
-            }, 500);
+            showSuccessPopup((role === 'admin' ? 'Admin' : 'User') + ' fingerprint registered!');
+            return true;
         }
-    } catch (error) {
-        console.error('Fingerprint auth error:', error);
-        
-        // Show error popup at top
-        showErrorPopup('Wrong Fingerprint!');
-        
-        // Red highlight entire password box structure
+    } catch (err) {
+        if (err.name === 'NotAllowedError') alert('Fingerprint setup cancelled.');
+        else if (err.name === 'SecurityError') alert('HTTPS required for fingerprint.');
+        else alert('Fingerprint setup failed: ' + err.message);
+    }
+    return false;
+}
+
+async function _authenticateFingerprint(role) {
+    const credId = localStorage.getItem('fp_credential_' + role);
+    if (!credId) return false;
+    try {
+        const challenge = new Uint8Array(32);
+        window.crypto.getRandomValues(challenge);
+        const assertion = await navigator.credentials.get({
+            publicKey: {
+                challenge,
+                allowCredentials: [{ id: Uint8Array.from(atob(credId), c => c.charCodeAt(0)), type: 'public-key', transports: ['internal'] }],
+                timeout: 60000,
+                userVerification: 'required'
+            }
+        });
+        return !!assertion;
+    } catch (err) {
+        return false;
+    }
+}
+
+// Lock screen fingerprint button tap
+async function useFingerprintAuth(role) {
+    if (!window.PublicKeyCredential) {
+        showErrorPopup('Fingerprint not supported!');
+        return;
+    }
+    const isRegistered = localStorage.getItem('fp_enabled_' + role) === 'true';
+
+    if (!isRegistered) {
+        // First time — register
+        const pwd = prompt('Enter ' + (role === 'admin' ? 'admin' : 'user') + ' password to register fingerprint:');
+        if (!pwd) return;
+        await _registerFingerprint(role, pwd);
+        return;
+    }
+
+    // Authenticate
+    document.getElementById('passwordError').textContent = 'Place your finger on the sensor...';
+    document.getElementById('passwordError').style.color = '#667eea';
+    const ok = await _authenticateFingerprint(role);
+    document.getElementById('passwordError').textContent = '';
+
+    if (ok) {
+        vibrateDevice([100, 50, 100]);
+        if (role === 'admin') {
+            // Admin — no location check
+            if (isJsonBinConfigured()) {
+                syncFromServer().then(merged => {
+                    if (merged) showSyncToast(Object.keys(merged).length + ' records on server', '#667eea');
+                });
+            }
+            unlockApp('admin');
+        } else {
+            // User — location check
+            const locEnabled = localStorage.getItem('loc_enabled') === 'true';
+            if (!locEnabled) { unlockApp('view'); return; }
+            const passwordBox = document.querySelector('.password-box');
+            if (_locationReady) {
+                if (!isInRange()) { showErrorPopup('Wrong Location!'); vibrateDevice([50,50,50]); return; }
+                unlockApp('view');
+            } else {
+                _showGpsWarning('Getting location...');
+                _requestGpsForView(
+                    () => {
+                        const gw = document.getElementById('gpsWarning');
+                        if (gw) gw.style.display = 'none';
+                        if (!isInRange()) { showErrorPopup('Wrong Location!'); vibrateDevice([50,50,50]); return; }
+                        unlockApp('view');
+                    },
+                    msg => _showGpsWarning(msg)
+                );
+            }
+        }
+    } else {
+        showErrorPopup('Fingerprint not recognized!');
+        vibrateDevice([50, 50, 50, 50, 50]);
         const passwordBox = document.querySelector('.password-box');
         passwordBox.style.border = '3px solid #f44336';
-        passwordBox.style.boxShadow = '0 0 30px rgba(244, 67, 54, 0.8)';
+        passwordBox.style.boxShadow = '0 0 30px rgba(244,67,54,0.8)';
         passwordBox.style.animation = 'shake 0.5s';
-        
-        // Update error message
-        document.getElementById('passwordError').textContent = '❌ Fingerprint not recognized! Try again or use password.';
-        document.getElementById('passwordError').style.color = '#f44336';
-        
-        // Vibrate error pattern
-        vibrateDevice([50, 50, 50, 50, 50]);
-        
-        // Reset after animation
         setTimeout(() => {
             passwordBox.style.border = 'none';
             passwordBox.style.boxShadow = '0 10px 40px rgba(0,0,0,0.3)';
@@ -2360,129 +2729,30 @@ async function useFingerprintAuth() {
     }
 }
 
-// Setup Fingerprint
-async function setupFingerprint() {
-    try {
-        // Check if WebAuthn is supported
-        if (!window.PublicKeyCredential) {
-            alert('❌ Fingerprint Not Supported!\n\nYour browser/device does not support fingerprint authentication.\n\nRequirements:\n- HTTPS website (not HTTP)\n- Modern browser (Chrome, Edge, Safari)\n- Device with fingerprint sensor');
-            return;
-        }
-        
-        // Ask for password first
-        const password = prompt('Enter your current password to set up fingerprint:');
-        const savedPassword = localStorage.getItem('admin_password') || '1234';
-        
-        if (password !== savedPassword) {
-            alert('Wrong password! Cannot set up fingerprint.');
-            return;
-        }
-        
-        alert('✅ Password verified!\n\n👆 Now place your finger on the sensor to register your fingerprint.\n\nNote: You may need to scan your finger multiple times.');
-        
-        // Create registration challenge
-        const challenge = new Uint8Array(32);
-        window.crypto.getRandomValues(challenge);
-        
-        const userId = new Uint8Array(16);
-        window.crypto.getRandomValues(userId);
-        
-        const publicKeyCredentialCreationOptions = {
-            challenge: challenge,
-            rp: {
-                name: "P Code Verify",
-                id: window.location.hostname || "localhost"
-            },
-            user: {
-                id: userId,
-                name: "user@pcodeverify.app",
-                displayName: "P Code User"
-            },
-            pubKeyCredParams: [
-                {alg: -7, type: "public-key"},  // ES256
-                {alg: -257, type: "public-key"} // RS256
-            ],
-            authenticatorSelection: {
-                authenticatorAttachment: "platform",
-                requireResidentKey: false,
-                userVerification: "required"
-            },
-            timeout: 60000,
-            attestation: "none"
-        };
-        
-        console.log('Starting fingerprint registration...');
-        
-        const credential = await navigator.credentials.create({
-            publicKey: publicKeyCredentialCreationOptions
-        });
-        
-        if (credential) {
-            // Save credential ID
-            const credentialId = btoa(String.fromCharCode(...new Uint8Array(credential.rawId)));
-            localStorage.setItem('fingerprint_credential', credentialId);
-            localStorage.setItem('fingerprint_enabled', 'true');
-            
-            console.log('Fingerprint registered successfully!');
-            vibrateDevice([100, 50, 100, 50, 100]);
-            showSuccessPopup('✅ Fingerprint registered successfully! 👆');
-        }
-    } catch (error) {
-        console.error('Fingerprint setup error:', error);
-        
-        let errorMessage = 'Fingerprint setup failed!\n\n';
-        
-        if (error.name === 'NotAllowedError') {
-            errorMessage += 'Reason: Setup cancelled or permission denied.\n\nPlease try again and allow fingerprint access.';
-        } else if (error.name === 'NotSupportedError') {
-            errorMessage += 'Reason: Your device does not support fingerprint authentication.\n\nRequirements:\n- Device with fingerprint sensor\n- HTTPS connection (not HTTP)\n- Modern browser';
-        } else if (error.name === 'SecurityError') {
-            errorMessage += 'Reason: Security error.\n\nThis page must be served over HTTPS (not HTTP) for fingerprint to work.\n\nTry:\n- Upload to GitHub Pages (HTTPS)\n- Use localhost for testing';
-        } else if (error.name === 'InvalidStateError') {
-            errorMessage += 'Reason: Fingerprint already registered.\n\nGo to Menu → Fingerprint Setup to re-register.';
-        } else {
-            errorMessage += 'Reason: ' + error.message + '\n\nError Type: ' + error.name;
-        }
-        
-        alert(errorMessage);
-    }
-}
-
-// Manage Fingerprint from Menu
+// Menu > Fingerprint Setup (admin only — manages admin fingerprint)
 function manageFingerprintAuth() {
     if (!window.PublicKeyCredential) {
-        alert('❌ Fingerprint authentication not supported!\n\nYour device/browser does not support fingerprint authentication.\n\nSupported on:\n- Android Chrome/Edge\n- iOS Safari (iPhone with Touch ID/Face ID)\n- Windows Hello\n\nPlease use password instead.');
+        alert('Fingerprint not supported on this device.');
         toggleMenu();
         return;
     }
-    
-    const fingerprintEnabled = localStorage.getItem('fingerprint_enabled');
-    
-    if (fingerprintEnabled) {
-        // Already set up - show options
-        const choice = confirm('Fingerprint Authentication Status: ✅ ENABLED\n\nWhat do you want to do?\n\nOK = Re-register fingerprint\nCancel = Disable fingerprint');
-        
+    const enabled = localStorage.getItem('fp_enabled_admin') === 'true';
+    if (enabled) {
+        const choice = confirm('Admin fingerprint: ENABLED\n\nOK = Re-register\nCancel = Disable');
         if (choice) {
-            // Re-register
-            setupFingerprint();
+            const pwd = prompt('Enter admin password:');
+            if (pwd) _registerFingerprint('admin', pwd);
         } else {
-            // Disable
-            const confirmDisable = confirm('Are you sure you want to DISABLE fingerprint authentication?\n\nYou will need to use password only.');
-            if (confirmDisable) {
-                localStorage.removeItem('fingerprint_enabled');
-                localStorage.removeItem('fingerprint_credential');
-                showSuccessPopup('Fingerprint authentication disabled!');
-                vibrateDevice([100]);
+            if (confirm('Disable admin fingerprint?')) {
+                localStorage.removeItem('fp_enabled_admin');
+                localStorage.removeItem('fp_credential_admin');
+                showSuccessPopup('Admin fingerprint disabled.');
             }
         }
     } else {
-        // Not set up yet
-        const setup = confirm('Fingerprint Authentication Status: ❌ NOT SET UP\n\nDo you want to set up fingerprint authentication?\n\nOK = Set up now\nCancel = Cancel');
-        if (setup) {
-            setupFingerprint();
-        }
+        const pwd = prompt('Enter admin password to set up fingerprint:');
+        if (pwd) _registerFingerprint('admin', pwd);
     }
-    
     toggleMenu();
 }
 
@@ -2599,12 +2869,37 @@ function changePassword() {
         localStorage.setItem('password_type', 'password');
     }
     
+    // Sync to server so all devices get updated password
+    syncToServer();
+    
     vibrateDevice([100, 50, 100]);
     if (choice) {
         showSuccessPopup('4-Digit PIN set successfully! 🔢');
     } else {
         showSuccessPopup('Password changed successfully! 🔐');
     }
+    toggleMenu();
+}
+
+// Change User (view) Password — admin only, syncs to server
+function changeUserPassword() {
+    const adminPwd = prompt('Enter admin password to confirm:');
+    if (adminPwd !== (localStorage.getItem('admin_password') || '1234')) {
+        alert('Wrong admin password!');
+        vibrateDevice([50, 50, 50]);
+        return;
+    }
+    const newPwd = prompt('Enter new user password:\n(min 4 characters)');
+    if (!newPwd || newPwd.length < 4) { alert('Password too short! Min 4 characters.'); return; }
+    const confirmPwd = prompt('Confirm new user password:');
+    if (newPwd !== confirmPwd) { alert('Passwords do not match!'); vibrateDevice([50,50,50]); return; }
+
+    localStorage.setItem('view_password', newPwd);
+    // Sync to server so all user devices get updated
+    syncToServer().then(() => {
+        showSuccessPopup('User password updated and synced!');
+        vibrateDevice([100, 50, 100]);
+    });
     toggleMenu();
 }
 
@@ -2927,7 +3222,7 @@ function generateReport() {
         // Title
         doc.setFontSize(20);
         doc.setTextColor(102, 126, 234);
-        doc.text('P Code Verify - Report', 20, 20);
+        doc.text('Digital Control Copy - Report', 20, 20);
         
         // Date
         doc.setFontSize(10);
@@ -2980,7 +3275,7 @@ function generateReport() {
             doc.setFontSize(8);
             doc.setTextColor(150, 150, 150);
             doc.text(`Page ${i} of ${pageCount}`, 20, 285);
-            doc.text('Generated by P Code Verify', 150, 285);
+            doc.text('Generated by Digital Control Copy', 150, 285);
         }
         
         // Save PDF
@@ -3200,339 +3495,125 @@ function closeScanner() {
     }
 }
 
-// Download User Guide PDF
-function downloadUserGuide() {
-    try {
-        const { jsPDF } = window.jspdf;
-        const doc = new jsPDF();
-        
-        let y = 20;
-        
-        // Title
-        doc.setFontSize(24);
-        doc.setTextColor(102, 126, 234);
-        doc.text('P Code Verify', 105, y, { align: 'center' });
-        y += 10;
-        doc.setFontSize(16);
-        doc.text('Complete User Guide', 105, y, { align: 'center' });
-        y += 15;
-        
-        // Section 1: Getting Started
-        doc.setFontSize(14);
-        doc.setTextColor(102, 126, 234);
-        doc.text('1. GETTING STARTED', 20, y);
-        y += 8;
-        doc.setFontSize(10);
-        doc.setTextColor(0, 0, 0);
-        doc.text('Default Password: 1234', 25, y);
-        y += 6;
-        doc.text('Enter password to unlock the app', 25, y);
-        y += 6;
-        doc.text('Use fingerprint icon (green circle) for quick access', 25, y);
-        y += 12;
-        
-        // Section 2: Main Features
-        doc.setFontSize(14);
-        doc.setTextColor(102, 126, 234);
-        doc.text('2. MAIN FEATURES', 20, y);
-        y += 8;
-        doc.setFontSize(10);
-        doc.setTextColor(0, 0, 0);
-        
-        doc.text('Search Products:', 25, y);
-        y += 6;
-        doc.text('  - Type PCode, SKU, Case G/Case, Pouch G/Case, or Bulk G/Case', 30, y);
-        y += 6;
-        doc.text('  - Press Search button or Enter key', 30, y);
-        y += 6;
-        doc.text('  - Sound & vibration on results found', 30, y);
-        y += 10;
-        
-        doc.text('QR/Barcode Scanner:', 25, y);
-        y += 6;
-        doc.text('  - Click camera button', 30, y);
-        y += 6;
-        doc.text('  - Point camera at QR/Barcode', 30, y);
-        y += 6;
-        doc.text('  - Auto-search after scan', 30, y);
-        y += 12;
-        
-        // Section 3: Data Management
-        doc.setFontSize(14);
-        doc.setTextColor(102, 126, 234);
-        doc.text('3. DATA MANAGEMENT', 20, y);
-        y += 8;
-        doc.setFontSize(10);
-        doc.setTextColor(0, 0, 0);
-        
-        doc.text('Upload CSV File:', 25, y);
-        y += 6;
-        doc.text('  - Menu > Upload File (CSV/Excel)', 30, y);
-        y += 6;
-        doc.text('  - Select your CSV file', 30, y);
-        y += 6;
-        doc.text('  - Data imported automatically', 30, y);
-        y += 10;
-        
-        doc.text('Download CSV Template:', 25, y);
-        y += 6;
-        doc.text('  - Menu > Download CSV Template', 30, y);
-        y += 6;
-        doc.text('  - Fill template with your data', 30, y);
-        y += 6;
-        doc.text('  - Upload filled template', 30, y);
-        y += 10;
-        
-        doc.text('Add Manual Data:', 25, y);
-        y += 6;
-        doc.text('  - Menu > Add Manual Data', 30, y);
-        y += 6;
-        doc.text('  - Fill all required fields', 30, y);
-        y += 6;
-        doc.text('  - Enter password to save', 30, y);
-        y += 6;
-        doc.text('  - Duplicate PCode? Confirm to update', 30, y);
-        y += 12;
-        
-        // New Page
-        doc.addPage();
-        y = 20;
-        
-        // Section 4: CSV Template Structure
-        doc.setFontSize(14);
-        doc.setTextColor(102, 126, 234);
-        doc.text('4. CSV TEMPLATE STRUCTURE (19 Columns)', 20, y);
-        y += 8;
-        doc.setFontSize(9);
-        doc.setTextColor(0, 0, 0);
-        
-        const columns = [
-            '1. PCode - Product Code (Required)',
-            '2. SKU - Description/SKU',
-            '3. BulkGCase - Bulk G/Case',
-            '4. MRPOld - Old MRP (Rs.)',
-            '5. MRPNew - New MRP (Rs.)',
-            '6. PerUnitMRP - Per Unit MRP',
-            '7. PouchGCase - Pouch G/Case',
-            '8. CaseGCase - Case G/Case',
-            '9. ZPartition - Z Partition',
-            '10. CasePouch - Case/Pouch',
-            '11. PalletShipper - Pallet/Shipper',
-            '12. LSL - Lower Specification Limit',
-            '13. Target - Target Weight',
-            '14. USL - Upper Specification Limit',
-            '15. Tera - Tera (e.g., 21.23-25.29-27.21)',
-            '16. SecLsl - Secondary LSL',
-            '17. SecTarget - Secondary Target',
-            '18. SecUsl - Secondary USL',
-            '19. SecTera - Secondary Tera'
-        ];
-        
-        columns.forEach(col => {
-            doc.text(col, 25, y);
-            y += 5;
-        });
-        
-        y += 5;
-        doc.setFontSize(10);
-        doc.text('Note: Secondary columns 7-11 use same values as Primary', 25, y);
-        y += 15;
-        
-        // Section 5: Password & Security
-        doc.setFontSize(14);
-        doc.setTextColor(102, 126, 234);
-        doc.text('5. PASSWORD & SECURITY', 20, y);
-        y += 8;
-        doc.setFontSize(10);
-        doc.setTextColor(0, 0, 0);
-        
-        doc.text('Change Password:', 25, y);
-        y += 6;
-        doc.text('  - Menu > Change Password', 30, y);
-        y += 6;
-        doc.text('  - Enter current password', 30, y);
-        y += 6;
-        doc.text('  - Choose: 4-Digit PIN or Multi-Character Password', 30, y);
-        y += 6;
-        doc.text('  - 4-Digit PIN: Exactly 4 numbers (e.g., 1234)', 30, y);
-        y += 6;
-        doc.text('  - Strong Password: Min 6 characters (e.g., MyApp@123)', 30, y);
-        y += 10;
-        
-        doc.text('Fingerprint Setup:', 25, y);
-        y += 6;
-        doc.text('  - Menu > Fingerprint Setup', 30, y);
-        y += 6;
-        doc.text('  - Enter password to verify', 30, y);
-        y += 6;
-        doc.text('  - Place finger on sensor', 30, y);
-        y += 6;
-        doc.text('  - Fingerprint registered!', 30, y);
-        y += 6;
-        doc.text('  - Requirements: HTTPS, Modern browser, Fingerprint sensor', 30, y);
-        y += 15;
-        
-        // New Page
-        doc.addPage();
-        y = 20;
-        
-        // Section 6: Customization
-        doc.setFontSize(14);
-        doc.setTextColor(102, 126, 234);
-        doc.text('6. CUSTOMIZATION', 20, y);
-        y += 8;
-        doc.setFontSize(10);
-        doc.setTextColor(0, 0, 0);
-        
-        doc.text('Change Theme:', 25, y);
-        y += 6;
-        doc.text('  - Menu > Change Theme', 30, y);
-        y += 6;
-        doc.text('  - 16 pre-built themes available', 30, y);
-        y += 6;
-        doc.text('  - Custom Color: Choose your own colors', 30, y);
-        y += 6;
-        doc.text('  - Primary & Secondary color selection', 30, y);
-        y += 10;
-        
-        doc.text('Dark Mode:', 25, y);
-        y += 6;
-        doc.text('  - Click moon/sun icon in header', 30, y);
-        y += 6;
-        doc.text('  - Or Menu > Dark Mode', 30, y);
-        y += 6;
-        doc.text('  - Saves preference automatically', 30, y);
-        y += 15;
-        
-        // Section 7: Product Cards
-        doc.setFontSize(14);
-        doc.setTextColor(102, 126, 234);
-        doc.text('7. PRODUCT CARDS', 20, y);
-        y += 8;
-        doc.setFontSize(10);
-        doc.setTextColor(0, 0, 0);
-        
-        doc.text('Primary/Secondary Tabs:', 25, y);
-        y += 6;
-        doc.text('  - Click PRIMARY tab: View primary weight data', 30, y);
-        y += 6;
-        doc.text('  - Click SECONDARY tab: View secondary weight data', 30, y);
-        y += 10;
-        
-        doc.text('Card Actions:', 25, y);
-        y += 6;
-        doc.text('  - Edit: Modify product data (password required)', 30, y);
-        y += 6;
-        doc.text('  - Delete: Remove product (password required)', 30, y);
-        y += 6;
-        doc.text('  - Share: Share via WhatsApp or Copy to clipboard', 30, y);
-        y += 15;
-        
-        // Section 8: Advanced Features
-        doc.setFontSize(14);
-        doc.setTextColor(102, 126, 234);
-        doc.text('8. ADVANCED FEATURES', 20, y);
-        y += 8;
-        doc.setFontSize(10);
-        doc.setTextColor(0, 0, 0);
-        
-        doc.text('Filters:', 25, y);
-        y += 6;
-        doc.text('  - Click filter button (down arrow)', 30, y);
-        y += 6;
-        doc.text('  - Set price range (Min/Max)', 30, y);
-        y += 6;
-        doc.text('  - Sort by: PCode, Price (Low-High, High-Low)', 30, y);
-        y += 10;
-        
-        doc.text('Result Count:', 25, y);
-        y += 6;
-        doc.text('  - Shows when multiple results found', 30, y);
-        y += 6;
-        doc.text('  - Displays total matching products', 30, y);
-        y += 10;
-        
-        doc.text('Compact View:', 25, y);
-        y += 6;
-        doc.text('  - Multiple results show in compact cards', 30, y);
-        y += 6;
-        doc.text('  - Single result shows full details', 30, y);
-        y += 15;
-        
-        // Section 9: Tips & Tricks
-        doc.setFontSize(14);
-        doc.setTextColor(102, 126, 234);
-        doc.text('9. TIPS & TRICKS', 20, y);
-        y += 8;
-        doc.setFontSize(10);
-        doc.setTextColor(0, 0, 0);
-        
-        doc.text('- Use QR scanner for quick product lookup', 25, y);
-        y += 6;
-        doc.text('- Download CSV template before adding bulk data', 25, y);
-        y += 6;
-        doc.text('- Enable fingerprint for faster login', 25, y);
-        y += 6;
-        doc.text('- Use dark mode to save battery', 25, y);
-        y += 6;
-        doc.text('- Share products directly via WhatsApp', 25, y);
-        y += 6;
-        doc.text('- Search works on multiple fields simultaneously', 25, y);
-        y += 6;
-        doc.text('- Password protects all data operations', 25, y);
-        y += 15;
-        
-        // Section 10: Troubleshooting
-        doc.setFontSize(14);
-        doc.setTextColor(102, 126, 234);
-        doc.text('10. TROUBLESHOOTING', 20, y);
-        y += 8;
-        doc.setFontSize(10);
-        doc.setTextColor(0, 0, 0);
-        
-        doc.text('Fingerprint not working?', 25, y);
-        y += 6;
-        doc.text('  - Ensure HTTPS connection (not HTTP)', 30, y);
-        y += 6;
-        doc.text('  - Check device has fingerprint sensor', 30, y);
-        y += 6;
-        doc.text('  - Use modern browser (Chrome, Edge, Safari)', 30, y);
-        y += 10;
-        
-        doc.text('Data not showing?', 25, y);
-        y += 6;
-        doc.text('  - Use search to find products', 30, y);
-        y += 6;
-        doc.text('  - Check if data was uploaded successfully', 30, y);
-        y += 10;
-        
-        doc.text('Scanner not working?', 25, y);
-        y += 6;
-        doc.text('  - Allow camera permission', 30, y);
-        y += 6;
-        doc.text('  - Ensure good lighting', 30, y);
-        y += 15;
-        
-        // Footer
-        doc.setFontSize(8);
-        doc.setTextColor(150, 150, 150);
-        const pageCount = doc.internal.getNumberOfPages();
-        for (let i = 1; i <= pageCount; i++) {
-            doc.setPage(i);
-            doc.text(`Page ${i} of ${pageCount}`, 105, 285, { align: 'center' });
-            doc.text('P Code Verify - User Guide', 20, 285);
-            doc.text(new Date().toLocaleDateString(), 190, 285, { align: 'right' });
+// User Guide popup
+function downloadUserGuide() { openUserGuide(); }
+
+var _guideLang = 'en';
+
+function _guideContent(mode, lang) {
+    const en = {
+        quick: {
+            title: 'Quick Guide',
+            s1h: '1. Login / Lock Screen',
+            s1b: 'Enter your Admin or User password to unlock.<br>Admin login: data sync only, no location check.<br>User login: if Location Lock is ON, GPS will be checked.<br>Blue button = Admin fingerprint &nbsp;|&nbsp; Green button = User fingerprint.<br>First fingerprint tap: enter password to register.<br>Next tap: opens directly via fingerprint.<br>? button on lock screen: opens this guide.',
+            s2h: '2. Search &amp; Scan',
+            s2b: 'Search by PCode, SKU, Case G/Case, Pouch G/Case, Bulk G/Case.<br>📷 Camera button: scan QR/Barcode, auto-search.<br>✖ button: clear search.<br>🔽 Filter button: price range &amp; sort options.'
+        },
+        full: {
+            title: 'User Guide',
+            s1h: '1. Login / Lock Screen',
+            s1b: 'Enter Admin or User password to unlock.<br>Admin: data sync only, no location check.<br>User: GPS checked if Location Lock is ON.<br>Blue = Admin fingerprint &nbsp;|&nbsp; Green = User fingerprint.<br>First tap: register with password. Next tap: direct access.',
+            s2h: '2. Search &amp; Scan',
+            s2b: 'Search by PCode, SKU, Case G/Case, Pouch G/Case, Bulk G/Case.<br>📷 Scan QR/Barcode — auto search.<br>✖ Clear search &nbsp;|&nbsp; 🔽 Filter: price range &amp; sort.',
+            s3h: '3. Data Management',
+            s3b: 'Upload CSV/Excel: Menu &gt; Upload File.<br>Template: Menu &gt; Download CSV Template.<br>Manual entry: Menu &gt; Add Manual Data.<br>Edit/Delete: tap button on card (password required).<br>Share: WhatsApp or clipboard.',
+            s4h: '4. CSV Format (19 Columns)',
+            s4b: 'PCode, SKU, BulkGCase, MRPOld, MRPNew, PerUnitMRP,<br>PouchGCase, CaseGCase, ZPartition, CasePouch, PalletShipper,<br>LSL, Target, USL, Tera, SecLsl, SecTarget, SecUsl, SecTera.',
+            s5h: '5. Password &amp; Security',
+            s5b: 'Change Admin Password: Menu &gt; Change Admin Password.<br>Change User Password: Menu &gt; Change User Password (admin only, syncs to server).<br>Fingerprint Setup: Menu &gt; Fingerprint Setup.',
+            s6h: '6. Location Lock',
+            s6b: 'Menu &gt; Location Settings (admin password required).<br>Set Location 1 &amp; 2 (use Auto button to fill GPS).<br>Set radius in meters. Enable Location Lock checkbox.<br>User out of range: red warning + data blocked.<br>Admin: location never checked.',
+            s7h: '7. Online Sync (JSONBin)',
+            s7b: 'Menu &gt; API / Bin ID Settings.<br>Admin device: enter API Key + Bin ID.<br>User device: enter Bin ID only (read-only).<br>Refresh button: sync data + location.',
+            s8h: '8. Customization',
+            s8b: 'Theme: Menu &gt; Change Theme (16 themes + custom color).<br>Dark Mode: moon icon in header or Menu &gt; Dark Mode.',
+            s9h: '9. Troubleshooting',
+            s9b: 'Fingerprint not working: needs HTTPS, modern browser, fingerprint sensor.<br>Scanner not working: allow camera permission.<br>Location mismatch: turn on GPS, increase radius.<br>Sync failed: check API Key and Bin ID.'
         }
-        
-        // Save PDF
-        doc.save('P_Code_Verify_User_Guide.pdf');
-        vibrateDevice([100]);
-        showSuccessPopup('User Guide downloaded! 📖');
-        toggleMenu();
-    } catch (error) {
-        console.error('Error generating guide:', error);
-        alert('Error generating user guide: ' + error.message);
+    };
+    const hi = {
+        quick: {
+            title: 'Quick Guide',
+            s1h: '1. Login / Lock Screen',
+            s1b: 'Admin ya User password dalo unlock karne ke liye.<br>Admin login: sirf data sync, location check nahi.<br>User login: agar Location Lock ON hai to GPS check hoga.<br>Blue button = Admin fingerprint &nbsp;|&nbsp; Green = User fingerprint.<br>Pehli baar tap: password dalo register karne ke liye.<br>Dobara tap: fingerprint se seedha open.<br>Lock screen pe ? button: ye guide khulega.',
+            s2h: '2. Search &amp; Scan',
+            s2b: 'PCode, SKU, Case G/Case, Pouch G/Case, Bulk G/Case se search karo.<br>📷 Camera button: QR/Barcode scan, auto search.<br>✖ button: search clear karo.<br>🔽 Filter: price range aur sort options.'
+        },
+        full: {
+            title: 'User Guide',
+            s1h: '1. Login / Lock Screen',
+            s1b: 'Admin ya User password dalo unlock karne ke liye.<br>Admin: sirf data sync, location check nahi.<br>User: agar Location Lock ON hai to GPS check hoga.<br>Blue = Admin fingerprint &nbsp;|&nbsp; Green = User fingerprint.<br>Pehli tap: password se register. Dobara tap: seedha open.',
+            s2h: '2. Search &amp; Scan',
+            s2b: 'PCode, SKU, Case G/Case, Pouch G/Case, Bulk G/Case se search karo.<br>📷 QR/Barcode scan — auto search.<br>✖ Search clear &nbsp;|&nbsp; 🔽 Filter: price range aur sort.',
+            s3h: '3. Data Management',
+            s3b: 'Upload CSV/Excel: Menu &gt; Upload File.<br>Template: Menu &gt; Download CSV Template.<br>Manual entry: Menu &gt; Add Manual Data.<br>Edit/Delete: card pe button tap karo (password required).<br>Share: WhatsApp ya clipboard.',
+            s4h: '4. CSV Format (19 Columns)',
+            s4b: 'PCode, SKU, BulkGCase, MRPOld, MRPNew, PerUnitMRP,<br>PouchGCase, CaseGCase, ZPartition, CasePouch, PalletShipper,<br>LSL, Target, USL, Tera, SecLsl, SecTarget, SecUsl, SecTera.',
+            s5h: '5. Password &amp; Security',
+            s5b: 'Admin Password change: Menu &gt; Change Admin Password.<br>User Password change: Menu &gt; Change User Password (admin only, server sync hoga).<br>Fingerprint Setup: Menu &gt; Fingerprint Setup.',
+            s6h: '6. Location Lock',
+            s6b: 'Menu &gt; Location Settings (admin password required).<br>Location 1 &amp; 2 set karo (Auto button se GPS fill hoga).<br>Radius meters mein set karo. Enable Location Lock checkbox ON karo.<br>User range se bahar: red warning + data block.<br>Admin ke liye location check kabhi nahi hoga.',
+            s7h: '7. Online Sync (JSONBin)',
+            s7b: 'Menu &gt; API / Bin ID Settings.<br>Admin device: API Key + Bin ID dono dalo.<br>User device: sirf Bin ID dalo (read-only).<br>Refresh button: data + location sync.',
+            s8h: '8. Customization',
+            s8b: 'Theme: Menu &gt; Change Theme (16 themes + custom color).<br>Dark Mode: header moon icon ya Menu &gt; Dark Mode.',
+            s9h: '9. Troubleshooting',
+            s9b: 'Fingerprint kaam nahi: HTTPS chahiye, modern browser, fingerprint sensor.<br>Scanner kaam nahi: camera permission allow karo.<br>Location match nahi: GPS on karo, radius badhao.<br>Sync fail: API Key aur Bin ID check karo.'
+        }
+    };
+    return lang === 'hi' ? hi[mode] : en[mode];
+}
+
+function _buildGuideHTML(mode) {
+    const lang = _guideLang;
+    const d = _guideContent(mode, lang);
+    const otherLang = lang === 'en' ? 'hi' : 'en';
+    const btnLabel = lang === 'en' ? '🇮🇳 हिंदी' : '🇬🇧 English';
+    const colors = ['#e8f0fe','#e8f5e9','#fff3e0','#fce4ec','#e8f0fe','#e8f5e9','#fff3e0','#fce4ec','#e8f0fe'];
+    const hcolors = ['#667eea','#4CAF50','#FF9800','#e91e63','#667eea','#4CAF50','#FF9800','#e91e63','#667eea'];
+
+    let sections = '';
+    if (mode === 'quick') {
+        sections = `<div style="background:${colors[0]};border-radius:10px;padding:12px 14px;margin-bottom:14px;"><b style="color:${hcolors[0]};">${d.s1h}</b><br>${d.s1b}</div><div style="background:${colors[1]};border-radius:10px;padding:12px 14px;margin-bottom:0;"><b style="color:${hcolors[1]};">${d.s2h}</b><br>${d.s2b}</div>`;
+    } else {
+        const keys = ['s1','s2','s3','s4','s5','s6','s7','s8','s9'];
+        keys.forEach((k,i) => {
+            sections += `<div style="background:${colors[i]};border-radius:10px;padding:12px 14px;margin-bottom:14px;"><b style="color:${hcolors[i]};">${d[k+'h']}</b><br>${d[k+'b']}</div>`;
+        });
     }
+
+    return `<div style="background:white;border-radius:16px;width:100%;max-width:500px;box-shadow:0 10px 40px rgba(0,0,0,0.4);margin:auto;overflow:hidden;">
+<div style="background:linear-gradient(135deg,#667eea,#764ba2);padding:14px 18px;display:flex;justify-content:space-between;align-items:center;">
+  <div><div style="color:white;font-size:17px;font-weight:700;">&#128214; ${d.title}</div><div style="color:rgba(255,255,255,0.8);font-size:11px;">P Code Verify</div></div>
+  <div style="display:flex;align-items:center;gap:8px;">
+    <button onclick="_guideLang='${otherLang}';document.getElementById('guideBody').innerHTML=_buildGuideHTML('${mode}');" style="background:rgba(255,255,255,0.2);border:1px solid rgba(255,255,255,0.5);color:white;padding:4px 10px;border-radius:20px;cursor:pointer;font-size:12px;">${btnLabel}</button>
+    <span onclick="document.getElementById('userGuideModal').remove()" style="color:white;font-size:24px;cursor:pointer;line-height:1;">&times;</span>
+  </div>
+</div>
+<div id="guideBody" style="padding:16px;font-size:13px;color:#333;line-height:1.7;max-height:78vh;overflow-y:auto;">${sections}</div>
+</div>`;
+}
+
+function openUserGuide() {
+    const existing = document.getElementById('userGuideModal');
+    if (existing) { existing.remove(); return; }
+    const modal = document.createElement('div');
+    modal.id = 'userGuideModal';
+    modal.style.cssText = 'position:fixed;top:0;left:0;width:100%;height:100%;background:rgba(0,0,0,0.7);display:flex;justify-content:center;align-items:flex-start;padding:15px;box-sizing:border-box;z-index:99999;overflow-y:auto;';
+    modal.innerHTML = _buildGuideHTML('quick');
+    document.body.appendChild(modal);
+    modal.addEventListener('click', e => { if (e.target === modal) modal.remove(); });
+}
+
+function openFullGuide() {
+    const existing = document.getElementById('userGuideModal');
+    if (existing) { existing.remove(); return; }
+    const modal = document.createElement('div');
+    modal.id = 'userGuideModal';
+    modal.style.cssText = 'position:fixed;top:0;left:0;width:100%;height:100%;background:rgba(0,0,0,0.7);display:flex;justify-content:center;align-items:flex-start;padding:15px;box-sizing:border-box;z-index:99999;overflow-y:auto;';
+    modal.innerHTML = _buildGuideHTML('full');
+    document.body.appendChild(modal);
+    modal.addEventListener('click', e => { if (e.target === modal) modal.remove(); });
 }
 
 // Download APK function placeholder
@@ -3541,28 +3622,518 @@ function downloadAPK() {
     toggleMenu();
 }
 
+
+// ===== CALCULATOR =====
+function openCalculator() {
+    window.location.href = 'calculator.html';
+}
+
+// ============================================================
+// CENTERLINE FEATURE
+// ============================================================
+
+function openCenterlineAdmin() {
+    toggleMenu();
+    const existing = document.getElementById('centerlineAdminModal');
+    if (existing) existing.remove();
+
+    const lines = JSON.parse(localStorage.getItem('centerlineData') || '[]');
+    const rows = lines.map((item, i) =>
+        `<div style="display:flex;justify-content:space-between;align-items:center;padding:8px 10px;background:#f5f5f5;border-radius:6px;margin-bottom:5px;font-size:13px;">
+            <span><strong>Line ${item.line}</strong> | ${item.sku} | ${item.variant}</span>
+            <button onclick="deleteCenterlineItem(${i})" style="background:#f44336;color:white;border:none;padding:2px 8px;border-radius:4px;cursor:pointer;font-size:11px;">✕</button>
+        </div>`
+    ).join('') || '<p style="color:#999;font-size:13px;text-align:center;">No data yet. Add below.</p>';
+
+    const modal = document.createElement('div');
+    modal.id = 'centerlineAdminModal';
+    modal.style.cssText = 'position:fixed;top:0;left:0;width:100%;height:100%;background:rgba(0,0,0,0.6);display:flex;justify-content:center;align-items:flex-start;z-index:9999;padding:15px;box-sizing:border-box;overflow-y:auto;';
+    modal.innerHTML = `
+    <div style="background:white;border-radius:12px;max-width:480px;width:100%;margin:auto;overflow:hidden;">
+        <div style="background:linear-gradient(135deg,#667eea,#764ba2);padding:14px 18px;display:flex;justify-content:space-between;align-items:center;">
+            <span style="color:white;font-weight:700;font-size:16px;">📋 Centerline Data</span>
+            <button onclick="document.getElementById('centerlineAdminModal').remove()" style="background:rgba(255,255,255,0.2);border:none;color:white;font-size:20px;width:30px;height:30px;border-radius:50%;cursor:pointer;">✕</button>
+        </div>
+        <div style="padding:15px;">
+            <div style="background:#e3f2fd;border:1.5px solid #2196F3;border-radius:8px;padding:12px;margin-bottom:12px;">
+                <h3 style="margin:0 0 10px;color:#1565c0;font-size:14px;">➕ Add New Entry</h3>
+                <div style="display:grid;grid-template-columns:1fr 1fr 1fr;gap:8px;margin-bottom:10px;">
+                    <div>
+                        <label style="font-size:11px;font-weight:600;color:#555;display:block;margin-bottom:3px;">Line No.</label>
+                        <input id="clLine" type="number" placeholder="1" min="1" style="width:100%;padding:8px;border:2px solid #ddd;border-radius:6px;font-size:14px;">
+                    </div>
+                    <div>
+                        <label style="font-size:11px;font-weight:600;color:#555;display:block;margin-bottom:3px;">SKU</label>
+                        <input id="clSku" placeholder="SKU" style="width:100%;padding:8px;border:2px solid #ddd;border-radius:6px;font-size:14px;">
+                    </div>
+                    <div>
+                        <label style="font-size:11px;font-weight:600;color:#555;display:block;margin-bottom:3px;">Variant</label>
+                        <input id="clVariant" placeholder="Variant" style="width:100%;padding:8px;border:2px solid #ddd;border-radius:6px;font-size:14px;">
+                    </div>
+                </div>
+                <button onclick="saveCenterlineItem()" style="width:100%;padding:10px;background:#667eea;color:white;border:none;border-radius:8px;font-size:14px;cursor:pointer;font-weight:700;">💾 Save Entry</button>
+            </div>
+            <h3 style="font-size:13px;color:#333;margin-bottom:8px;">📋 All Entries</h3>
+            <div id="centerlineList" style="max-height:200px;overflow-y:auto;">${rows}</div>
+            <button onclick="syncCenterlineToServer()" style="width:100%;margin-top:12px;padding:10px;background:#4caf50;color:white;border:none;border-radius:8px;font-size:14px;cursor:pointer;font-weight:700;">☁️ Sync to Server</button>
+        </div>
+    </div>`;
+    document.body.appendChild(modal);
+    modal.addEventListener('click', e => { if (e.target === modal) modal.remove(); });
+}
+
+function saveCenterlineItem() {
+    const line = document.getElementById('clLine').value.trim();
+    const sku  = document.getElementById('clSku').value.trim();
+    const variant = document.getElementById('clVariant').value.trim();
+    if (!line || !sku) { alert('Line No. and SKU required!'); return; }
+    const data = JSON.parse(localStorage.getItem('centerlineData') || '[]');
+    data.push({ line: parseInt(line), sku, variant });
+    data.sort((a,b) => a.line - b.line);
+    localStorage.setItem('centerlineData', JSON.stringify(data));
+    document.getElementById('centerlineAdminModal').remove();
+    openCenterlineAdmin();
+}
+
+function deleteCenterlineItem(index) {
+    if (!confirm('Delete this entry?')) return;
+    const data = JSON.parse(localStorage.getItem('centerlineData') || '[]');
+    data.splice(index, 1);
+    localStorage.setItem('centerlineData', JSON.stringify(data));
+    document.getElementById('centerlineAdminModal').remove();
+    openCenterlineAdmin();
+}
+
+function syncCenterlineToServer() {
+    syncToServer().then(() => showSyncToast('✅ Centerline synced!', '#4caf50'));
+}
+
+// User: Centerline popup on card click
+function openCenterlineUser() {
+    const existing = document.getElementById('centerlineUserModal');
+    if (existing) existing.remove();
+
+    const modal = document.createElement('div');
+    modal.id = 'centerlineUserModal';
+    modal.style.cssText = 'position:fixed;top:0;left:0;width:100%;height:100%;background:rgba(0,0,0,0.6);display:flex;justify-content:center;align-items:center;z-index:9999;padding:15px;box-sizing:border-box;';
+    modal.innerHTML = `
+    <div style="background:white;border-radius:14px;max-width:380px;width:100%;overflow:hidden;box-shadow:0 10px 40px rgba(0,0,0,0.3);">
+        <div style="background:linear-gradient(135deg,#667eea,#764ba2);padding:16px 20px;display:flex;justify-content:space-between;align-items:center;">
+            <h2 style="margin:0;color:white;font-size:17px;">📋 Centerline</h2>
+            <button onclick="document.getElementById('centerlineUserModal').remove()" style="background:rgba(255,255,255,0.2);border:none;color:white;font-size:22px;width:32px;height:32px;border-radius:50%;cursor:pointer;">✕</button>
+        </div>
+        <div style="padding:20px;">
+            <p style="color:#555;font-size:14px;margin-bottom:16px;">Select centerline type:</p>
+            <div style="display:flex;gap:12px;">
+                <button onclick="openCenterlineDetail('primary')" style="flex:1;padding:16px;background:linear-gradient(135deg,#667eea,#764ba2);color:white;border:none;border-radius:10px;font-size:15px;font-weight:700;cursor:pointer;">
+                    🔵 Primary<br><span style="font-size:11px;opacity:0.8;">Centerline</span>
+                </button>
+                <button onclick="openCenterlineDetail('secondary')" style="flex:1;padding:16px;background:linear-gradient(135deg,#764ba2,#f44336);color:white;border:none;border-radius:10px;font-size:15px;font-weight:700;cursor:pointer;">
+                    🔴 Secondary<br><span style="font-size:11px;opacity:0.8;">Centerline</span>
+                </button>
+            </div>
+        </div>
+    </div>`;
+    document.body.appendChild(modal);
+    modal.addEventListener('click', e => { if (e.target === modal) modal.remove(); });
+}
+
+function openCenterlineDetail(type) {
+    document.getElementById('centerlineUserModal').remove();
+
+    const data = JSON.parse(localStorage.getItem('centerlineData') || '[]');
+    if (data.length === 0) {
+        alert('No centerline data available. Ask admin to add data.');
+        return;
+    }
+
+    const color = type === 'primary' ? '#667eea' : '#764ba2';
+    const title = type === 'primary' ? '🔵 Primary Centerline' : '🔴 Secondary Centerline';
+
+    const rows = data.map(item =>
+        `<div style="display:flex;align-items:center;gap:10px;padding:10px 12px;border-bottom:1px solid #f0f0f0;cursor:pointer;" onclick="selectCenterlineItem(${item.line},'${item.sku}','${item.variant}')" onmouseover="this.style.background='#f5f5f5'" onmouseout="this.style.background=''">
+            <div style="width:32px;height:32px;background:${color};color:white;border-radius:50%;display:flex;align-items:center;justify-content:center;font-weight:700;font-size:13px;flex-shrink:0;">${item.line}</div>
+            <div>
+                <div style="font-weight:700;font-size:14px;color:#333;">${item.sku}</div>
+                <div style="font-size:12px;color:#888;">${item.variant || '—'}</div>
+            </div>
+        </div>`
+    ).join('');
+
+    const modal = document.createElement('div');
+    modal.id = 'centerlineDetailModal';
+    modal.style.cssText = 'position:fixed;top:0;left:0;width:100%;height:100%;background:rgba(0,0,0,0.6);display:flex;justify-content:center;align-items:flex-start;z-index:9999;padding:15px;box-sizing:border-box;overflow-y:auto;';
+    modal.innerHTML = `
+    <div style="background:white;border-radius:12px;max-width:400px;width:100%;margin:auto;overflow:hidden;">
+        <div style="background:${color};padding:14px 18px;display:flex;justify-content:space-between;align-items:center;">
+            <span style="color:white;font-weight:700;font-size:15px;">${title}</span>
+            <button onclick="document.getElementById('centerlineDetailModal').remove()" style="background:rgba(255,255,255,0.2);border:none;color:white;font-size:20px;width:30px;height:30px;border-radius:50%;cursor:pointer;">✕</button>
+        </div>
+        <div style="max-height:60vh;overflow-y:auto;">${rows}</div>
+    </div>`;
+    document.body.appendChild(modal);
+    modal.addEventListener('click', e => { if (e.target === modal) modal.remove(); });
+}
+
+function selectCenterlineItem(line, sku, variant) {
+    document.getElementById('centerlineDetailModal').remove();
+    // Search for this SKU
+    const searchInput = document.getElementById('searchInput');
+    if (searchInput) {
+        searchInput.value = sku;
+        searchData();
+    }
+    showSyncToast('Line ' + line + ' | ' + sku + ' | ' + variant, '#667eea');
+}
+
+function openCalculatorSettings() {
+    toggleMenu();
+    const existing = document.getElementById('calculatorSettingsModal');
+    if (existing) existing.remove();
+
+    const custom = JSON.parse(localStorage.getItem('customFormulas') || '{}');
+    const defaultF = {
+        'S1 70g': { pouchToShipper:2,  shipperToPallet:48, speed:3,  unit:'met'   },
+        '300g':   { pouchToShipper:24, shipperToPallet:42, speed:40, unit:'Pouch' },
+        '500g':   { pouchToShipper:12, shipperToPallet:50, speed:30, unit:'Pouch' },
+        '850g':   { pouchToShipper:12, shipperToPallet:40, speed:20, unit:'Pouch' },
+        '900g':   { pouchToShipper:12, shipperToPallet:40, speed:18, unit:'Pouch' },
+        '1kg':    { pouchToShipper:12, shipperToPallet:50, speed:15, unit:'Pouch' },
+        '2kg':    { pouchToShipper:6,  shipperToPallet:40, speed:10, unit:'Pouch' },
+        '3kg':    { pouchToShipper:4,  shipperToPallet:36, speed:8,  unit:'Pouch' },
+        '4kg':    { pouchToShipper:4,  shipperToPallet:30, speed:6,  unit:'Pouch' },
+        '5kg':    { pouchToShipper:4,  shipperToPallet:24, speed:5,  unit:'Pouch' },
+        '6kg':    { pouchToShipper:2,  shipperToPallet:20, speed:4,  unit:'Pouch' },
+    };
+    const allF = Object.assign({}, defaultF, custom);
+    const weightOpts = Object.keys(allF).map(k=>`<option value="${k}">${k}</option>`).join('');
+    const rows = Object.keys(allF).map(k=>{
+        const f=allF[k], isC=!!custom[k];
+        return `<div style="display:flex;justify-content:space-between;align-items:center;padding:8px 10px;background:${isC?'#e8f5e9':'#f5f5f5'};border-radius:7px;margin-bottom:6px;font-size:13px;flex-wrap:wrap;gap:4px;">
+            <div><strong>${k}</strong> | ${f.pouchToShipper} Pouch/Shipper | ${f.shipperToPallet} Shipper/Pallet | ${f.speed} ${f.unit}/min</div>
+            ${isC?`<button onclick="deleteCalcFormula('${k}')" style="background:#f44336;color:white;border:none;padding:3px 9px;border-radius:5px;cursor:pointer;font-size:12px;">🗑</button>`:'<span style="font-size:11px;color:#999;">default</span>'}
+        </div>`;
+    }).join('');
+
+    const modal = document.createElement('div');
+    modal.id = 'calculatorSettingsModal';
+    modal.style.cssText = 'position:fixed;top:0;left:0;width:100%;height:100%;background:rgba(0,0,0,0.6);display:flex;justify-content:center;align-items:flex-start;z-index:9999;overflow-y:auto;padding:15px;box-sizing:border-box;';
+    modal.innerHTML = `
+    <div style="background:white;border-radius:12px;padding:20px;max-width:560px;width:100%;margin:auto;">
+        <h2 style="margin-top:0;color:#333;font-size:18px;">⚙️ Calculator Settings</h2>
+        <div style="background:#e3f2fd;padding:10px;border-radius:8px;margin-bottom:15px;font-size:13px;color:#1565c0;border-left:4px solid #1565c0;">
+            ✅ Admin save karega to server pe jayega — sabhi users ko milega.
+        </div>
+
+        <!-- EDIT EXISTING -->
+        <div style="background:#fff3e0;border:1.5px solid #ff9800;border-radius:10px;padding:15px;margin-bottom:15px;">
+            <h3 style="margin:0 0 10px;color:#e65100;font-size:15px;">✏️ Edit Existing Formula</h3>
+            <select id="editWeightSel" onchange="loadFormulaForEdit()" style="width:100%;padding:10px;border:2px solid #ff9800;border-radius:8px;font-size:14px;margin-bottom:10px;">
+                <option value="">-- Weight Chuno --</option>${weightOpts}
+            </select>
+            <div id="editFields" style="display:none;">
+                <div style="display:grid;grid-template-columns:1fr 1fr;gap:8px;margin-bottom:10px;">
+                    <div><label style="font-size:12px;font-weight:600;color:#555;display:block;margin-bottom:3px;">Pouch / Shipper</label>
+                        <input id="ePS" type="number" style="width:100%;padding:9px;border:2px solid #ddd;border-radius:7px;font-size:14px;" oninput="updateEditPreview()"></div>
+                    <div><label style="font-size:12px;font-weight:600;color:#555;display:block;margin-bottom:3px;">Shipper / Pallet</label>
+                        <input id="eSP" type="number" style="width:100%;padding:9px;border:2px solid #ddd;border-radius:7px;font-size:14px;" oninput="updateEditPreview()"></div>
+                    <div><label style="font-size:12px;font-weight:600;color:#555;display:block;margin-bottom:3px;">Speed / min</label>
+                        <input id="eSpd" type="number" style="width:100%;padding:9px;border:2px solid #ddd;border-radius:7px;font-size:14px;" oninput="updateEditPreview()"></div>
+                    <div><label style="font-size:12px;font-weight:600;color:#555;display:block;margin-bottom:3px;">Unit</label>
+                        <select id="eUnit" style="width:100%;padding:9px;border:2px solid #ddd;border-radius:7px;font-size:14px;" onchange="updateEditPreview()">
+                            <option value="Pouch">Pouch</option><option value="met">met</option></select></div>
+                </div>
+                <div style="background:#f9f9f9;border-radius:7px;padding:9px;margin-bottom:10px;font-size:13px;color:#555;">
+                    📊 <span id="editPreview" style="font-weight:700;color:#667eea;">—</span>
+                </div>
+                <button onclick="saveEditedFormula()" style="width:100%;padding:11px;background:#ff9800;color:white;border:none;border-radius:8px;font-size:14px;cursor:pointer;font-weight:700;">💾 Save Changes</button>
+            </div>
+        </div>
+
+        <!-- ADD NEW -->
+        <div style="background:#e8f5e9;border:1.5px solid #4caf50;border-radius:10px;padding:15px;margin-bottom:15px;">
+            <h3 style="margin:0 0 10px;color:#2e7d32;font-size:15px;">➕ New Formula Add Karo</h3>
+            <div style="display:grid;grid-template-columns:1fr 1fr;gap:8px;margin-bottom:10px;">
+                <div style="grid-column:1/-1;"><label style="font-size:12px;font-weight:600;color:#555;display:block;margin-bottom:3px;">Weight Name</label>
+                    <input id="nName" placeholder="e.g. 1.5kg" style="width:100%;padding:9px;border:2px solid #ddd;border-radius:7px;font-size:14px;"></div>
+                <div><label style="font-size:12px;font-weight:600;color:#555;display:block;margin-bottom:3px;">Pouch / Shipper</label>
+                    <input id="nPS" type="number" placeholder="e.g. 12" style="width:100%;padding:9px;border:2px solid #ddd;border-radius:7px;font-size:14px;"></div>
+                <div><label style="font-size:12px;font-weight:600;color:#555;display:block;margin-bottom:3px;">Shipper / Pallet</label>
+                    <input id="nSP" type="number" placeholder="e.g. 50" style="width:100%;padding:9px;border:2px solid #ddd;border-radius:7px;font-size:14px;"></div>
+                <div><label style="font-size:12px;font-weight:600;color:#555;display:block;margin-bottom:3px;">Speed / min</label>
+                    <input id="nSpd" type="number" placeholder="e.g. 15" style="width:100%;padding:9px;border:2px solid #ddd;border-radius:7px;font-size:14px;"></div>
+                <div><label style="font-size:12px;font-weight:600;color:#555;display:block;margin-bottom:3px;">Unit</label>
+                    <select id="nUnit" style="width:100%;padding:9px;border:2px solid #ddd;border-radius:7px;font-size:14px;">
+                        <option value="Pouch">Pouch</option><option value="met">met</option></select></div>
+            </div>
+            <button onclick="saveNewFormula()" style="width:100%;padding:11px;background:#4caf50;color:white;border:none;border-radius:8px;font-size:14px;cursor:pointer;font-weight:700;">➕ Add Formula</button>
+        </div>
+
+        <!-- ALL FORMULAS -->
+        <div style="margin-bottom:15px;">
+            <h3 style="color:#333;font-size:14px;margin-bottom:8px;">📋 Sabhi Formulas <span style="font-size:11px;color:#999;">(green = custom)</span></h3>
+            <div style="max-height:180px;overflow-y:auto;">${rows}</div>
+        </div>
+
+        <div style="display:flex;gap:10px;">
+            <button onclick="syncCalcFormulas()" style="flex:1;padding:12px;background:#4caf50;color:white;border:none;border-radius:8px;font-size:14px;cursor:pointer;font-weight:700;">☁️ Server pe Save</button>
+            <button onclick="document.getElementById('calculatorSettingsModal').remove()" style="flex:1;padding:12px;background:#999;color:white;border:none;border-radius:8px;font-size:14px;cursor:pointer;font-weight:600;">✖ Close</button>
+        </div>
+    </div>`;
+    document.body.appendChild(modal);
+    modal.addEventListener('click', e => { if (e.target === modal) modal.remove(); });
+}
+
+function loadFormulaForEdit() {
+    const key = document.getElementById('editWeightSel').value;
+    const fields = document.getElementById('editFields');
+    if (!key) { fields.style.display='none'; return; }
+    const defaultF = {
+        'S1 70g':{pouchToShipper:2,shipperToPallet:48,speed:3,unit:'met'},
+        '300g':{pouchToShipper:24,shipperToPallet:42,speed:40,unit:'Pouch'},
+        '500g':{pouchToShipper:12,shipperToPallet:50,speed:30,unit:'Pouch'},
+        '850g':{pouchToShipper:12,shipperToPallet:40,speed:20,unit:'Pouch'},
+        '900g':{pouchToShipper:12,shipperToPallet:40,speed:18,unit:'Pouch'},
+        '1kg':{pouchToShipper:12,shipperToPallet:50,speed:15,unit:'Pouch'},
+        '2kg':{pouchToShipper:6,shipperToPallet:40,speed:10,unit:'Pouch'},
+        '3kg':{pouchToShipper:4,shipperToPallet:36,speed:8,unit:'Pouch'},
+        '4kg':{pouchToShipper:4,shipperToPallet:30,speed:6,unit:'Pouch'},
+        '5kg':{pouchToShipper:4,shipperToPallet:24,speed:5,unit:'Pouch'},
+        '6kg':{pouchToShipper:2,shipperToPallet:20,speed:4,unit:'Pouch'},
+    };
+    const custom = JSON.parse(localStorage.getItem('customFormulas')||'{}');
+    const f = custom[key] || defaultF[key];
+    if (!f) return;
+    document.getElementById('ePS').value = f.pouchToShipper;
+    document.getElementById('eSP').value = f.shipperToPallet;
+    document.getElementById('eSpd').value = f.speed;
+    document.getElementById('eUnit').value = f.unit||'Pouch';
+    fields.style.display = 'block';
+    updateEditPreview();
+}
+
+function updateEditPreview() {
+    const key = document.getElementById('editWeightSel').value;
+    const ps = document.getElementById('ePS').value;
+    const sp = document.getElementById('eSP').value;
+    const spd = document.getElementById('eSpd').value;
+    const unit = document.getElementById('eUnit').value;
+    if (!ps||!sp) return;
+    const pallet = parseInt(ps)*parseInt(sp);
+    document.getElementById('editPreview').textContent =
+        `${key}: 1 Shipper=${ps} Pouch | 1 Pallet=${sp} Shipper=${pallet} Pouch | Speed:${spd} ${unit}/min`;
+}
+
+function saveEditedFormula() {
+    const key = document.getElementById('editWeightSel').value;
+    if (!key) { alert('Please select a weight!'); return; }
+    const ps  = parseInt(document.getElementById('ePS').value);
+    const sp  = parseInt(document.getElementById('eSP').value);
+    const spd = parseFloat(document.getElementById('eSpd').value)||0;
+    const unit = document.getElementById('eUnit').value;
+    if (!ps||!sp) { alert('Pouch/Shipper and Shipper/Pallet required!'); return; }
+    const custom = JSON.parse(localStorage.getItem('customFormulas')||'{}');
+    custom[key] = { pouchToShipper:ps, shipperToPallet:sp, pouchToPallet:ps*sp, speed:spd, unit };
+    localStorage.setItem('customFormulas', JSON.stringify(custom));
+    syncToServer().then(()=>showSyncToast('✅ "'+key+'" saved to server!','#4caf50'));
+    document.getElementById('calculatorSettingsModal').remove();
+    openCalculatorSettings();
+}
+
+function saveNewFormula() {
+    const name = document.getElementById('nName').value.trim();
+    const ps   = parseInt(document.getElementById('nPS').value);
+    const sp   = parseInt(document.getElementById('nSP').value);
+    const spd  = parseFloat(document.getElementById('nSpd').value)||0;
+    const unit = document.getElementById('nUnit').value;
+    if (!name) { alert('Weight name required!'); return; }
+    if (!ps||!sp) { alert('Pouch/Shipper and Shipper/Pallet required!'); return; }
+    const custom = JSON.parse(localStorage.getItem('customFormulas')||'{}');
+    custom[name] = { pouchToShipper:ps, shipperToPallet:sp, pouchToPallet:ps*sp, speed:spd, unit };
+    localStorage.setItem('customFormulas', JSON.stringify(custom));
+    syncToServer().then(()=>showSyncToast('✅ "'+name+'" added to server!','#4caf50'));
+    document.getElementById('calculatorSettingsModal').remove();
+    openCalculatorSettings();
+}
+
+function deleteCalcFormula(name) {
+    if (!confirm('Delete "'+name+'" formula?')) return;
+    const custom = JSON.parse(localStorage.getItem('customFormulas')||'{}');
+    delete custom[name];
+    localStorage.setItem('customFormulas', JSON.stringify(custom));
+    document.getElementById('calculatorSettingsModal').remove();
+    openCalculatorSettings();
+}
+
+function syncCalcFormulas() {
+    const pwd = prompt('Enter admin password to sync to server:');
+    const adminPwd = localStorage.getItem('admin_password')||'1234';
+    if (pwd!==adminPwd) { if (pwd!==null) alert('❌ Wrong password!'); return; }
+    syncToServer().then(()=>showSyncToast('✅ Formulas synced! All users will receive updates.','#4caf50'));
+}
+
+function openHighlightNote() {
+    toggleMenu();
+    const existing = document.getElementById('highlightNoteModal');
+    if (existing) existing.remove();
+
+    const saved = JSON.parse(localStorage.getItem('highlightNote') || '{}');
+    const isOn = saved.enabled !== false;
+    const noteText = saved.text || '';
+
+    const modal = document.createElement('div');
+    modal.id = 'highlightNoteModal';
+    modal.style.cssText = 'position:fixed;top:0;left:0;width:100%;height:100%;background:rgba(0,0,0,0.6);display:flex;justify-content:center;align-items:center;z-index:9999;padding:15px;box-sizing:border-box;';
+    modal.innerHTML = `
+    <div style="background:white;border-radius:14px;padding:0;max-width:420px;width:100%;overflow:hidden;box-shadow:0 10px 40px rgba(0,0,0,0.3);">
+        <div style="background:linear-gradient(135deg,#ff9800,#f44336);padding:16px 20px;display:flex;justify-content:space-between;align-items:center;">
+            <h2 style="margin:0;color:white;font-size:17px;">📢 Highlight Note</h2>
+            <button onclick="document.getElementById('highlightNoteModal').remove()" style="background:rgba(255,255,255,0.2);border:none;color:white;font-size:22px;width:32px;height:32px;border-radius:50%;cursor:pointer;">&#215;</button>
+        </div>
+        <div style="padding:20px;">
+            <div style="background:#fff3e0;border-radius:8px;padding:10px 14px;margin-bottom:15px;font-size:13px;color:#e65100;border-left:3px solid #ff9800;">
+                This note will appear as a popup after user login.
+            </div>
+
+            <!-- ON/OFF toggle -->
+            <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:15px;padding:12px;background:#f5f5f5;border-radius:8px;">
+                <span style="font-weight:700;color:#333;font-size:14px;">Show Note</span>
+                <div onclick="toggleHighlightNoteSwitch()" id="hnSwitch" style="width:48px;height:26px;border-radius:13px;background:${isOn?'#4caf50':'#ccc'};cursor:pointer;position:relative;transition:background 0.3s;">
+                    <div id="hnThumb" style="position:absolute;top:3px;${isOn?'right:3px':'left:3px'};width:20px;height:20px;border-radius:50%;background:white;transition:all 0.3s;box-shadow:0 1px 4px rgba(0,0,0,0.3);"></div>
+                </div>
+            </div>
+
+            <!-- Note text -->
+            <label style="font-size:13px;font-weight:600;color:#555;display:block;margin-bottom:6px;">Write note (visible to users):</label>
+            <textarea id="hnText" rows="4" placeholder="e.g. New update: 60g weight has been added..." style="width:100%;padding:10px;border:2px solid #ddd;border-radius:8px;font-size:14px;resize:vertical;box-sizing:border-box;">${noteText}</textarea>
+
+            <button onclick="saveHighlightNote()" style="width:100%;margin-top:12px;padding:12px;background:#ff9800;color:white;border:none;border-radius:8px;font-size:15px;cursor:pointer;font-weight:700;">💾 Save Note</button>
+        </div>
+    </div>`;
+    document.body.appendChild(modal);
+    modal.addEventListener('click', e => { if (e.target === modal) modal.remove(); });
+}
+
+function toggleHighlightNoteSwitch() {
+    const sw = document.getElementById('hnSwitch');
+    const thumb = document.getElementById('hnThumb');
+    const isOn = sw.style.background === 'rgb(76, 175, 80)';
+    sw.style.background = isOn ? '#ccc' : '#4caf50';
+    thumb.style.left = isOn ? '3px' : '';
+    thumb.style.right = isOn ? '' : '3px';
+}
+
+function saveHighlightNote() {
+    const sw = document.getElementById('hnSwitch');
+    const isOn = sw.style.background === 'rgb(76, 175, 80)';
+    const text = document.getElementById('hnText').value.trim();
+    const note = { enabled: isOn, text };
+    localStorage.setItem('highlightNote', JSON.stringify(note));
+    syncToServer();
+    showSyncToast('✅ Note saved!', '#ff9800');
+    document.getElementById('highlightNoteModal').remove();
+}
+
+function showHighlightNotePopup() {
+    const saved = JSON.parse(localStorage.getItem('highlightNote') || '{}');
+    if (!saved.enabled || !saved.text) return;
+    // Show only once per session
+    if (sessionStorage.getItem('hnShown')) return;
+    sessionStorage.setItem('hnShown', '1');
+
+    const popup = document.createElement('div');
+    popup.style.cssText = 'position:fixed;top:0;left:0;width:100%;height:100%;background:rgba(0,0,0,0.6);display:flex;justify-content:center;align-items:center;z-index:99999;padding:15px;box-sizing:border-box;';
+    popup.innerHTML = `
+    <div style="background:white;border-radius:14px;max-width:380px;width:100%;overflow:hidden;box-shadow:0 10px 40px rgba(0,0,0,0.4);animation:fadeInScale 0.3s ease;">
+        <div style="background:linear-gradient(135deg,#ff9800,#f44336);padding:14px 18px;display:flex;align-items:center;gap:10px;">
+            <span style="font-size:22px;">📢</span>
+            <span style="color:white;font-weight:700;font-size:16px;">Admin Note</span>
+        </div>
+        <div style="padding:20px;">
+            <p style="font-size:15px;color:#333;line-height:1.7;margin:0 0 18px;">${saved.text.replace(/\n/g,'<br>')}</p>
+            <button onclick="this.closest('div[style*=fixed]').remove()" style="width:100%;padding:11px;background:#667eea;color:white;border:none;border-radius:8px;font-size:15px;cursor:pointer;font-weight:700;">✅ Got It</button>
+        </div>
+    </div>`;
+    document.body.appendChild(popup);
+    popup.addEventListener('click', e => { if (e.target === popup) popup.remove(); });
+}
+
+function openPrivacySettings() {
+    toggleMenu();
+    const existing = document.getElementById('privacySettingsModal');
+    if (existing) existing.remove();
+
+    const modal = document.createElement('div');
+    modal.id = 'privacySettingsModal';
+    modal.style.cssText = 'position:fixed;top:0;left:0;width:100%;height:100%;background:rgba(0,0,0,0.6);display:flex;justify-content:center;align-items:center;z-index:9999;padding:15px;box-sizing:border-box;';
+    modal.innerHTML = `
+    <div style="background:white;border-radius:14px;padding:0;max-width:400px;width:100%;overflow:hidden;box-shadow:0 10px 40px rgba(0,0,0,0.3);">
+        <!-- Header -->
+        <div style="background:linear-gradient(135deg,#667eea,#764ba2);padding:18px 20px;display:flex;justify-content:space-between;align-items:center;">
+            <h2 style="margin:0;color:white;font-size:18px;">🔐 Privacy Settings</h2>
+            <button onclick="document.getElementById('privacySettingsModal').remove()" style="background:rgba(255,255,255,0.2);border:none;color:white;font-size:22px;width:34px;height:34px;border-radius:50%;cursor:pointer;display:flex;align-items:center;justify-content:center;">&#215;</button>
+        </div>
+        <!-- Options -->
+        <div style="padding:10px 0;">
+            <div onclick="document.getElementById('privacySettingsModal').remove();changePassword();" style="display:flex;align-items:center;gap:14px;padding:16px 20px;cursor:pointer;border-bottom:1px solid #f0f0f0;transition:background 0.2s;" onmouseover="this.style.background='#f5f5f5'" onmouseout="this.style.background='white'">
+                <div style="width:42px;height:42px;background:#e3f2fd;border-radius:10px;display:flex;align-items:center;justify-content:center;font-size:20px;flex-shrink:0;">🔑</div>
+                <div>
+                    <div style="font-weight:700;color:#333;font-size:15px;">Admin Password</div>
+                    <div style="font-size:12px;color:#888;margin-top:2px;">Admin ka password badlo</div>
+                </div>
+                <span style="margin-left:auto;color:#ccc;font-size:18px;">›</span>
+            </div>
+            <div onclick="document.getElementById('privacySettingsModal').remove();changeUserPassword();" style="display:flex;align-items:center;gap:14px;padding:16px 20px;cursor:pointer;border-bottom:1px solid #f0f0f0;transition:background 0.2s;" onmouseover="this.style.background='#f5f5f5'" onmouseout="this.style.background='white'">
+                <div style="width:42px;height:42px;background:#e8f5e9;border-radius:10px;display:flex;align-items:center;justify-content:center;font-size:20px;flex-shrink:0;">🔑</div>
+                <div>
+                    <div style="font-weight:700;color:#333;font-size:15px;">User Password</div>
+                    <div style="font-size:12px;color:#888;margin-top:2px;">User ka password badlo</div>
+                </div>
+                <span style="margin-left:auto;color:#ccc;font-size:18px;">›</span>
+            </div>
+            <div onclick="document.getElementById('privacySettingsModal').remove();manageFingerprintAuth();" style="display:flex;align-items:center;gap:14px;padding:16px 20px;cursor:pointer;border-bottom:1px solid #f0f0f0;transition:background 0.2s;" onmouseover="this.style.background='#f5f5f5'" onmouseout="this.style.background='white'">
+                <div style="width:42px;height:42px;background:#fff3e0;border-radius:10px;display:flex;align-items:center;justify-content:center;font-size:20px;flex-shrink:0;">👆</div>
+                <div>
+                    <div style="font-weight:700;color:#333;font-size:15px;">Fingerprint Setup</div>
+                    <div style="font-size:12px;color:#888;margin-top:2px;">Biometric login setup karo</div>
+                </div>
+                <span style="margin-left:auto;color:#ccc;font-size:18px;">›</span>
+            </div>
+            <div onclick="document.getElementById('privacySettingsModal').remove();openApiSettings();" style="display:flex;align-items:center;gap:14px;padding:16px 20px;cursor:pointer;transition:background 0.2s;" onmouseover="this.style.background='#f5f5f5'" onmouseout="this.style.background='white'">
+                <div style="width:42px;height:42px;background:#f3e5f5;border-radius:10px;display:flex;align-items:center;justify-content:center;font-size:20px;flex-shrink:0;">🔗</div>
+                <div>
+                    <div style="font-weight:700;color:#333;font-size:15px;">API / Bin ID</div>
+                    <div style="font-size:12px;color:#888;margin-top:2px;">Server connection settings</div>
+                </div>
+                <span style="margin-left:auto;color:#ccc;font-size:18px;">›</span>
+            </div>
+        </div>
+    </div>`;
+    document.body.appendChild(modal);
+    modal.addEventListener('click', e => { if (e.target === modal) modal.remove(); });
+}
+
 function logoutApp() {
     toggleMenu();
-    if (!confirm('Logout karna chahte ho?')) return;
-    // Role reset karo
+    if (!confirm('Are you sure you want to logout?')) return;
     window._userRole = null;
-    // Location watch band karo
+    _locationReady = false;
     stopLocationWatch();
+    stopAutoSync();
     _currentLat = null;
     _currentLng = null;
-    // Search clear karo
+    _showOutOfRangeWarning(false);
     document.getElementById('searchInput').value = '';
     document.getElementById('resultsContainer').innerHTML = '';
     hideResultCount();
-    // Lock screen dikhao
-    document.getElementById('passwordScreen').style.display = 'flex';
     document.getElementById('passwordInput').value = '';
     document.getElementById('passwordError').textContent = '';
-    // Location watch dobara shuru karo
+    const gw = document.getElementById('gpsWarning');
+    if (gw) { gw.style.display = 'none'; gw.textContent = ''; }
     showPasswordScreen();
 }
 
-// API Settings — key HTML mein nahi, localStorage mein save hoti hai
+// API Settings
 function openApiSettings() {
     toggleMenu();
     const currentKey = getApiKey();
@@ -3581,16 +4152,16 @@ function openApiSettings() {
             <p style="color:#666;font-size:13px;margin-bottom:5px;">${status}</p>
 
             <div style="background:#e8f5e9;border-radius:8px;padding:12px;margin-bottom:15px;font-size:12px;color:#2e7d32;">
-                <b>👑 Admin Device (tumhara):</b> API Key + Bin ID dono daalo<br>
-                <b>👤 User Device (doosra):</b> Sirf Bin ID daalo — data read ho jayega
+                <b>👑 Admin Device (yours):</b> Enter API Key + Bin ID<br>
+                <b>👤 User Device (others):</b> Enter Bin ID only — data will be read
             </div>
 
-            <label style="font-weight:600;font-size:14px;display:block;margin-bottom:5px;">Bin ID <span style="color:#4CAF50;">(sab devices pe same)</span>:</label>
+            <label style="font-weight:600;font-size:14px;display:block;margin-bottom:5px;">Bin ID <span style="color:#4CAF50;">(same on all devices)</span>:</label>
             <input id="inputBinId" type="text" value="${publicBin}" placeholder="64abc123xxxxxxxx"
                 style="width:100%;padding:10px;border:2px solid #4CAF50;border-radius:5px;font-size:13px;margin-bottom:15px;box-sizing:border-box;">
 
-            <label style="font-weight:600;font-size:14px;display:block;margin-bottom:5px;">API Key <span style="color:#999;">(sirf admin device pe)</span>:</label>
-            <input id="inputApiKey" type="password" value="${currentKey}" placeholder="Chhod do agar user device hai"
+            <label style="font-weight:600;font-size:14px;display:block;margin-bottom:5px;">API Key <span style="color:#999;">(admin device only)</span>:</label>
+            <input id="inputApiKey" type="password" value="${currentKey}" placeholder="Leave empty if this is a user device"
                 style="width:100%;padding:10px;border:2px solid #ddd;border-radius:5px;font-size:13px;margin-bottom:20px;box-sizing:border-box;">
 
             <div style="display:flex;gap:10px;">
@@ -3605,21 +4176,21 @@ function openApiSettings() {
 function saveApiSettings() {
     const key = document.getElementById('inputApiKey').value.trim();
     const bin = document.getElementById('inputBinId').value.trim();
-    if (!bin) { alert('Bin ID zaroor daalo!'); return; }
-    // Bin ID sab ke liye save karo
+    if (!bin) { alert('Bin ID is required!'); return; }
+    // Save Bin ID for all devices
     localStorage.setItem('jb_public_bin_id', bin);
-    // API key sirf agar di ho (admin device)
+    // Save API key only if provided (admin device)
     if (key) {
         localStorage.setItem('jb_api_key', key);
         localStorage.setItem('jb_bin_id', bin);
     }
     document.getElementById('apiSettingsModal').remove();
-    showSuccessPopup(key ? '✅ Admin sync active!' : '👁️ Read-only sync active!');
+    showSuccessPopup(key ? 'Admin sync active!' : 'Read-only sync active!');
     syncFromServer();
 }
 
 function clearApiSettings() {
-    if (!confirm('API settings clear karo? Sync band ho jayega.')) return;
+    if (!confirm('Clear API settings? Sync will be disabled.')) return;
     localStorage.removeItem('jb_api_key');
     localStorage.removeItem('jb_bin_id');
     document.getElementById('apiSettingsModal').remove();
@@ -3632,7 +4203,7 @@ function clearApiSettings() {
 
 function openLocationSettings() {
     const adminPassword = localStorage.getItem('admin_password') || '1234';
-    const pwd = prompt('Enter admin password:\nएडमिन पासवर्ड डालो');
+    const pwd = prompt('Enter admin password:');
     if (pwd !== adminPassword) { alert('Wrong password!'); return; }
     toggleMenu();
 
@@ -3647,31 +4218,31 @@ function openLocationSettings() {
         <div style="background:white;padding:clamp(15px,4vw,25px);border-radius:15px;width:100%;max-width:480px;box-shadow:0 10px 40px rgba(0,0,0,0.3);margin:auto;box-sizing:border-box;">
             <h3 style="color:#667eea;margin-bottom:4px;font-size:clamp(16px,4vw,20px);">📍 Location Settings</h3>
             <p style="font-size:clamp(10px,2.5vw,12px);color:#888;margin-bottom:12px;">
-                ⚠️ <span style="font-size:clamp(10px,2.5vw,12px);color:#aaa;">Admin ke liye lock nahi hoga</span>
+                ⚠️ <span style="font-size:clamp(10px,2.5vw,12px);color:#aaa;">Admin is never location locked</span>
                 &nbsp;Location lock applies to view users only
             </p>
 
-            <label style="font-weight:600;font-size:clamp(13px,3vw,15px);display:block;margin-bottom:4px;">📍 Location 1 <span style="font-size:10px;color:#aaa;font-weight:400;">पहली लोकेशन</span></label>
+            <label style="font-weight:600;font-size:clamp(13px,3vw,15px);display:block;margin-bottom:4px;">📍 Location 1 <span style="font-size:10px;color:#aaa;font-weight:400;">First Location</span></label>
             <div style="display:grid;grid-template-columns:1fr 1fr auto;gap:6px;margin-bottom:12px;">
                 <input id="loc1lat" type="number" step="any" placeholder="Latitude" value="${loc1 ? loc1.lat : ''}" style="padding:clamp(7px,2vw,10px);border:2px solid #ddd;border-radius:6px;font-size:clamp(12px,3vw,14px);width:100%;box-sizing:border-box;">
                 <input id="loc1lng" type="number" step="any" placeholder="Longitude" value="${loc1 ? loc1.lng : ''}" style="padding:clamp(7px,2vw,10px);border:2px solid #ddd;border-radius:6px;font-size:clamp(12px,3vw,14px);width:100%;box-sizing:border-box;">
                 <button onclick="autoFillLocation(1)" style="padding:clamp(7px,2vw,10px) clamp(8px,2vw,12px);background:#4CAF50;color:white;border:none;border-radius:6px;cursor:pointer;font-size:clamp(11px,2.5vw,13px);white-space:nowrap;">📡 Auto</button>
             </div>
 
-            <label style="font-weight:600;font-size:clamp(13px,3vw,15px);display:block;margin-bottom:4px;">📍 Location 2 <span style="font-size:10px;color:#aaa;font-weight:400;">दूसरी लोकेशन</span></label>
+            <label style="font-weight:600;font-size:clamp(13px,3vw,15px);display:block;margin-bottom:4px;">📍 Location 2 <span style="font-size:10px;color:#aaa;font-weight:400;">Second Location</span></label>
             <div style="display:grid;grid-template-columns:1fr 1fr auto;gap:6px;margin-bottom:12px;">
                 <input id="loc2lat" type="number" step="any" placeholder="Latitude" value="${loc2 ? loc2.lat : ''}" style="padding:clamp(7px,2vw,10px);border:2px solid #ddd;border-radius:6px;font-size:clamp(12px,3vw,14px);width:100%;box-sizing:border-box;">
                 <input id="loc2lng" type="number" step="any" placeholder="Longitude" value="${loc2 ? loc2.lng : ''}" style="padding:clamp(7px,2vw,10px);border:2px solid #ddd;border-radius:6px;font-size:clamp(12px,3vw,14px);width:100%;box-sizing:border-box;">
                 <button onclick="autoFillLocation(2)" style="padding:clamp(7px,2vw,10px) clamp(8px,2vw,12px);background:#4CAF50;color:white;border:none;border-radius:6px;cursor:pointer;font-size:clamp(11px,2.5vw,13px);white-space:nowrap;">📡 Auto</button>
             </div>
 
-            <label style="font-weight:600;font-size:clamp(13px,3vw,15px);display:block;margin-bottom:4px;">📏 Radius (meters) <span style="font-size:10px;color:#aaa;font-weight:400;">दायरा मीटर में</span></label>
+            <label style="font-weight:600;font-size:clamp(13px,3vw,15px);display:block;margin-bottom:4px;">📏 Radius (meters) <span style="font-size:10px;color:#aaa;font-weight:400;">Distance in meters</span></label>
             <input id="locRadius" type="number" value="${radius}" placeholder="100" style="width:100%;padding:clamp(7px,2vw,10px);border:2px solid #ddd;border-radius:6px;font-size:clamp(12px,3vw,14px);margin-bottom:14px;box-sizing:border-box;">
 
             <label style="display:flex;align-items:center;gap:10px;margin-bottom:16px;cursor:pointer;">
                 <input type="checkbox" id="locEnabled" ${localStorage.getItem('loc_enabled') === 'true' ? 'checked' : ''} style="width:20px;height:20px;cursor:pointer;">
                 <span style="font-size:clamp(13px,3vw,15px);font-weight:600;">Enable Location Lock
-                    <span style="display:block;font-size:10px;color:#aaa;font-weight:400;">लोकेशन लॉक चालू करो</span>
+                    <span style="display:block;font-size:10px;color:#aaa;font-weight:400;">Turn on location lock</span>
                 </span>
             </label>
 
@@ -3684,10 +4255,10 @@ function openLocationSettings() {
 }
 
 function autoFillLocation(num) {
-    if (!navigator.geolocation) { alert('GPS supported nahi hai!'); return; }
+    if (!navigator.geolocation) { alert('GPS not supported on this device!'); return; }
     const latEl = document.getElementById('loc' + num + 'lat');
     const lngEl = document.getElementById('loc' + num + 'lng');
-    // Pehle clear karo aur loading dikhao
+    // Clear and show loading
     latEl.value = '';
     lngEl.value = '';
     latEl.placeholder = '⏳ GPS...';
@@ -3703,7 +4274,7 @@ function autoFillLocation(num) {
         err => {
             latEl.placeholder = 'Latitude';
             lngEl.placeholder = 'Longitude';
-            alert('Location nahi mili!\n\nReason: ' + err.message + '\n\nGPS on and try agean.');
+            alert('Location not found!\n\nReason: ' + err.message + '\n\nPlease enable GPS and try again.');
         },
         { enableHighAccuracy: true, timeout: 10000, maximumAge: 0 }
     );
@@ -3725,8 +4296,8 @@ function saveLocationSettings() {
     localStorage.setItem('loc_radius', radius);
     localStorage.setItem('loc_enabled', enabled ? 'true' : 'false');
     document.getElementById('locationModal').remove();
-    showSuccessPopup('📍 Location settings seve');
-    syncToServer(); // server pe bhi save karo
+    showSuccessPopup('Location settings saved!');
+    syncToServer(); // save to server too
 }
 
 function getDistance(lat1, lng1, lat2, lng2) {
@@ -3739,16 +4310,17 @@ function getDistance(lat1, lng1, lat2, lng2) {
     return R * 2 * Math.atan2(Math.sqrt(a), Math.sqrt(1-a));
 }
 
-// ---- Global Location Tracker (watchPosition — sirf ek baar permission) ----
+// ---- Global Location Tracker (watchPosition — single permission request) ----
 let _currentLat = null;
 let _currentLng = null;
 let _locationWatchId = null;
+let _locationReady = false; // GPS permission granted and location cached
 
 function startLocationWatch() {
     const enabled = localStorage.getItem('loc_enabled') === 'true';
     if (!enabled || !navigator.geolocation) return;
 
-    // Pehle se chal raha ho to dobara mat shuru karo
+    // Already running — don't start again
     if (_locationWatchId !== null) return;
 
     _locationWatchId = navigator.geolocation.watchPosition(
@@ -3796,7 +4368,6 @@ function updateLocationDots() {
     }
 
     if (_currentLat === null) {
-        // GPS nahi mila — grey
         dots.forEach(d => { if(d) { d.style.background = '#ccc'; d.style.boxShadow = ''; d.classList.remove('dot-blink'); } });
         return;
     }
@@ -3808,15 +4379,41 @@ function updateLocationDots() {
         d.style.boxShadow = inRange ? '0 0 8px #4CAF50' : '0 0 8px #f44336';
         d.classList.add('dot-blink');
     });
+
+    // View user — if out of range, show warning + block data
+    if (window._userRole === 'view' && !inRange) {
+        _showOutOfRangeWarning(true);
+    } else {
+        _showOutOfRangeWarning(false);
+    }
 }
 
-// Purana naam raha — backward compatible
+function _showOutOfRangeWarning(show) {
+    let w = document.getElementById('outOfRangeWarning');
+    if (!w) {
+        w = document.createElement('div');
+        w.id = 'outOfRangeWarning';
+        w.style.cssText = 'position:fixed;top:60px;left:50%;transform:translateX(-50%);color:#f44336;font-size:11px;font-weight:700;z-index:99999;display:none;text-align:center;pointer-events:none;letter-spacing:0.5px;';
+        w.textContent = '⚠ Out of range — access restricted';
+        document.body.appendChild(w);
+    }
+    w.style.display = show ? 'block' : 'none';
+
+    // Block/unblock results container
+    const container = document.getElementById('resultsContainer');
+    if (container) {
+        container.style.filter = show ? 'blur(4px) grayscale(1)' : '';
+        container.style.pointerEvents = show ? 'none' : '';
+    }
+}
+
+// Kept for backward compatibility
 function checkLocationDot() {
     const enabled = localStorage.getItem('loc_enabled') === 'true';
     if (!enabled) { updateLocationDots(); return; }
-    // Watch shuru karo agar nahi hua
+    // Start watch if not started
     startLocationWatch();
-    // Agar location pehle se hai to turant update karo
+    // Update dots immediately if location already cached
     updateLocationDots();
 }
 
@@ -3825,14 +4422,14 @@ function refreshLocationAndSync() {
     btn.style.transform = 'rotate(360deg)';
     btn.style.transition = 'transform 0.5s';
     setTimeout(() => { btn.style.transform = ''; }, 500);
-    // Watch restart karo fresh location ke liye
+    // Restart watch for fresh location
     stopLocationWatch();
     _currentLat = null;
     _currentLng = null;
-    // Dots grey + blink karo jab tak naya data na aaye
+    // Set dots grey + blink until new data arrives
     const dots = [document.getElementById('locationDot'), document.getElementById('mainLocationDot')];
     dots.forEach(d => { if(d) { d.style.background = '#ccc'; d.style.boxShadow = ''; d.classList.add('dot-blink'); } });
-    // Server se fresh location settings fetch karo
+    // Fetch fresh location settings from server
     if (isJsonBinConfigured()) {
         syncFromServer().then(() => {
             startLocationWatch();
@@ -3851,50 +4448,50 @@ function isLocationAllowed(callback) {
     if (!enabled) { callback(true); return; }
     if (!navigator.geolocation) { callback(true); return; }
 
-    // Agar location pehle se cached hai to seedha use karo
+    // If location already cached, use it directly
     if (_currentLat !== null) {
         callback(isInRange());
         return;
     }
 
-    // Pehli baar — ek baar getCurrentPosition, phir watch shuru
+    // First time — get position once, then start watch
     navigator.geolocation.getCurrentPosition(pos => {
         _currentLat = pos.coords.latitude;
         _currentLng = pos.coords.longitude;
         updateLocationDots();
-        startLocationWatch(); // ab watch shuru karo
+        startLocationWatch(); // start watch now
         callback(isInRange());
     }, () => {
         startLocationWatch();
-        callback(true); // GPS nahi mila — allow karo
+        callback(true); // GPS not available — allow access
     }, { enableHighAccuracy: true, timeout: 8000 });
 }
 
 // ============================================================
 // JSONBIN BACKEND SYNC — Online Data Storage
 // ============================================================
-// SETUP KARNE KE LIYE:
-//   1. jsonbin.io par free account banao
-//   2. API Key copy karo (Account > API Keys)
-//   3. Ek naya Bin banao (New Bin > empty JSON {})
-//   4. Bin ID copy karo (URL mein hota hai)
-//   5. Neeche JSONBIN_API_KEY aur JSONBIN_BIN_ID fill karo
+// HOW TO SETUP:
+//   1. Create a free account at jsonbin.io
+//   2. Copy API Key (Account > API Keys)
+//   3. Create a new Bin (New Bin > empty JSON {})
+//   4. Copy Bin ID (found in the URL)
+//   5. Enter API Key and Bin ID in App Settings
 // ============================================================
 
-// API keys HTML mein nahi hain — localStorage mein store hoti hain
+// API keys are not in HTML — stored in localStorage
 // Admin settings se enter karo — GitHub pe leak nahi hogi
 function getApiKey() {
-    // Pehle config.js check karo (local file, GitHub pe nahi jayegi)
+    // Check config.js first (local file, not pushed to GitHub)
     if (typeof JSONBIN_CONFIG !== 'undefined' && JSONBIN_CONFIG.apiKey)
         return JSONBIN_CONFIG.apiKey;
-    // Phir localStorage check karo (settings se save ki hui)
+    // Then check localStorage (saved from settings)
     return localStorage.getItem('jb_api_key') || '';
 }
 function getBinId() {
-    // Pehle config.js check karo
+    // Check config.js first
     if (typeof JSONBIN_CONFIG !== 'undefined' && JSONBIN_CONFIG.binId)
         return JSONBIN_CONFIG.binId;
-    // Phir localStorage check karo
+    // Then check localStorage
     return localStorage.getItem('jb_bin_id') || '';}
 
 function isJsonBinConfigured() {
@@ -3917,7 +4514,7 @@ function showSyncToast(msg, color) {
     t._timer = setTimeout(() => { t.style.opacity = '0'; setTimeout(() => { t.style.display = 'none'; }, 300); }, 3500);
 }
 
-// Server se data fetch karo — public bin se, key optional
+// Fetch data from server — public bin, key optional
 async function syncFromServer() {
     const binId = getBinId();
     if (!binId) return;
@@ -3933,12 +4530,11 @@ async function syncFromServer() {
         }
         const json = await res.json();
         const rec = json.record || json || {};
-        // Product records sync
+        // Product records sync — server is source of truth
         const serverData = rec.records || {};
-        const localData = JSON.parse(localStorage.getItem('mc_data_v1') || '{}');
-        const merged = Object.assign({}, localData, serverData);
-        localStorage.setItem('mc_data_v1', JSON.stringify(merged));
-        // Location settings sync — sirf agar server pe hain to overwrite karo
+        // Use server data directly (not merge) so deletions are respected
+        localStorage.setItem('mc_data_v1', JSON.stringify(serverData));
+        // Location settings sync — only overwrite if server has them
         if (rec.locationSettings) {
             const ls = rec.locationSettings;
             if (ls.loc_1) localStorage.setItem('loc_1', JSON.stringify(ls.loc_1));
@@ -3948,59 +4544,101 @@ async function syncFromServer() {
             if (ls.loc_radius) localStorage.setItem('loc_radius', ls.loc_radius);
             if (ls.loc_enabled !== undefined) localStorage.setItem('loc_enabled', ls.loc_enabled);
         }
-        const count = Object.keys(merged).length;
+        // View password sync — when admin updates, user devices get it too
+        if (rec.viewPassword) {
+            localStorage.setItem('view_password', rec.viewPassword);
+        }
+        // Admin password sync — all devices get updated password
+        if (rec.adminPassword) {
+            localStorage.setItem('admin_password', rec.adminPassword);
+        }
+        // Custom formulas sync — sabhi devices ko milenge
+        if (rec.customFormulas) {
+            localStorage.setItem('customFormulas', JSON.stringify(rec.customFormulas));
+        }
+        // Highlight note sync
+        if (rec.highlightNote) {
+            localStorage.setItem('highlightNote', JSON.stringify(rec.highlightNote));
+        }
+        // Centerline data sync
+        if (rec.centerlineData) {
+            localStorage.setItem('centerlineData', JSON.stringify(rec.centerlineData));
+        }
+        const count = Object.keys(serverData).length;
         showSyncToast('✅ ' + count + ' records synced', '#4CAF50');
-        return merged;
+        return serverData;
     } catch (err) {
         showSyncToast('❌ ' + err.message, '#f44336');
     }
 }
 
-// Server par data save karo
+// Save data to server
 async function syncToServer() {
     if (!isJsonBinConfigured()) return;
     try {
         const data = JSON.parse(localStorage.getItem('mc_data_v1') || '{}');
-        // Location settings bhi save karo
+        // Save location settings too
         const locationSettings = {
             loc_1: JSON.parse(localStorage.getItem('loc_1') || 'null'),
             loc_2: JSON.parse(localStorage.getItem('loc_2') || 'null'),
             loc_radius: localStorage.getItem('loc_radius') || '100',
             loc_enabled: localStorage.getItem('loc_enabled') || 'false'
         };
+        const viewPassword = localStorage.getItem('view_password') || '2468';
         const res = await fetch(`https://api.jsonbin.io/v3/b/${getBinId()}`, {
             method: 'PUT',
             headers: {
                 'Content-Type': 'application/json',
                 'X-Access-Key': getApiKey()
             },
-            body: JSON.stringify({ records: data, locationSettings })
+            body: JSON.stringify({ records: data, locationSettings, viewPassword, adminPassword: localStorage.getItem('admin_password') || '1234', customFormulas: JSON.parse(localStorage.getItem('customFormulas') || '{}'), highlightNote: JSON.parse(localStorage.getItem('highlightNote') || '{}'), centerlineData: JSON.parse(localStorage.getItem('centerlineData') || '[]') })
         });
         if (!res.ok) {
             if (res.status === 401) throw new Error('401 - API Key wrong!');
             if (res.status === 404) throw new Error('404 - Bin ID not found!');
             throw new Error('HTTP ' + res.status);
         }
-        showSyncToast('☁️ Saved to tha server', '#2196F3');
+        showSyncToast('☁️ Saved to server', '#2196F3');
     } catch (err) {
         showSyncToast('❌ ' + err.message, '#f44336');
     }
 }
 
-// App open hone par server se data load karo
+// App unlock
+let _syncPollInterval = null;
+
+function startAutoSync() {
+    // Auto sync disabled — manual refresh only
+}
+
+function stopAutoSync() {
+    if (_syncPollInterval) {
+        clearInterval(_syncPollInterval);
+        _syncPollInterval = null;
+    }
+}
+
 function unlockApp(role) {
     window._userRole = role || 'admin';
     document.getElementById('passwordScreen').style.display = 'none';
+    // Close side menu if open
+    const sideMenu = document.getElementById('sideMenu');
+    if (sideMenu) sideMenu.classList.remove('active');
     vibrateDevice([100]);
     loadDarkMode();
     loadTheme();
     showEmptyState();
     applyRoleAccess(window._userRole);
-    if (isJsonBinConfigured()) {
+    // Sync on login only — no auto polling
+    if (getBinId()) {
         syncFromServer().then(() => {
             const term = document.getElementById('searchInput')?.value?.trim();
             if (term) searchData();
+            // Show highlight note after sync (so latest note is shown)
+            setTimeout(showHighlightNotePopup, 800);
         });
+    } else {
+        setTimeout(showHighlightNotePopup, 800);
     }
 }
 </script>
